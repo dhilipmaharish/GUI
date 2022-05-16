@@ -14,13 +14,14 @@ import pythoncom
 from matplotlib.backends.backend_tkagg import (
     FigureCanvasTkAgg, NavigationToolbar2Tk)
 import logging
-from transmission import transmission_input
-from engine import engine_input
-from finaldrive import final_drive_input
-from tire import tire_input
-from air_resistence import air_resistance_input
+from src.transmission import transmission_input
+from src.engine import engine_input
+from src.finaldrive import final_drive_input
+from src.tire import tire_input
+from src.air_resistence import air_resistance_input
 # from .src.air_resistence import
-
+import webbrowser
+from threading import Timer
 app = Flask(__name__, template_folder='templates', static_url_path='/static')
 
 trans_dict, trans_drop = transmission_input()
@@ -84,7 +85,7 @@ def output_page():
        
         # excel = Dispatch('Excel.Application', pythoncom.CoInitialize())
         try:
-            shutil.copyfile('Longitudinal_simulation_sample.xlsx',
+            shutil.copyfile('data\Longitudinal_simulation_sample.xlsx',
                         f'{file_path}' + f'\{vehicle_name}'+'.xlsx')
             excel = win32com.client.Dispatch(
                 'Excel.Application', pythoncom.CoInitialize())
@@ -165,6 +166,10 @@ def output_page():
         excel.Quit()
     return render_template("index.html", result_text="Success!! Excel Generated")
 
+def main():
+    if not os.environ.get("WERKZEUG_RUN_MAIN"):
+        webbrowser.open_new('http://127.0.0.1:5050/')
+    app.run(debug=True, port=(5050))
 
 if __name__ == "__main__":
-    app.run(debug=True, port=(5050))
+    main()
