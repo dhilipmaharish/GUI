@@ -45,15 +45,12 @@
     </nav>
     <div id="content">
       <div class="container">
-        <form
-          id="Form2"
-          method="post"
-        ></form>
+        <form id="Form2" method="post"></form>
         <!-- ------------------------Form------------------------------- -->
         <form method="post" id="Form1" action="{{url_for('output_page')}}" >
           <div class="row">
         <!-- -----------------------Vehicle Details---------------------- -->
-            <div class="card1 mt-3 col-lg-3 col-md-10 col-sm-12 col-xs-12">
+            <div class="card1 mt-3 col-lg-3 col-md-10 col-sm-12 col-xs-12" style="height:300px;">
               <div class="card-body">
                 <h5 class="card-title">
                   <image
@@ -74,6 +71,7 @@
                     placeholder="Eg. Truck,Bus"
                     name="vehicle_name"
                     required="required"
+                    autocomplete="off"
                   />
                 </div>
                 <div class="mb-3 mt-4">
@@ -87,6 +85,7 @@
                     placeholder="Eg. 6000"
                     name="vehicle_weight"
                     required="required"
+                    autocomplete="off"
                   />
                 </div>
               </div>
@@ -94,7 +93,7 @@
 
             <div
               class="card2 mt-3 col-lg-6 col-md-10 col-sm-12 col-xs-12"
-              style="left: 8px"
+              style="left: 8px; height:300px;"
             >
               <div class="card-body">
                 <h5 class="card-title">
@@ -150,9 +149,9 @@
                   >
                     Show Graph
                   </button>
-                  <div style="position: relative; left: 200px; top: -200px">
+                  <div style="position: relative; left: 150px; top: -200px">
                     <img src="" id="graph_img" />
-                  </div>
+                  </div>  
                 </div>
               </div>
             </div>
@@ -210,117 +209,87 @@
                     ><strong>Torque_cut(A-D)</strong>
                   </label>
                   <h6>(As per the number of Gears)</h6>
-                  <div
-                    class="input"
-                    style="
-                      left: 145px;
-                      width: 150px;
-                      position: relative;
-                      top: -65px;
-                    "
-                  >
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="Torque_cut"
-                      placeholder="Eg. A,B,C,D"
-                      name="Torque_cut"
-                      width="5"
-                      height="5"
-                      onblur="uppercase()"
-                      
-                    />
-                  </div>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="Torque_cut"
+                    placeholder="Eg. A,B,C,D"
+                    name="Torque_cut"
+                    width="5"
+                    height="5"
+                    onblur="uppercase()"
+                    style="left: 145px;
+                    width: 150px;
+                    position: relative;
+                    top: -65px;"
+                    autocomplete="off"
+                  />
                 </div>
                 <div class="mb-0 mt-0">
                   <label for="Torque_cut" class="form-label"
                     ><strong>Torque_cut_A(Nm)</strong>
                   </label>
-                  <div
-                    class="input"
+                  <input
+                    type="number"
+                    class="form-control"
+                    id="Torque_cut_A"
+                    placeholder="Eg. 250"
+                    name="Torque_cut_A"
+                    width="5"
+                    height="5"
                     style="
-                      left: 145px;
-                      width: 150px;
-                      position: relative;
-                      top: -35px;
-                    "
-                  >
-                    <input
-                      type="number"
-                      class="form-control"
-                      id="Torque_cut_A"
-                      placeholder="Eg. 250"
-                      name="Torque_cut_A"
-                      width="5"
-                      height="5"
-                      
-                    />
-                  </div>
+                    left: 145px;
+                    width: 150px;
+                    position: relative;
+                    top: -35px;"
+                    autocomplete="off"
+                  />
                 </div>
                 <div class="mb-0 mt-0">
                   <label for="Torque_cut" class="form-label"
                     ><strong>Torque_cut_B(Nm)</strong>
                   </label>
-                  <div
-                    class="input"
+                  <input
+                    type="number"
+                    class="form-control"
+                    id="Torque_cut_B"
+                    placeholder="Eg. 250"
+                    name="Torque_cut_B"
+                    width="5"
+                    height="5"
                     style="
-                      left: 145px;
-                      width: 150px;
-                      position: relative;
-                      top: -35px;
-                    "
-                  >
-                    <input
-                      type="number"
-                      class="form-control"
-                      id="Torque_cut_B"
-                      placeholder="Eg. 250"
-                      name="Torque_cut_B"
-                      width="5"
-                      height="5"
-                      
-                    />
-                  </div>
+                    left: 145px;
+                    width: 150px;
+                    position: relative;
+                    top: -35px;"
+                    autocomplete="off"
+                  />
                 </div>
                 <div class="mb-0 mt-0">
                   <label for="Torque_cut" class="form-label"
                     ><strong>Torque_cut_C(Nm)</strong>
                   </label>
-                  <div
-                    class="input"
+                  <input
+                    type="number"
+                    class="form-control"
+                    id="Torque_cut_C"
+                    placeholder="Eg. 250"
+                    name="Torque_cut_C"
+                    width="5"
+                    height="5"
                     style="
-                      left: 145px;
-                      width: 150px;
-                      position: relative;
-                      top: -35px;
-                    "
-                  >
-                    <input
-                      type="number"
-                      class="form-control"
-                      id="Torque_cut_C"
-                      placeholder="Eg. 250"
-                      name="Torque_cut_C"
-                      width="5"
-                      height="5"
-                      
-                    />
-                  </div>
+                    left: 145px;
+                    width: 150px;
+                    position: relative;
+                    top: -35px;"
+                    autocomplete="off"
+                  />
                 </div>
                 <div class="mb-0 mt-0">
                   <label for="Torque_cut" class="form-label"
                     ><strong>Torque_cut_D(Nm)</strong>
                   </label>
-                  <div
-                    class="input"
-                    style="
-                      left: 145px;
-                      width: 150px;
-                      position: relative;
-                      top: -35px;
-                    "
-                  >
-                    <input
+                  <input
                       type="number"
                       class="form-control"
                       id="Torque_cut_D"
@@ -328,9 +297,13 @@
                       name="Torque_cut_D"
                       width="5"
                       height="5"
-                      
-                    />
-                  </div>
+                      style="
+                      left: 145px;
+                      width: 150px;
+                      position: relative;
+                      top: -35px;"
+                      autocomplete="off"
+                  />
                 </div>
               </div>
             </div>
@@ -428,8 +401,8 @@
                   </label>
                   <div class="btn-group">
                     <select
-                      name="tyre_size"
-                      id="tyre_size"
+                      name="tyre_type"
+                      id="tyre_type"
                       onchange="filterradius()"
                       required="required"
                     >
@@ -507,53 +480,46 @@
               </div>
             </div> 
           </div>
-          <div
-              class="file_path"
-              style="left: 150px; position: relative; top: 0px"
-            >
-              <label
-                for="file_path"
-                class="form-label"
-                style="left: 50x; position: relative; top: 35px"
-                ><strong>File Path</strong>
-              </label>
-              <div
-                class="file_path"
-                style="left: 100px; width: 700px; position: relative; top: 0px"
-              >
-                <input
-                  type="text"
-                  class="form-control"
-                  id="file_path"
-                  placeholder="Eg. C:\username\Desktop\folder_name"
-                  name="file_path"
-                  required="required"
-                />
-              </div>
-          </div>
-          <div class="submit_form">
-            <button
-              class="btn btn-success btn-li float-right"
-              type="submit"
-              id="submit-button"
-              onclick="loading();"
-              name="submit-button"
-            >
-              Submit
-            </button>
-          </div>
+          <label
+            for="file_path"
+            class="form-label"
+            style="left: 150px; position: relative; top: 35px"
+            ><strong>File Path</strong>
+          </label>
+          <input
+            type="text"
+            class="form-control"
+            id="file_path"
+            placeholder="Eg. C:\username\Desktop\folder_name"
+            name="file_path"
+            required="required"
+            style="left: 250px; width: 700px; position: relative; top: 0px"
+          />
+          <button
+            class="btn btn-success btn-li float-right"
+            type="submit"
+            id="submit-button"
+            onclick="loading();"
+            this.onclick = null;
+            name="submit-button"
+          >
+          Submit
+          </button>
           <div id="loading"></div>          
         </form>
-        
-        <script>
-          function goBack() {
-            window.history.back();
-          }
-        </script>
-        <div class="result">
-          <font color="green" align="center"><strong>{{result_text}}</strong></font> 
+        <div style="left:1100px; position:relative; top: -65px;">
+          <font color="green" align="center" ><strong>{{result_text}}</strong></font> 
         </div>
-      </div>
+        <div>
+          <a href="{{url_for('display')}}">
+            <button
+            class="btn btn-success btn-li float-right"
+            id="refresh">
+              REFRESH
+            </button>
+          </a>
+        </div>
+      </div>  
     </div>
   </body>
   <script src="https://code.jquery.com/jquery-3.5.1.js"
@@ -562,8 +528,7 @@
   </script>
   <script>
     $("#Form2").submit(function(e)
-                  {
-    
+                  {    
       e.preventDefault();
       $.ajax({
         type:'POST',
@@ -579,51 +544,6 @@
         
       })
     });
-    $(form).submit(function(){
-      $("#result").show()
-      event.preventDefault();
-    })
-    // $('#Form1').submit(function(e)
-    //               { 
-    //   e.preventDefault();
-    //   $.ajax({
-    //     type:'POST',
-    //     url:"{{url_for('output_page')}}",
-    //     data:{
-    //       'vehicle_name':$("#vname").val(),
-    //       'vehicle_weight':$("#vweight").val(),         
-    //       'engine_type':$("#engine_type").val(),
-    //       'emission_type':$("#emission_type").val(),
-    //       'transmission_type':$("#transmission_type").val(),
-    //       'axel_type':$('#axel_type').val(),
-    //       'axle_layout_type':$("#axle_layout_type").val(),
-    //       'ratio_type':$("#ratio_type").val(),
-    //       'efficiency_type':$("#efficiency_type").val(),
-    //       'tyre_type':$("#tyre_size").val(),
-    //       'radius_type':$("#radius_type").val(),
-    //       'rrc_type':$("#rrc_type").val(),
-    //       'air_resistance_type':$("#air_resistance_type").val(),
-    //       'Torque_cut':$("#Torque_cut").val(),
-    //       'Torque_cut_A':$("#Torque_cut_A").val(),
-    //       'Torque_cut_B':$("#Torque_cut_B").val(),
-    //       'Torque_cut_C':$('#Torque_cut_C').val(),
-    //       'Torque_cut_D':$("#Torque_cut_D").val(),
-    //       'file_path':$("#file_path").val()
-    //     },
-    //     success:function (response) {
-    //         var response = "Excel Generated";
-    //         $("#result").show(response);
-    //       }
-    //   });
-    // });
-    // $(document).ready(function()
-    // {
-    //   $.ajax({
-    //     type:"GET",
-    //     url:"/data"
-
-    //   })
-    // })
   </script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 </html>

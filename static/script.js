@@ -115,44 +115,44 @@ function filterradius(){
 
     $("#rrc_type").empty();
     $("#rrc_type").append("<option value='' selected disabled>Select</option>");
-    tyreradiusObject[$("#tyre_size").val()].forEach(value => {            
+    tyreradiusObject[$("#tyre_type").val()].forEach(value => {            
         let optionTemplate = `<option value="${value}" >${value}</option>`;
         $("#radius_type").append(optionTemplate);
     });
     $("#Tyre_details").show();
-    if ($("#tyre_size").val() === "195/75R15"){
+    if ($("#tyre_type").val() === "195/75R15"){
         $("#pattern").val("327")
         $("#std").val("JATMA")
         $("#remark").val("BS ")
-    }else if($("#tyre_size").val() === "265/60 R 22.5"){
+    }else if($("#tyre_type").val() === "265/60 R 22.5"){
         $("#pattern").val("Lib")
         $("#std").val("ETRTO")
         $("#remark").val("TOYO 123")
-    }else if($("#tyre_size").val() === "185/85R16"){
+    }else if($("#tyre_type").val() === "185/85R16"){
         $("#pattern").val("350")
         $("#std").val("JATMA")
         $("#remark").val("Yokohama")
-    }else if($("#tyre_size").val() === "195/85R15"){
+    }else if($("#tyre_type").val() === "195/85R15"){
         $("#pattern").val("346")
         $("#std").val("JATMA")
         $("#remark").val("BS")
-    }else if($("#tyre_size").val() === "195/85R16"){
+    }else if($("#tyre_type").val() === "195/85R16"){
         $("#pattern").val("358")
         $("#std").val("JATMA")
         $("#remark").val("Yokohama")
-    }else if($("#tyre_size").val() === "205/70R16"){
+    }else if($("#tyre_type").val() === "205/70R16"){
         $("#pattern").val("338")
         $("#std").val("JATMA")
         $("#remark").val("Yokohama")
-    }else if($("#tyre_size").val() === "205/70R17.5"){
+    }else if($("#tyre_type").val() === "205/70R17.5"){
         $("#pattern").val("358")
         $("#std").val("JATMA")
         $("#remark").val("BS")
-    }else if($("#tyre_size").val() === "205/75R16"){
+    }else if($("#tyre_type").val() === "205/75R16"){
         $("#pattern").val("347")
         $("#std").val("JATMA")
         $("#remark").val("MS")
-    }else if($("#tyre_size").val() === "205/85R16"){
+    }else if($("#tyre_type").val() === "205/85R16"){
         $("#pattern").val("366")
         $("#std").val("JATMA")
         $("#remark").val("MS")
@@ -167,7 +167,7 @@ function filterradius(){
 function filterrrc(){
     $("#rrc_type").empty();
     $("#rrc_type").append("<option value='' selected disabled>Select</option>");
-    let rrc_string = `${$("#tyre_size").val()} ${$("#radius_type").val()}`
+    let rrc_string = `${$("#tyre_type").val()} ${$("#radius_type").val()}`
     tyrerratioObject[rrc_string].forEach(value => {            
         let optionTemplate = `<option value="${value}" >${value}</option>`;
         $("#rrc_type").append(optionTemplate);
@@ -187,11 +187,14 @@ function loading(){
     select.forEach(function(i){
         all_input.push(i.value);
     })
-    if (all_input.includes('')){
+    if (all_input.includes('') ){
+        $("#loading").show()
         $("#content").show()
+        
     }else{
         $("#loading").show()
         $("#content").show()
+        
     };
 }
 

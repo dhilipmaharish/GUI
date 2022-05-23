@@ -130,18 +130,25 @@ select{
     background-color: rgb(189, 191, 198);
 
 }
-.submit_form {
+#submit-button {
 left :1000px;
 position: relative;
 top: -35px;
 }
 
+#refresh{
+    left: 0px;
+    position: relative;
+    top: -75px;
+}
 .graph-button{
 left :100px;
 position: relative;
-top: 50px;
+top: 20px;
 height: 200px;
 }
+
+
 
 .back-button{
     left :0px;
