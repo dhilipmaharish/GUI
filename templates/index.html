@@ -47,7 +47,7 @@
       <div class="container">
         <form id="Form2" method="post"></form>
         <!-- ------------------------Form------------------------------- -->
-        <form method="post" id="Form1" action="{{url_for('output_page')}}" >
+        <form method="post" id="Form1" action="{{url_for('output_page')}}" onsubmit= "submit_button.disabled = true; return true;">
           <div class="row">
         <!-- -----------------------Vehicle Details---------------------- -->
             <div class="card1 mt-3 col-lg-3 col-md-10 col-sm-12 col-xs-12" style="height:300px;">
@@ -114,7 +114,6 @@
                       id="engine_type"
                       form="Form2"
                       required = "required"
-                      onblur="document.Form1.select.value = this.value;"
                     >
                       <option value="" selected disabled>Select</option>
                       {% for engine in engine_drop %}
@@ -129,7 +128,7 @@
                     ><strong>Emission</strong>
                   </label>
                   <div class="btn-group" style="left: 45px">
-                    <select name="emission_type" id="emission_type" form="Form2" required = "required" onblur="document.Form1.select.value = this.value;">
+                    <select name="emission_type" id="emission_type" form="Form2" required = "required" >
                       <option value="" selected disabled>Select</option>
                       {% for emission in emission_drop %}
                       <option value="{{emission}}">{{emission}}</option>
@@ -501,24 +500,23 @@
             id="submit-button"
             onclick="loading();"
             this.onclick = null;
-            name="submit-button"
+            name="submit_button"
           >
           Submit
           </button>
-          <div id="loading"></div>          
+          <div id="loading"></div>
+                    
         </form>
-        <div style="left:1100px; position:relative; top: -65px;">
-          <font color="green" align="center" ><strong>{{result_text}}</strong></font> 
-        </div>
-        <div>
-          <a href="{{url_for('display')}}">
-            <button
-            class="btn btn-success btn-li float-right"
-            id="refresh">
-              REFRESH
-            </button>
-          </a>
-        </div>
+        <a href="{{url_for('display')}}">
+          <button
+          class="btn btn-success btn-li float-right"
+          id="refresh"
+          type="reset"
+          >
+            REFRESH
+          </button>
+        </a>
+        <font color="green" align="center" style="left:1050px; position:relative; top: -75px;" ><strong>{{result_text}}</strong></font> 
       </div>  
     </div>
   </body>

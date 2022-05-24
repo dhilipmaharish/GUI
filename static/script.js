@@ -182,18 +182,18 @@ function loading(){
     let select = document.querySelectorAll("select");
     input.forEach(function(i){
         all_input.push(i.value);
-    
     })
     select.forEach(function(i){
         all_input.push(i.value);
     })
+    
     if (all_input.includes('') ){
-        $("#loading").show()
         $("#content").show()
         
-    }else{
+    }
+    else{
         $("#loading").show()
-        $("#content").show()
+        // $("#content").show()
         
     };
 }
@@ -211,7 +211,6 @@ function getgearno(){
   }
 
 function uppercase(){
-    
         var x = document.getElementById("Torque_cut");
         x.value = x.value.toUpperCase();
       
@@ -227,7 +226,6 @@ function page_load() {
   }
 
 
-$("#Form1").validate();
 // if (document.querySelectorAll("input").forEach(input => input.value !== "") && document.querySelectorAll("select").forEach(input => input.value !== "")){
 // // document.querySelectorAll("input").forEach(input => flag =  input.value !== "");
 
