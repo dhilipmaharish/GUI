@@ -10,6 +10,7 @@ def transmission_input():
     end_ind = 1
     name_ind = 0
     trans_dict = {}
+    trans_dict_len = {}
     trans_data = pd.read_excel('data/Transmission_sample.xlsx')
     trans_model = trans_data.iloc[:, 1:].iloc[4].dropna().to_list()
     gear_ratio_effi_data = trans_data.iloc[:, 1:].iloc[9:]
@@ -23,10 +24,17 @@ def transmission_input():
             # print(str(trans_model[name_ind]))
             trans_dict[str(trans_model[name_ind])] = {'Gear ratio': gear_ratio_effi_data[str(start_ind)].dropna(
             ).to_list(), 'Efficiency': gear_ratio_effi_data[str(end_ind)].dropna().to_list()}
+            
+            trans_dict_len[str(trans_model[name_ind])] = len(gear_ratio_effi_data[str(start_ind)].dropna(
+            ).to_list())
             start_ind = end_ind+1
             end_ind = end_ind+2
             name_ind += 1
-    return trans_dict, trans_model
+            
+            
+    return trans_dict, trans_dict_len, trans_model
 
-transmission_input()
+trans_dict,trans_dict_len, trans_model = transmission_input()
+
+print(trans_dict_len)
 

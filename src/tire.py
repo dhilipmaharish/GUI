@@ -21,9 +21,10 @@ def tire_input():
     partern = tire_data.iloc[:, 1:].iloc[5].dropna().to_list()
     standard = tire_data.iloc[:, 1:].iloc[6].dropna().to_list()
     dynamic_ratio_t = tire_data.iloc[:, 1:].iloc[8].dropna().to_list()
+    application = tire_data.iloc[:, 1:].iloc[7].dropna().to_list()
     rrc_t = tire_data.iloc[:, 1:].iloc[9].dropna().to_list()
     remark = tire_data.iloc[:, 1:].iloc[10].dropna().to_list()
-
+    print(application)
     main_list_tire = [size_t, dynamic_ratio_t]  # ,rrc_t]
     # ,from_dynamic_ratio_select_rrc_option_show]
     dict_list_tire = [from_size_select_application_option_show]
@@ -49,5 +50,6 @@ def tire_input():
                 size_t[jj])+' '+str(dynamic_ratio_t[jj])] = [str(rrc_t[jj])]
     # print(from_dynamic_ratio_select_rrc_option_show)
 
-    return set(size_t), dynamic_ratio_t, rrc_t
+    return set(size_t), application, dynamic_ratio_t, rrc_t
+
 

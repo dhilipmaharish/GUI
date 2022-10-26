@@ -26,15 +26,27 @@ app = Flask(__name__, template_folder='templates', static_url_path='/static')
 
 trans_dict, trans_drop = transmission_input()
 engine_dict, engine_drop, emission_drop = engine_input()
+print(trans_dict)
 axel_drop, axel_layout_drop, ratio_drop, efficiency_drop = final_drive_input()
-tyre_size_drop, radius_drop, rrc_drop = tire_input()
+tyre_size_drop, application, radius_drop, rrc_drop = tire_input()
 air_drop = air_resistance_input()
+
+
+
+drop_down = {
+    "engine_drop" : engine_drop,
+    "emission_drop" : emission_drop,
+    "trans_drop" : trans_drop,
+    "axel_drop" : axel_drop,
+    "tyre_size_drop" : tyre_size_drop,
+    "air_drop" : air_drop
+}
 
 app.secret_key = "27eduCBA09"
 
 @app.route("/")
 def display():
-    return render_template("index.html", engine_drop=engine_drop, emission_drop=emission_drop, trans_drop=trans_drop, axel_drop=axel_drop, tyre_size_drop=tyre_size_drop, air_drop=air_drop)
+    return render_template("index.html", drop_down = drop_down, trans = trans_drop)
 
 @app.route("/", methods=['POST'])   
 def graph():

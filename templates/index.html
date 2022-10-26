@@ -23,7 +23,9 @@
       crossorigin="anonymous"
     ></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    
     <script src="{{url_for('static', filename='script.js')}}"></script>
+    
   </head>
   <body style="background: #e7ebea">
     <nav class="navbar-default" style="background-color:rgb(72, 178, 178)">
@@ -114,9 +116,10 @@
                       id="engine_type"
                       form="Form2"
                       required = "required"
+                      onchange="filteremission()"
                     >
                       <option value="" selected disabled>Select</option>
-                      {% for engine in engine_drop %}
+                      {% for engine in drop_down["engine_drop"] %}
                       <option value="{{engine}}">{{engine}}</option>
                       {% endfor %}
                     </select>
@@ -170,9 +173,9 @@
                     ><strong>Transmission</strong>
                   </label>
                   <div class="btn-group">
-                    <select name="transmission_type" id="transmission_type" required="required" onChange="getgearno();">
+                    <select name="transmission_type" id="transmission_type" required="required" onChange="getgearno({{trans}});">
                       <option value="" selected disabled>Select</option>
-                      {% for transmission in trans_drop %}
+                      {% for transmission in  drop_down['trans_drop'] %}
                       <option value="{{transmission}}">{{transmission}}</option>
                       {% endfor %}
                     </select>
@@ -330,7 +333,7 @@
                       required="required"
                     >
                       <option value="" selected disabled>Select</option>
-                      {% for axel in axel_drop %}
+                      {% for axel in drop_down['axel_drop'] %}
                       <option value="{{axel}}">{{axel}}</option>
                       {% endfor %}
                     </select>
@@ -406,6 +409,24 @@
                       required="required"
                     >
                       <option value="" selected disabled>Select</option>
+                      {% for tyre in drop_down['tyre_size_drop'] %}
+                      <option value="{{tyre}}">{{tyre}}</option>
+                      {% endfor %}
+                    </select>
+                  </div>
+                </div>
+                <div class="mb-3 mt-4">
+                  <label for="Tyre Size" class="form-label"
+                    ><strong>Application</strong>
+                  </label>
+                  <div class="btn-group" style="left: 5px">
+                    <select
+                      name="tyre_type"
+                      id="tyre_type"
+                      onchange="filterradius()"
+                      required="required"
+                    >
+                      <option value="" selected disabled>Select</option>
                       {% for tyre in tyre_size_drop %}
                       <option value="{{tyre}}">{{tyre}}</option>
                       {% endfor %}
@@ -414,9 +435,9 @@
                 </div>
                 <div class="mb-3 mt-4">
                   <label for="Radius" class="form-label"
-                    ><strong>Radius</strong>
+                    ><strong>Radius(mm)</strong>
                   </label>
-                  <div class="btn-group" style="left: 40px">
+                  <div class="btn-group" style="left: 2px">
                     <select
                       name="radius_type"
                       id="radius_type"
@@ -467,10 +488,11 @@
                   <label for="Air Resistance" class="form-label"
                     ><strong>Air Resistance</strong>
                   </label>
-                  <div class="btn-group">
+                  <div><strong>(N/(km/h)2)</strong></div>
+                  <div class="btn-group" , style="left: 120px; top: -60px;">
                     <select name="air_resistance_type" id="air_resistance_type" required="required">
                       <option value="" selected disabled>Select</option>
-                      {% for air in air_drop %}
+                      {% for air in drop_down['air_drop'] %}
                       <option value="{{air}}">{{air}}</option>
                       {% endfor %}
                     </select>

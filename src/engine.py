@@ -40,3 +40,9 @@ def engine_input():
             end_ind = end_ind+3
             name_ind += 1
     return engine_dict, engine_model, emission_model
+
+engine_dict, engine_model, emission_model = engine_input()
+
+print(engine_model)
+print(emission_model)
+print(engine_dict)

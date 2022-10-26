@@ -1,3 +1,11 @@
+let emissionObject = {
+    '4P10_96kW' : ['JP09','JP17'],
+    '4P10_129kW': ['JP17'],
+    '4P10_110kW' : ['JP17'],
+    '4P10_96kW' : ['JP17'],
+    '4P10_81kW' : ['JP17'],
+}
+
 let axleObject = {
     'D035H': ['4x2', '4x4'], 
     'D050HT': ['8x4'], 
@@ -46,6 +54,10 @@ let axelefficiencyObject = {
     'D3H 4x4 4.111': ['0.95']
 }
 
+let tyreapplicationObject = {
+
+}
+
 let tyreradiusObject = {
     '195/75R15': ['327'], 
     '265/60 R 22.5': ['437'], 
@@ -69,6 +81,16 @@ let tyrerratioObject = {
     '205/75R16 347': ['0.0063'], 
     '205/85R16 366': ['0.0063'], 
     '225/80R17.5 389': ['0.0063']}
+
+function filteremission() {
+    $("#emission_type").empty();
+    $("#emission_type").append("<option value='' selected disabled>Select</option>");
+    emissionObject[$("#engine_type").val()].forEach(value =>{
+        let optionTemplate = `<option value="${value}" >${value}</option>`
+        $("#emission_type").append(optionTemplate);
+    });
+
+}
 
 function filterAxleLayout() {
     $("#axle_layout_type").empty();
@@ -198,11 +220,11 @@ function loading(){
     };
 }
 
-function getgearno(){
+function getgearno(value){
     $("#Geardiv").show()
-    if($("#transmission_type").val() === "M038S6A"){
+    if($("#transmission_type").val() === value[0]){
         $("#gear_display").val("6")}
-    else if($("#transmission_type").val() === "M123S5"){
+    else if($("#transmission_type").val() === value[1]){
         $("#gear_display").val("5")}
     else{
         $("#gear_display").val("12")

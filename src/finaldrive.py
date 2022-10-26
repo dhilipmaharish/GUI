@@ -15,7 +15,8 @@ def final_drive_input():
     type_f = [str(gg).replace('\n', ' ') for gg in type_f]
     axel_layout = f_drive_data.iloc[:, 1:].iloc[6].dropna().to_list()
     gear_ratio_f = f_drive_data.iloc[:, 1:].iloc[7].dropna().to_list()
-    efficiency_f = f_drive_data.iloc[:, 1:].iloc[8].dropna().to_list()
+    efficiency_f = f_drive_data.iloc[:, 1:].iloc[9].dropna().to_list()
+    print("efficiency_f", efficiency_f)
 
 
     # from_axel_select_gear_ratio_option_show={}
