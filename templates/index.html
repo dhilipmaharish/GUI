@@ -16,6 +16,7 @@
       integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
       crossorigin="anonymous"
     ></script>
+    
     <title>FUSO</title>
     <link rel="stylesheet" href="static\style.css" />
     <script
@@ -25,7 +26,9 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     
     <script src="{{url_for('static', filename='script.js')}}"></script>
-    
+    <script>
+      myFunc({{inputdata|tojson}})
+    </script>
   </head>
   <body style="background: #e7ebea">
     <nav class="navbar-default" style="background-color:rgb(72, 178, 178)">
@@ -46,13 +49,13 @@
       </div>
     </nav>
     <div id="content">
-      <div class="container">
+      <div class="container" style="max-width: 1775px">
         <form id="Form2" method="post"></form>
         <!-- ------------------------Form------------------------------- -->
         <form method="post" id="Form1" action="{{url_for('output_page')}}" onsubmit= "submit_button.disabled = true; return true;">
-          <div class="row">
+          <div class="row" style="max-height: 1000px">
         <!-- -----------------------Vehicle Details---------------------- -->
-            <div class="card1 mt-3 col-lg-3 col-md-10 col-sm-12 col-xs-12" style="height:300px;">
+            <div class="card1 mt-3 col-lg-3 col-md-10 col-sm-12 col-xs-12" style="height:300px">
               <div class="card-body">
                 <h5 class="card-title">
                   <image
@@ -116,10 +119,10 @@
                       id="engine_type"
                       form="Form2"
                       required = "required"
-                      onchange="filteremission()"
+                      onchange= "filteremission()"
                     >
                       <option value="" selected disabled>Select</option>
-                      {% for engine in drop_down["engine_drop"] %}
+                      {% for engine in inputdata["engine_drop"] %}
                       <option value="{{engine}}">{{engine}}</option>
                       {% endfor %}
                     </select>
@@ -151,7 +154,7 @@
                   >
                     Show Graph
                   </button>
-                  <div style="position: relative; left: 150px; top: -200px">
+                  <div style="position: relative; left: 200px; top: -200px">
                     <img src="" id="graph_img" />
                   </div>  
                 </div>
@@ -173,9 +176,9 @@
                     ><strong>Transmission</strong>
                   </label>
                   <div class="btn-group">
-                    <select name="transmission_type" id="transmission_type" required="required" onChange="getgearno({{trans}});">
+                    <select name="transmission_type" id="transmission_type" required="required" onChange="getgearno({{inputdata['trans_dict_len']}});">
                       <option value="" selected disabled>Select</option>
-                      {% for transmission in  drop_down['trans_drop'] %}
+                      {% for transmission in  inputdata['trans_drop'] %}
                       <option value="{{transmission}}">{{transmission}}</option>
                       {% endfor %}
                     </select>
@@ -193,11 +196,11 @@
               
             </div>
           </div>
-          <div class="row">
+          <div class="row">   
             <div
-              class="card4 mt-3 col-lg-3 col-md-10 col-sm-12 col-xs-12"
-              style="left: 0px; top:-3px;"
-            >
+              class="card4 mt-3 col-lg-6 col-md-10 col-sm-12 col-xs-12"
+              style="top:-6px; width:-200px">
+
               <div class="card-body">
                 <h5 class="card-title">
                   <img
@@ -206,112 +209,182 @@
                     height="50"
                   />Torque Limit Details
                 </h5>
-                <div class="mb-0 mt-0">
-                  <label for="Torque_cut" class="form-label"
-                    ><strong>Torque_cut(A-D)</strong>
-                  </label>
-                  <h6>(As per the number of Gears)</h6>
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="Torque_cut"
-                    placeholder="Eg. A,B,C,D"
-                    name="Torque_cut"
-                    width="5"
-                    height="5"
-                    onblur="uppercase()"
-                    style="left: 145px;
-                    width: 150px;
-                    position: relative;
-                    top: -65px;"
-                    autocomplete="off"
-                  />
+
+                <div class="row">
+                  <div class="col-6">
+                    <div class="mb-0 mt-0">
+                      <label for="Torque_cut" class="form-label"
+                        ><strong>Torque_cut_A(Nm)</strong>
+                      </label>
+                      <input
+                        type="number"
+                        class="form-control"
+                        id="Torque_cut_A"
+                        placeholder="Eg. 250"
+                        name="Torque_cut_A"
+                        width="5"
+                        height="5"
+                        style="
+                        left: 145px;
+                        width: 150px;
+                        position: relative;
+                        top: -35px;"
+                        autocomplete="off"
+                      />
+                    </div>
+                    <div class="mb-0 mt-0">
+                      <label for="Torque_cut" class="form-label"
+                        ><strong>Torque_cut_B(Nm)</strong>
+                      </label>
+                      <input
+                        type="number"
+                        class="form-control"
+                        id="Torque_cut_B"
+                        placeholder="Eg. 250"
+                        name="Torque_cut_B"
+                        width="5"
+                        height="5"
+                        style="
+                        left: 145px;
+                        width: 150px;
+                        position: relative;
+                        top: -35px;"
+                        autocomplete="off"
+                      />
+                    </div>
+                    <div class="mb-0 mt-0">
+                      <label for="Torque_cut" class="form-label"
+                        ><strong>Torque_cut_C(Nm)</strong>
+                      </label>
+                      <input
+                        type="number"
+                        class="form-control"
+                        id="Torque_cut_C"
+                        placeholder="Eg. 250"
+                        name="Torque_cut_C"
+                        width="5"
+                        height="5"
+                        style="
+                        left: 145px;
+                        width: 150px;
+                        position: relative;
+                        top: -35px;"
+                        autocomplete="off"
+                      />
+                    </div>
+                    <div class="mb-0 mt-0">
+                      <label for="Torque_cut" class="form-label"
+                        ><strong>Torque_cut_D(Nm)</strong>
+                      </label>
+                      <input
+                          type="number"
+                          class="form-control"
+                          id="Torque_cut_D"
+                          placeholder="Eg. 250"
+                          name="Torque_cut_D"
+                          width="5"
+                          height="5"
+                          style="
+                          left: 145px;
+                          width: 150px;
+                          position: relative;
+                          top: -35px;"
+                          autocomplete="off"
+                      />
+                    </div>
+                  </div>
+
+                  <div class="col-6">
+                    <div class="mb-0 mt-0">
+                      <label for="Torque_cut" class="form-label"
+                        ><strong>Gear for Torque_cut_A</strong>
+                      </label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="Gear_A"
+                        placeholder="Eg. 1,2,3,4,5"
+                        name="Gear_A"
+                        width="5"
+                        height="5"
+                        style="
+                        left: 180px;
+                        width: 150px;
+                        position: relative;
+                        top: -35px;"
+                        autocomplete="off"
+                      />
+                    </div>
+                    <div class="mb-0 mt-0">
+                      <label for="Torque_cut" class="form-label"
+                        ><strong>Gear for Torque_cut_B</strong>
+                      </label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="Gear_B"
+                        placeholder="Eg. 1,2,3,4,5"
+                        name="Gear_B"
+                        width="5"
+                        height="5"
+                        style="
+                        left: 180px;
+                        width: 150px;
+                        position: relative;
+                        top: -35px;"
+                        autocomplete="off"
+                      />
+                    </div>
+                    <div class="mb-0 mt-0">
+                      <label for="Torque_cut" class="form-label"
+                        ><strong>Gear for Torque_cut_C</strong>
+                      </label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="Gear_C"
+                        placeholder="Eg. 1,2,3,4,5"
+                        name="Gear_C"
+                        width="5"
+                        height="5"
+                        style="
+                        left: 180px;
+                        width: 150px;
+                        position: relative;
+                        top: -35px;"
+                        autocomplete="off"
+                      />
+                    </div>
+                    <div class="mb-0 mt-0">
+                      <label for="Torque_cut" class="form-label"
+                        ><strong>Gear for Torque_cut_D</strong>
+                      </label>
+                      <input
+                          type="text"
+                          class="form-control"
+                          id="Gear_D"
+                          placeholder="Eg. 1,2,3,4,5"
+                          name="Gear_D"
+                          width="5"
+                          height="5"
+                          style="
+                          left: 180px;
+                          width: 150px;
+                          position: relative;
+                          top: -35px;"
+                          autocomplete="off"
+                      />
+                    </div>
+                  </div>
                 </div>
-                <div class="mb-0 mt-0">
-                  <label for="Torque_cut" class="form-label"
-                    ><strong>Torque_cut_A(Nm)</strong>
-                  </label>
-                  <input
-                    type="number"
-                    class="form-control"
-                    id="Torque_cut_A"
-                    placeholder="Eg. 250"
-                    name="Torque_cut_A"
-                    width="5"
-                    height="5"
-                    style="
-                    left: 145px;
-                    width: 150px;
-                    position: relative;
-                    top: -35px;"
-                    autocomplete="off"
-                  />
-                </div>
-                <div class="mb-0 mt-0">
-                  <label for="Torque_cut" class="form-label"
-                    ><strong>Torque_cut_B(Nm)</strong>
-                  </label>
-                  <input
-                    type="number"
-                    class="form-control"
-                    id="Torque_cut_B"
-                    placeholder="Eg. 250"
-                    name="Torque_cut_B"
-                    width="5"
-                    height="5"
-                    style="
-                    left: 145px;
-                    width: 150px;
-                    position: relative;
-                    top: -35px;"
-                    autocomplete="off"
-                  />
-                </div>
-                <div class="mb-0 mt-0">
-                  <label for="Torque_cut" class="form-label"
-                    ><strong>Torque_cut_C(Nm)</strong>
-                  </label>
-                  <input
-                    type="number"
-                    class="form-control"
-                    id="Torque_cut_C"
-                    placeholder="Eg. 250"
-                    name="Torque_cut_C"
-                    width="5"
-                    height="5"
-                    style="
-                    left: 145px;
-                    width: 150px;
-                    position: relative;
-                    top: -35px;"
-                    autocomplete="off"
-                  />
-                </div>
-                <div class="mb-0 mt-0">
-                  <label for="Torque_cut" class="form-label"
-                    ><strong>Torque_cut_D(Nm)</strong>
-                  </label>
-                  <input
-                      type="number"
-                      class="form-control"
-                      id="Torque_cut_D"
-                      placeholder="Eg. 250"
-                      name="Torque_cut_D"
-                      width="5"
-                      height="5"
-                      style="
-                      left: 145px;
-                      width: 150px;
-                      position: relative;
-                      top: -35px;"
-                      autocomplete="off"
-                  />
-                </div>
+                
+
               </div>
+
             </div>
             <div
-              class="card5 mt-2 col-lg-3 col-md-10 col-sm-12 col-xs-12"
-              style="left: 8px"
+              class="card5 mt-2 col-lg-2 col-md-10 col-sm-12 col-xs-12"
+              style="left: 0px"
             >
               <div class="card-body">
                 <h5 class="card-title">
@@ -323,9 +396,9 @@
                 </h5>
                 <div class="mb-3 mt-4">
                   <label for="Axle" class="form-label"
-                    ><strong>Axle</strong>
+                    ><strong>Final Drive</strong>
                   </label>
-                  <div class="btn-group" style="left: 75px">
+                  <div class="btn-group" style="left: 30px">
                     <select
                       name="axel_type"
                       id="axel_type"
@@ -333,7 +406,7 @@
                       required="required"
                     >
                       <option value="" selected disabled>Select</option>
-                      {% for axel in drop_down['axel_drop'] %}
+                      {% for axel in inputdata['axel_drop'] %}
                       <option value="{{axel}}">{{axel}}</option>
                       {% endfor %}
                     </select>
@@ -341,9 +414,9 @@
                 </div>
                 <div class="mb-3 mt-4">
                   <label for="Axle layout" class="form-label"
-                    ><strong>Axle layout</strong>
+                    ><strong>Layout</strong>
                   </label>
-                  <div class="btn-group">
+                  <div class="btn-group", style="left: 60px">
                     <select
                       name="axle_layout_type"
                       id="axle_layout_type"
@@ -386,8 +459,8 @@
               </div>
             </div>
             <div
-              class="card6 mt-2 col-lg-3 col-md-10 col-sm-12 col-xs-12"
-              style="left: 16px"
+              class="card6 mt-2 col-lg-2 col-md-10 col-sm-12 col-xs-12"
+              style="left: 10px"
             >
               <div class="card-body">
                 <h5 class="card-title">
@@ -405,11 +478,11 @@
                     <select
                       name="tyre_type"
                       id="tyre_type"
-                      onchange="filterradius()"
+                      onchange="filterapplication()"
                       required="required"
                     >
                       <option value="" selected disabled>Select</option>
-                      {% for tyre in drop_down['tyre_size_drop'] %}
+                      {% for tyre in inputdata['tyre_size_drop'] %}
                       <option value="{{tyre}}">{{tyre}}</option>
                       {% endfor %}
                     </select>
@@ -421,8 +494,8 @@
                   </label>
                   <div class="btn-group" style="left: 5px">
                     <select
-                      name="tyre_type"
-                      id="tyre_type"
+                      name="application_type"
+                      id="application_type"
                       onchange="filterradius()"
                       required="required"
                     >
@@ -473,7 +546,7 @@
               </div>
             </div>
             <div
-              class="card7 mt-2 col-lg-3 col-md-10 col-sm-12 col-xs-12"
+              class="card7 mt-2 col-lg-2 col-md-10 col-sm-12 col-xs-12"
               style="left: 24px"
             >
               <div class="card-body">
@@ -492,7 +565,7 @@
                   <div class="btn-group" , style="left: 120px; top: -60px;">
                     <select name="air_resistance_type" id="air_resistance_type" required="required">
                       <option value="" selected disabled>Select</option>
-                      {% for air in drop_down['air_drop'] %}
+                      {% for air in inputdata['air_drop'] %}
                       <option value="{{air}}">{{air}}</option>
                       {% endfor %}
                     </select>
@@ -504,7 +577,7 @@
           <label
             for="file_path"
             class="form-label"
-            style="left: 150px; position: relative; top: 35px"
+            style="left: 400px; position: relative; top: 35px"
             ><strong>File Path</strong>
           </label>
           <input
@@ -514,7 +587,7 @@
             placeholder="Eg. C:\username\Desktop\folder_name"
             name="file_path"
             required="required"
-            style="left: 250px; width: 700px; position: relative; top: 0px"
+            style="left: 500px; width: 700px; position: relative; top: 0px"
           />
           <button
             class="btn btn-success btn-li float-right"
@@ -523,22 +596,25 @@
             onclick="loading();"
             this.onclick = null;
             name="submit_button"
+            style = "left:1300px"
           >
           Submit
           </button>
           <div id="loading"></div>
                     
         </form>
+        
         <a href="{{url_for('display')}}">
           <button
           class="btn btn-success btn-li float-right"
           id="refresh"
           type="reset"
+          style = "left:200px"
           >
             REFRESH
           </button>
         </a>
-        <font color="green" align="center" style="left:1050px; position:relative; top: -75px;" ><strong>{{result_text}}</strong></font> 
+        <font color="green" align="center" style="left:1500px; position:relative; top: -75px;" ><strong>{{result_text}}</strong></font> 
       </div>  
     </div>
   </body>

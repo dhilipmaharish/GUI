@@ -36,5 +36,5 @@ def transmission_input():
 
 trans_dict,trans_dict_len, trans_model = transmission_input()
 
-print(trans_dict_len)
+
 

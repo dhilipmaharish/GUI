@@ -31,18 +31,20 @@ def engine_input():
     name_ind = 0
 
     engine_dict = {}
-
+    emission_filter_dict = {}
     for ll in range(0, len(enginespd_troque_power_data.columns)):
         if ll == end_ind:
             engine_dict[str(engine_emission_model[name_ind])] = {'Engine speed': enginespd_troque_power_data[str(start_ind)].dropna().to_list(), 'Torque': enginespd_troque_power_data[str(end_ind-1)].dropna().to_list(), 'Power': enginespd_troque_power_data[str(end_ind)].dropna().to_list()
-                                                                }
+                                                                           }
             start_ind = end_ind+1
             end_ind = end_ind+3
-            name_ind += 1
-    return engine_dict, engine_model, emission_model
+            name_ind += 1      
+    for engine, emission in zip(engine_model, emission_model):
+        if engine in emission_filter_dict:
+            emission_filter_dict[engine].append(emission)
+        else:
+            emission_filter_dict[engine] = [emission]
+            
+    return engine_dict, engine_model, emission_model, emission_filter_dict
 
-engine_dict, engine_model, emission_model = engine_input()
-
-print(engine_model)
-print(emission_model)
-print(engine_dict)
+engine_dict, engine_model, emission_model, emission_filter_dict = engine_input()
