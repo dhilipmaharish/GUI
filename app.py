@@ -14,39 +14,22 @@ import pythoncom
 from matplotlib.backends.backend_tkagg import (
     FigureCanvasTkAgg, NavigationToolbar2Tk)
 import logging
-from src.transmission import transmission_input
-from src.engine import engine_input
-from src.finaldrive import final_drive_input
-from src.tire import tire_input
-from src.air_resistence import air_resistance_input
+from src.input_varible import trans_dict, engine_dict,input_json
 # from .src.air_resistence import
 import webbrowser
 from threading import Timer
 app = Flask(__name__, template_folder='templates', static_url_path='/static')
-
-trans_dict, trans_drop = transmission_input()
-engine_dict, engine_drop, emission_drop = engine_input()
-print(trans_dict)
-axel_drop, axel_layout_drop, ratio_drop, efficiency_drop = final_drive_input()
-tyre_size_drop, application, radius_drop, rrc_drop = tire_input()
-air_drop = air_resistance_input()
+import json
 
 
-
-drop_down = {
-    "engine_drop" : engine_drop,
-    "emission_drop" : emission_drop,
-    "trans_drop" : trans_drop,
-    "axel_drop" : axel_drop,
-    "tyre_size_drop" : tyre_size_drop,
-    "air_drop" : air_drop
-}
-
+# jsoninput = json.loads(inputjson)
 app.secret_key = "27eduCBA09"
+
+inputdata = json.loads(input_json)
 
 @app.route("/")
 def display():
-    return render_template("index.html", drop_down = drop_down, trans = trans_drop)
+    return render_template("index.html",inputdata  = inputdata)
 
 @app.route("/", methods=['POST'])   
 def graph():
@@ -67,7 +50,7 @@ def graph():
     plt.ylabel("Engine torque(Nm)")
     plt.savefig("static\output.jpg", dpi=800)
     image = Image.open(".\static\output.jpg")
-    image = image.resize((300, 200), Image.ANTIALIAS)
+    image = image.resize((500, 200), Image.ANTIALIAS)
     image.save(fp="static\graph.png")
     image_path = "static\graph.png"
     return engine, emission
@@ -97,6 +80,11 @@ def output_page():
         B_da = request.form.get("Torque_cut_B")
         C_da = request.form.get("Torque_cut_C")
         D_da = request.form.get("Torque_cut_D")
+        Gear_A = request.form.get("Gear_A").split(",")
+        Gear_B = request.form.get("Gear_B").split(",")
+        Gear_C = request.form.get("Gear_C").split(",")
+        Gear_D = request.form.get("Gear_D").split(",")
+        Gear_value = {"A":Gear_A, "B":Gear_B, "C":Gear_C, "D":Gear_D}
         file_path = request.form.get("file_path")
         chan_val = 1
         chan_val = + 1
@@ -107,12 +95,13 @@ def output_page():
                         f'{file_path}' + f'\{vehicle_name}'+'.xlsx')
             excel = win32com.client.Dispatch(
                 'Excel.Application', pythoncom.CoInitialize())
-            wb = excel.Workbooks.Open(rf"{file_path}" + f'\{vehicle_name}'+'.xlsx')
+            output_filepath = rf"{file_path}" + f'\{vehicle_name}'+'.xlsx'
+            wb = excel.Workbooks.Open(output_filepath)
             sheet = wb.Worksheets('Longitudinal')
         except:
             return render_template("Error_page.html")
         inertia = 0
-        trans_row, engine_row, torque_row1, torque_row2 = 9, 49, 9, 69 
+        trans_row, engine_row, torque_row2 = 9, 49, 69 
         
         if vehicle_name:
             sheet.Cells(2, 5).Value = vehicle_name
@@ -141,9 +130,7 @@ def output_page():
 
         if torquecut_da:
             for pqe in torquecut_da:
-                sheet.Cells(torque_row1, 7).Value = pqe
                 sheet.Cells(torque_row2, 6).Value = pqe
-                torque_row1 = torque_row1+1
                 torque_row2 = torque_row2+1
         if axel:
             # print(axel)
@@ -185,10 +172,76 @@ def output_page():
         if D_da:
             sheet.Cells(72, 6).value = int(D_da)
             sheet.Cells(151, 6).value = int(D_da)
+            
+        gear_for_torque_dict = {
+            "1":  9, 
+            "2":  10, 
+            "3":  11, 
+            "4":  12, 
+            "5":  13, 
+            "6":  14, 
+            "7":  15, 
+            "8":  16, 
+            "9":  17, 
+            "10":  18, 
+            "11":  19, 
+            "12":  20, 
+            "13":  21, 
+            "14":  22, 
+            "15":  23, 
+            "16":  24, 
+            "17":  25, 
+            "18":  26, 
+            "19":  27, 
+            "20":  28
+    }
+    
+    # count = 1
+    # for key in gear_for_torque_dict:
+    #     print("key_value",key)
+    #     print("key",gear_for_torque_dict[key])
+    #     count += 1
+    #     a = gear_for_torque_dict[key]
+        # sheet.Cells(9, 7).value = "c"
+        # sheet.Cells(10, 7).value = "d"
+        # sheet.Cells(11, 7).value = "f"
+        # sheet.Cells(12, 7).value = 2
+        # sheet.Cells(13, 7).value = 4
+        # sheet.Cells(14, 7).value = 4
+        # sheet.Cells(15, 7).value = 6
+        # sheet.Cells(16, 7).value = 8
+        # sheet.Cells(17, 7).value = 8
+        # sheet.Cells(18, 7).value = 8
+        # sheet.Cells(19, 7).value = 8
+        # sheet.Cells(20, 7).value = 8
+        # sheet.Cells(21, 7).value = 8
+        # sheet.Cells(22, 7).value = 8
+        # sheet.Cells(23, 7).value = 8
+        # sheet.Cells(24, 7).value = 8
+        # sheet.Cells(25, 7).value = 8
+        # sheet.Cells(26, 7).value = 8
+        # sheet.Cells(27, 7).value = 8
+        # sheet.Cells(28, 7).value = 8
+
+    
+        
+        for gear in Gear_value:
+            print(Gear_value)
+            print(Gear_value[gear])
+            if "" not in Gear_value[gear]:
+                for value in Gear_value[gear]:
+                    print(value)
+                    print(gear)
+                    sheet.Cells(gear_for_torque_dict[value], 7).Value = gear
+                    
+            else:
+                pass
+        
         wb.Save()
         wb.Close()
         excel.Quit()
-    return render_template("index.html", result_text="Success!! Excel Generated")
+        os.startfile(output_filepath)
+    return render_template("index.html", inputdata = inputdata ,result_text = "Success!! Excel Generated")
 
 def main():
     if not os.environ.get("WERKZEUG_RUN_MAIN"):
