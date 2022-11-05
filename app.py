@@ -20,6 +20,7 @@ import webbrowser
 from threading import Timer
 app = Flask(__name__, template_folder='templates', static_url_path='/static')
 import json
+import dataframe_image as dfi
 
 
 # jsoninput = json.loads(inputjson)
@@ -74,8 +75,6 @@ def output_page():
         radius = request.form.get("radius_type")
         rrc = request.form.get("rrc_type")
         air_resistance = request.form.get("air_resistance_type")
-        torquecut_da = request.form.get("Torque_cut").upper()
-        torquecut_da = torquecut_da.split(',')
         A_da = request.form.get("Torque_cut_A")
         B_da = request.form.get("Torque_cut_B")
         C_da = request.form.get("Torque_cut_C")
@@ -127,11 +126,7 @@ def output_page():
                 engine_row = engine_row+1
             sheet.Cells(42,5).Value = engine
             sheet.Cells(43,5).Value = emission
-
-        if torquecut_da:
-            for pqe in torquecut_da:
-                sheet.Cells(torque_row2, 6).Value = pqe
-                torque_row2 = torque_row2+1
+            
         if axel:
             # print(axel)
             sheet.Cells(29, 5).Value = axel
@@ -195,36 +190,7 @@ def output_page():
             "19":  27, 
             "20":  28
     }
-    
-    # count = 1
-    # for key in gear_for_torque_dict:
-    #     print("key_value",key)
-    #     print("key",gear_for_torque_dict[key])
-    #     count += 1
-    #     a = gear_for_torque_dict[key]
-        # sheet.Cells(9, 7).value = "c"
-        # sheet.Cells(10, 7).value = "d"
-        # sheet.Cells(11, 7).value = "f"
-        # sheet.Cells(12, 7).value = 2
-        # sheet.Cells(13, 7).value = 4
-        # sheet.Cells(14, 7).value = 4
-        # sheet.Cells(15, 7).value = 6
-        # sheet.Cells(16, 7).value = 8
-        # sheet.Cells(17, 7).value = 8
-        # sheet.Cells(18, 7).value = 8
-        # sheet.Cells(19, 7).value = 8
-        # sheet.Cells(20, 7).value = 8
-        # sheet.Cells(21, 7).value = 8
-        # sheet.Cells(22, 7).value = 8
-        # sheet.Cells(23, 7).value = 8
-        # sheet.Cells(24, 7).value = 8
-        # sheet.Cells(25, 7).value = 8
-        # sheet.Cells(26, 7).value = 8
-        # sheet.Cells(27, 7).value = 8
-        # sheet.Cells(28, 7).value = 8
 
-    
-        
         for gear in Gear_value:
             print(Gear_value)
             print(Gear_value[gear])
@@ -241,6 +207,8 @@ def output_page():
         wb.Close()
         excel.Quit()
         os.startfile(output_filepath)
+        df = pd.read_excel(output_filepath)
+        print(df.iloc[[64,65,66,67,68], 8:30])
     return render_template("index.html", inputdata = inputdata ,result_text = "Success!! Excel Generated")
 
 def main():
