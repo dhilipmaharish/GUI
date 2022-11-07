@@ -103,6 +103,7 @@ function filterrrc(){
 }
 
 function loading(){
+   
     let all_input = []
     let input = document.querySelectorAll("input");
     let select = document.querySelectorAll("select");
@@ -122,6 +123,7 @@ function loading(){
         // $("#content").show()
         
     };
+    $("#table_display").show()
 }
 
 function getgearno(gear_dict){

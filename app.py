@@ -14,7 +14,7 @@ import pythoncom
 from matplotlib.backends.backend_tkagg import (
     FigureCanvasTkAgg, NavigationToolbar2Tk)
 import logging
-from src.input_varible import trans_dict, engine_dict,input_json
+from src.input_varible import trans_dict, engine_dict,input_json, table_data
 # from .src.air_resistence import
 import webbrowser
 from threading import Timer
@@ -30,7 +30,7 @@ inputdata = json.loads(input_json)
 
 @app.route("/")
 def display():
-    return render_template("index.html",inputdata  = inputdata)
+    return render_template("index.html",inputdata  = inputdata ,table_data=table_data)
 
 @app.route("/", methods=['POST'])   
 def graph():
@@ -208,8 +208,25 @@ def output_page():
         excel.Quit()
         os.startfile(output_filepath)
         df = pd.read_excel(output_filepath)
-        print(df.iloc[[64,65,66,67,68], 8:30])
-    return render_template("index.html", inputdata = inputdata ,result_text = "Success!! Excel Generated")
+        df = df.drop("Unnamed: 9", axis=1)
+        n = len(list(round(i, 3) for i in df.iloc[65, 10:30].tolist() if i!="-"))
+        table_len = list(range(1, n+1))
+        new_table = pd.DataFrame(columns = ["Values", "units"] + list(range(1,21)))
+        new_table.loc[0] = df.iloc[65, 8:30].tolist()
+        new_table.loc[1] = df.iloc[66, 8:30].tolist()
+        new_table.loc[2] = df.iloc[67, 8:30].tolist()
+        new_table.loc[3] = df.iloc[68, 8:30].tolist()
+        
+        table_data = {
+            "row1" : ["Max Velocity", "km/h"] + list(round(i, 3) for i in df.iloc[65, 10:30].tolist() if i!="-"),
+            "row2" : ["@rpm"] + list(round(i, 3) for i in df.iloc[66, 10:30].tolist() if i!="-"),
+            "row3" : ["Climb ability", "%"] + list(round(i, 3) for i in df.iloc[67, 10:30].tolist() if i!="-"),
+            "row4" : ["@km/h"] + list(round(i, 3) for i in df.iloc[68, 10:30].tolist() if i!="-")
+        }
+        #df_styled = new_table.style.background_gradient()
+        #dfi.export(df_styled, "mytable.png")
+        
+    return render_template("output.html", inputdata = inputdata ,result_text = "Success!! Excel Generated", table_data = table_data, table_len = table_len)
 
 def main():
     if not os.environ.get("WERKZEUG_RUN_MAIN"):
