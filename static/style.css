@@ -118,6 +118,28 @@ box-shadow: 0 0 20px rgba(0, 0, 0, 1.0);
     box-shadow: 0 0 20px rgba(0, 0, 0, 1.5);
     }
 
+.card8 {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+        word-wrap: break-word;
+        background-color: rgb(211, 238, 238) ;
+        background-clip: border-box;
+        border: 1px solid rgba(34, 12, 240, 0.125);
+        border-radius: 0.75rem;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 1.5);
+        }
+
+.checkbox {
+            clip-path: circle(40% at 50% 50%);
+            width:40px;
+            height:40px;
+            position: realative;
+            left:50px;
+            
+          }
+
 .vehicle-icon{
     width:5px;
 }
