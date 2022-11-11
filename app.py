@@ -83,6 +83,12 @@ def output_page():
         Gear_B = request.form.get("Gear_B").split(",")
         Gear_C = request.form.get("Gear_C").split(",")
         Gear_D = request.form.get("Gear_D").split(",")
+        driving_resistance_dict = {}
+        for drive_res in range(1, 23):
+            driving_resistance_dict["driving_resistance"+str(drive_res)] = request.form.get("driving_resistance_{}".format(drive_res))
+        print("driving", driving_resistance_dict)
+        starting_value = request.form.get("starting_value")
+        step_size = request.form.get("step_size")
         Gear_value = {"A":Gear_A, "B":Gear_B, "C":Gear_C, "D":Gear_D}
         file_path = request.form.get("file_path")
         chan_val = 1
@@ -189,7 +195,38 @@ def output_page():
             "18":  26, 
             "19":  27, 
             "20":  28
-    }
+        }
+        
+        driving_resistance_cell = {'driving_resistance1':9,
+                            'driving_resistance2':10,
+                            'driving_resistance3':11,
+                            'driving_resistance4':12,
+                            'driving_resistance5':13,
+                            'driving_resistance6':14,
+                            'driving_resistance7':15,
+                            'driving_resistance8':16,
+                            'driving_resistance9':17,
+                            'driving_resistance10':18,
+                            'driving_resistance11':19,
+                            'driving_resistance12':20,
+                            'driving_resistance13':21,
+                            'driving_resistance14':22,
+                            'driving_resistance15':23,
+                            'driving_resistance16':24,
+                            'driving_resistance17':25,
+                            'driving_resistance18':26,
+                            'driving_resistance19':27,
+                            'driving_resistance20':28,
+                            'driving_resistance21':29,
+                            'driving_resistance22':30
+                           }
+        
+        for key in driving_resistance_dict:
+            if driving_resistance_dict[key]:
+                sheet.Cells(driving_resistance_cell[key], 11).Value = driving_resistance_dict[key] +"%"
+        
+        
+             
 
         for gear in Gear_value:
             print(Gear_value)
