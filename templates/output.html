@@ -16,7 +16,24 @@
       integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
       crossorigin="anonymous"
     ></script>
-    
+    <style>
+      .box{
+          display: none;
+          margin-top: 20px;
+      }
+      
+    </style>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script>
+      $(document).ready(function(){ 
+      $('input[type="radio"]').click(function(){
+        var inputValue = $(this).attr("value");
+        var targetBox = $("." + inputValue);
+        $(".box").not(targetBox).hide();
+        $(targetBox).show();
+        });
+     });
+    </script>
     <title>FUSO</title>
     <link rel="stylesheet" href="static\style.css" />
     <script
@@ -274,7 +291,7 @@
                     </div>
                     <div class="mb-0 mt-0">
                       <label for="Torque_cut" class="form-label"
-                        ><strong>Torque_cut_D(Nm)</strong>
+                        ><strong>Driving Resistance </strong>
                       </label>
                       <input
                           type="number"
@@ -377,8 +394,6 @@
                     </div>
                   </div>
                 </div>
-                
-
               </div>
 
             </div>
@@ -574,6 +589,499 @@
               </div>
             </div> 
           </div>
+          <div class="row">   
+            <div
+              class="card8 mt-3 col-lg-12 col-md-12 col-sm-12 col-xs-12"
+              >
+              <div class="card-body">
+                <h5 class="card-title">
+                  <img
+                    src="{{url_for('static', filename='air_res.png')}}"
+                    width="50"
+                    height="50"
+                  />Driving Resistance
+                </h5>
+                  <div class="row">
+                    <div class="col-1">
+                      <label><input type="radio" name="colorRadio" value="default" style= "width:20px; height:20px;"><strong>Default</strong></label>
+                    </div>
+                    <div class="col-1">
+                      <label><input type="radio" name="colorRadio" value="manual" style= "width:20px; height:20px;"><strong>Manual Entry</strong></label>
+                    </div>
+                    <div class="col-2">
+                      <label><input type="radio" name="colorRadio" value="step" style= "width:20px; height:20px;"><strong>Steps</strong></label>
+                    </div>
+                  </div>
+                  <div class = "col-12">
+                    <div class="default box"><strong>Default Option will not modify the Driving Resistance Table</strong></div>
+                  </div>
+                  <div class = "col-12">
+                    <div class ="row">
+                      <div class = "col-3">
+                        <div class="manual box" style="margin-top:30px;">
+                          <label for="Torque_cut" class="form-label"
+                            ><strong>Driving Resistance 1</strong>
+                          </label>
+                          <input
+                              type="number"
+                              class="form-control"
+                              id="driving_resistance_1"
+                              placeholder="Eg. 250"
+                              name="driving_resistance_1"
+                              width="5"
+                              height="5"
+                              style="
+                              left: 165px;
+                              width: 150px;
+                              position: relative;
+                              top: -35px;"
+                              autocomplete="off"
+                          />
+                          <label for="Torque_cut" class="form-label"
+                            ><strong>Driving Resistance 2</strong>
+                          </label>
+                          <input
+                              type="number"
+                              class="form-control"
+                              id="driving_resistance_2"
+                              placeholder="Eg. 250"
+                              name="driving_resistance_2"
+                              width="5"
+                              height="5"
+                              style="
+                              left: 165px;
+                              width: 150px;
+                              position: relative;
+                              top: -35px;"
+                              autocomplete="off"
+                          />
+                          <label for="Torque_cut" class="form-label"
+                            ><strong>Driving Resistance 3</strong>
+                          </label>
+                          <input
+                              type="number"
+                              class="form-control"
+                              id="driving_resistance_3"
+                              placeholder="Eg. 250"
+                              name="driving_resistance_3"
+                              width="5"
+                              height="5"
+                              style="
+                              left: 165px;
+                              width: 150px;
+                              position: relative;
+                              top: -35px;"
+                              autocomplete="off"
+                          />
+                          <label for="Torque_cut" class="form-label"
+                            ><strong>Driving Resistance 4</strong>
+                          </label>
+                          <input
+                              type="number"
+                              class="form-control"
+                              id="driving_resistance_4"
+                              placeholder="Eg. 250"
+                              name="driving_resistance_4"
+                              width="5"
+                              height="5"
+                              style="
+                              left: 165px;
+                              width: 150px;
+                              position: relative;
+                              top: -35px;"
+                              autocomplete="off"
+                          />
+                          <label for="Torque_cut" class="form-label"
+                            ><strong>Driving Resistance 5</strong>
+                          </label>
+                          <input
+                              type="number"
+                              class="form-control"
+                              id="driving_resistance_5"
+                              placeholder="Eg. 250"
+                              name="driving_resistance_5"
+                              width="5"
+                              height="5"
+                              style="
+                              left: 165px;
+                              width: 150px;
+                              position: relative;
+                              top: -35px;"
+                              autocomplete="off"
+                          />
+                          <label for="Torque_cut" class="form-label"
+                            ><strong>Driving Resistance 21</strong>
+                          </label>
+                          <input
+                              type="number"
+                              class="form-control"
+                              id="driving_resistance_21"
+                              placeholder="Eg. 250"
+                              name="driving_resistance_21"
+                              width="5"
+                              height="5"
+                              style="
+                              left: 165px;
+                              width: 150px;
+                              position: relative;
+                              top: -35px;"
+                              autocomplete="off"
+                          />
+                        </div>
+                      </div>
+                      <div class = "col-3">
+                        <div class="manual box" style="margin-top:30px;">
+                          <label for="Torque_cut" class="form-label"
+                            ><strong>Driving Resistance 6</strong>
+                          </label>
+                          <input
+                              type="number"
+                              class="form-control"
+                              id="driving_resistance_6"
+                              placeholder="Eg. 250"
+                              name="driving_resistance_6"
+                              width="5"
+                              height="5"
+                              style="
+                              left: 165px;
+                              width: 150px;
+                              position: relative;
+                              top: -35px;"
+                              autocomplete="off"
+                          />
+                          <label for="Torque_cut" class="form-label"
+                            ><strong>Driving Resistance 7</strong>
+                          </label>
+                          <input
+                              type="number"
+                              class="form-control"
+                              id="driving_resistance_7"
+                              placeholder="Eg. 250"
+                              name="driving_resistance_7"
+                              width="5"
+                              height="5"
+                              style="
+                              left: 165px;
+                              width: 150px;
+                              position: relative;
+                              top: -35px;"
+                              autocomplete="off"
+                          />
+                          <label for="Torque_cut" class="form-label"
+                            ><strong>Driving Resistance 8</strong>
+                          </label>
+                          <input
+                              type="number"
+                              class="form-control"
+                              id="driving_resistance_8"
+                              placeholder="Eg. 250"
+                              name="driving_resistance_8"
+                              width="5"
+                              height="5"
+                              style="
+                              left: 165px;
+                              width: 150px;
+                              position: relative;
+                              top: -35px;"
+                              autocomplete="off"
+                          />
+                          <label for="Torque_cut" class="form-label"
+                            ><strong>Driving Resistance 9</strong>
+                          </label>
+                          <input
+                              type="number"
+                              class="form-control"
+                              id="driving_resistance_9"
+                              placeholder="Eg. 250"
+                              name="driving_resistance_9"
+                              width="5"
+                              height="5"
+                              style="
+                              left: 165px;
+                              width: 150px;
+                              position: relative;
+                              top: -35px;"
+                              autocomplete="off"
+                          />
+                          <label for="Torque_cut" class="form-label"
+                            ><strong>Driving Resistance 10</strong>
+                          </label>
+                          <input
+                              type="number"
+                              class="form-control"
+                              id="driving_resistance_10"
+                              placeholder="Eg. 250"
+                              name="driving_resistance_10"
+                              width="5"
+                              height="5"
+                              style="
+                              left: 165px;
+                              width: 150px;
+                              position: relative;
+                              top: -35px;"
+                              autocomplete="off"
+                          />
+                          <label for="Torque_cut" class="form-label"
+                            ><strong>Driving Resistance 22</strong>
+                          </label>
+                          <input
+                              type="number"
+                              class="form-control"
+                              id="driving_resistance_22"
+                              placeholder="Eg. 250"
+                              name="driving_resistance_22"
+                              width="5"
+                              height="5"
+                              style="
+                              left: 165px;
+                              width: 150px;
+                              position: relative;
+                              top: -35px;"
+                              autocomplete="off"
+                          />
+                        </div>
+                      </div>
+                      <div class = "col-3">
+                        <div class="manual box" style="margin-top:30px;">
+                          <label for="Torque_cut" class="form-label"
+                            ><strong>Driving Resistance 11</strong>
+                          </label>
+                          <input
+                              type="number"
+                              class="form-control"
+                              id="driving_resistance_11"
+                              placeholder="Eg. 250"
+                              name="driving_resistance_11"
+                              width="5"
+                              height="5"
+                              style="
+                              left: 165px;
+                              width: 150px;
+                              position: relative;
+                              top: -35px;"
+                              autocomplete="off"
+                          />
+                          <label for="Torque_cut" class="form-label"
+                            ><strong>Driving Resistance 12</strong>
+                          </label>
+                          <input
+                              type="number"
+                              class="form-control"
+                              id="driving_resistance_12"
+                              placeholder="Eg. 250"
+                              name="driving_resistance_12"
+                              width="5"
+                              height="5"
+                              style="
+                              left: 165px;
+                              width: 150px;
+                              position: relative;
+                              top: -35px;"
+                              autocomplete="off"
+                          />
+                          <label for="Torque_cut" class="form-label"
+                            ><strong>Driving Resistance 13</strong>
+                          </label>
+                          <input
+                              type="number"
+                              class="form-control"
+                              id="driving_resistance_13"
+                              placeholder="Eg. 250"
+                              name="driving_resistance_13"
+                              width="5"
+                              height="5"
+                              style="
+                              left: 165px;
+                              width: 150px;
+                              position: relative;
+                              top: -35px;"
+                              autocomplete="off"
+                          />
+                          <label for="Torque_cut" class="form-label"
+                            ><strong>Driving Resistance 14</strong>
+                          </label>
+                          <input
+                              type="number"
+                              class="form-control"
+                              id="driving_resistance_14"
+                              placeholder="Eg. 250"
+                              name="driving_resistance_14"
+                              width="5"
+                              height="5"
+                              style="
+                              left: 165px;
+                              width: 150px;
+                              position: relative;
+                              top: -35px;"
+                              autocomplete="off"
+                          />
+                          <label for="Torque_cut" class="form-label"
+                            ><strong>Driving Resistance 15</strong>
+                          </label>
+                          <input
+                              type="number"
+                              class="form-control"
+                              id="driving_resistance_15"
+                              placeholder="Eg. 250"
+                              name="driving_resistance_15"
+                              width="5"
+                              height="5"
+                              style="
+                              left: 165px;
+                              width: 150px;
+                              position: relative;
+                              top: -35px;"
+                              autocomplete="off"
+                          />
+                        </div>
+                      </div>
+                      <div class = "col-3">
+                        <div class="manual box" style="margin-top:30px;">
+                          <label for="Torque_cut" class="form-label"
+                            ><strong>Driving Resistance 16</strong>
+                          </label>
+                          <input
+                              type="number"
+                              class="form-control"
+                              id="driving_resistance_16"
+                              placeholder="Eg. 250"
+                              name="driving_resistance_16"
+                              width="5"
+                              height="5"
+                              style="
+                              left: 165px;
+                              width: 150px;
+                              position: relative;
+                              top: -35px;"
+                              autocomplete="off"
+                          />
+                          <label for="Torque_cut" class="form-label"
+                            ><strong>Driving Resistance 17</strong>
+                          </label>
+                          <input
+                              type="number"
+                              class="form-control"
+                              id="driving_resistance_17"
+                              placeholder="Eg. 250"
+                              name="driving_resistance_17"
+                              width="5"
+                              height="5"
+                              style="
+                              left: 165px;
+                              width: 150px;
+                              position: relative;
+                              top: -35px;"
+                              autocomplete="off"
+                          />
+                          <label for="Torque_cut" class="form-label"
+                            ><strong>Driving Resistance 18</strong>
+                          </label>
+                          <input
+                              type="number"
+                              class="form-control"
+                              id="driving_resistance_18"
+                              placeholder="Eg. 250"
+                              name="driving_resistance_18"
+                              width="5"
+                              height="5"
+                              style="
+                              left: 165px;
+                              width: 150px;
+                              position: relative;
+                              top: -35px;"
+                              autocomplete="off"
+                          />
+                          <label for="Torque_cut" class="form-label"
+                            ><strong>Driving Resistance 19</strong>
+                          </label>
+                          <input
+                              type="number"
+                              class="form-control"
+                              id="driving_resistance_19"
+                              placeholder="Eg. 250"
+                              name="driving_resistance_19"
+                              width="5"
+                              height="5"
+                              style="
+                              left: 165px;
+                              width: 150px;
+                              position: relative;
+                              top: -35px;"
+                              autocomplete="off"
+                          />
+                          <label for="Torque_cut" class="form-label"
+                            ><strong>Driving Resistance 20</strong>
+                          </label>
+                          <input
+                              type="number"
+                              class="form-control"
+                              id="driving_resistance_20"
+                              placeholder="Eg. 250"
+                              name="driving_resistance_20"
+                              width="5"
+                              height="5"
+                              style="
+                              left: 165px;
+                              width: 150px;
+                              position: relative;
+                              top: -35px;"
+                              autocomplete="off"
+                          />
+                        </div>
+                      </div> 
+                    </div>
+                  </div>
+                  <div class="col-12">
+                    <div class="row">
+                      <div class = "col-3">
+                        <div class="step box" style="margin-top:30px;">
+                          <label for="Torque_cut" class="form-label"
+                            ><strong>Starting value</strong>
+                          </label>
+                          <input
+                              type="number"
+                              class="form-control"
+                              id="starting_value"
+                              placeholder="Eg. 250"
+                              name="starting_value"
+                              width="5"
+                              height="5"
+                              style="
+                              left: 145px;
+                              width: 150px;
+                              position: relative;
+                              top: -35px;"
+                              autocomplete="off"
+                          />
+                        </div>
+                      </div>
+                      <div class = "col-3">
+                        <div class="step box" style="margin-top:30px;">
+                          <label for="Torque_cut" class="form-label"
+                            ><strong>Step Size</strong>
+                          </label>
+                          <input
+                              type="number"
+                              class="form-control"
+                              id="step_size"
+                              placeholder="Eg. 250"
+                              name="step_size"
+                              width="5"
+                              height="5"
+                              style="
+                              left: 100px;
+                              width: 150px;
+                              position: relative;
+                              top: -35px;"
+                              autocomplete="off"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+              </div>
+            </div>
+          </div>
           <label
             for="file_path"
             class="form-label"
@@ -614,7 +1122,7 @@
             REFRESH
           </button>
         </a>
-        <font color="green" align="center" style="left:1500px; position:relative; top: -75px;" ><strong>{{result_text}}</strong></font> 
+        <font color="green" align="center" style="left:1500px; position:relative; top: -75px;" ><strong>{{result_text}}</strong></font>
         <table id="table_display" class="styled-table">
           <thead>
               <tr>
@@ -654,7 +1162,7 @@
                 {%endfor%}
               </tr>
           </tbody>
-      </table>
+        </table> 
       </div> 
     </div>
   </body>

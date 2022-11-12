@@ -71,7 +71,6 @@ def output_page():
         ratio = request.form.get("ratio_type")
         efficiency = request.form.get("efficiency_type")
         tyre_size = request.form.get("tyre_type")
-        print(tyre_size)
         radius = request.form.get("radius_type")
         rrc = request.form.get("rrc_type")
         air_resistance = request.form.get("air_resistance_type")
@@ -86,7 +85,6 @@ def output_page():
         driving_resistance_dict = {}
         for drive_res in range(1, 23):
             driving_resistance_dict["driving_resistance"+str(drive_res)] = request.form.get("driving_resistance_{}".format(drive_res))
-        print("driving", driving_resistance_dict)
         starting_value = request.form.get("starting_value")
         step_size = request.form.get("step_size")
         Gear_value = {"A":Gear_A, "B":Gear_B, "C":Gear_C, "D":Gear_D}
@@ -226,16 +224,26 @@ def output_page():
                 sheet.Cells(driving_resistance_cell[key], 11).Value = driving_resistance_dict[key] +"%"
         
         
-             
+        if starting_value:
+            starting = int(starting_value)
+        else:
+            starting = 0
+        if step_size:
+            step = int(step_size)
+        else:
+            step = 2  
+        for cell in range(9, 31):
+            sheet.Cells(cell, 11).Value = str(starting) + "%"
+            starting += step
+            
 
         for gear in Gear_value:
-            print(Gear_value)
-            print(Gear_value[gear])
             if "" not in Gear_value[gear]:
                 for value in Gear_value[gear]:
-                    print(value)
-                    print(gear)
-                    sheet.Cells(gear_for_torque_dict[value], 7).Value = gear
+                    try:
+                        sheet.Cells(gear_for_torque_dict[value], 7).Value = gear
+                    except:
+                        pass
                     
             else:
                 pass
