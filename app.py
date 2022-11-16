@@ -129,7 +129,7 @@ def output_page():
                     engine)+'_'+str(emission)]['Power'][ii]   
                 engine_row = engine_row+1
             sheet.Cells(42,5).Value = engine
-            sheet.Cells(43,5).Value = emission
+            #sheet.Cells(43,5).Value = emission
             
         if axel:
             # print(axel)

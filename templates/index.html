@@ -291,7 +291,7 @@
                     </div>
                     <div class="mb-0 mt-0">
                       <label for="Torque_cut" class="form-label"
-                        ><strong>Driving Resistance </strong>
+                        ><strong>Torque_cut_D(Nm)</strong>
                       </label>
                       <input
                           type="number"
@@ -493,11 +493,29 @@
                     <select
                       name="tyre_type"
                       id="tyre_type"
-                      onchange="filterapplication()"
+                      onchange="filterstandard()"
                       required="required"
                     >
                       <option value="" selected disabled>Select</option>
                       {% for tyre in inputdata['tyre_size_drop'] %}
+                      <option value="{{tyre}}">{{tyre}}</option>
+                      {% endfor %}
+                    </select>
+                  </div>
+                </div>
+                <div class="mb-3 mt-4">
+                  <label for="Tyre Size" class="form-label"
+                    ><strong>Standard</strong>
+                  </label>
+                  <div class="btn-group" style="left: 25px">
+                    <select
+                      name="standard_type"
+                      id="standard_type"
+                      onchange="filterapplication()"
+                      required="required"
+                    >
+                      <option value="" selected disabled>Select</option>
+                      {% for tyre in tyre_size_drop %}
                       <option value="{{tyre}}">{{tyre}}</option>
                       {% endfor %}
                     </select>
@@ -551,9 +569,6 @@
                 <label><strong>Pattern:</strong></label>
                 <input type="text" class="tyre_pattern" id="pattern" style="position:relative; left:25px; width:100px; border-radius: 0.25rem; top:0px; background-color:rgb(225, 245, 247)" readonly>
                 <br></br>
-                <label><strong>Standard:</strong></label>
-                <input type="text" class="tyre_stand" id="std" style="position:relative; left:10px; top:5px; width:100px; border-radius: 0.25rem; background-color:rgb(225, 245, 247)" readonly>
-                <br></br>
                 <label><strong>Remark:</strong></label>
                 <input type="text" class="tyre_remark" id="remark" style="position:relative; left:20px; top:5px; width:100px; border-radius: 0.25rem; background-color:rgb(225, 245, 247)" readonly>
               </div>
@@ -570,7 +585,7 @@
                     src="{{url_for('static', filename='air_res.png')}}"
                     width="50"
                     height="50"
-                  />Air Resistance Details
+                  />Air Resistance 
                 </h5>
                 <div class="mb-3 mt-4">
                   <label for="Air Resistance" class="form-label"
@@ -599,7 +614,7 @@
                     src="{{url_for('static', filename='slope.png')}}"
                     width="50"
                     height="50"
-                  />Slope for driving resistance
+                  />Slope for driving resistance Details
                 </h5>
                   <div class="row">
                     <div class="col-1">

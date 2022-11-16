@@ -8,7 +8,7 @@ import json
 trans_dict,trans_dict_len, trans_drop = transmission_input()
 engine_dict, engine_drop, emission_drop, emission_filter_dict = engine_input()
 axel_drop,axle_type, from_axel_select_gear_ratio_option_show, from_gear_ratio_select_efficiency_option_show = final_drive_input()
-tyre_size_drop,application_drop, radius_drop, rrc_drop, tire_description_dict = tire_input()
+tyre_size_drop,standard_drop,application_drop, radius_drop, rrc_drop, tire_description_dict = tire_input()
 air_drop = air_resistance_input()
 
 # unique option on axle details
@@ -17,6 +17,7 @@ from_axel_select_gear_ratio_option_show = {key:list(set(value)) for key,value in
 from_gear_ratio_select_efficiency_option_show = {key:list(set(value)) for key,value in from_gear_ratio_select_efficiency_option_show.items()}
 
 # unique option on tyre details
+standard_drop = {key:list(set(value)) for key, value in standard_drop.items()}
 application_drop = {key:list(set(value)) for key,value in application_drop.items()}
 radius_drop = {key:list(set(value)) for key,value in radius_drop.items()}
 rrc_drop = {key:list(set(value)) for key,value in rrc_drop.items()}
@@ -35,7 +36,8 @@ inputdata = {
     "air_drop" : air_drop,
     "trans_dict_len" : trans_dict_len,
     "tire_description_dict" : tire_description_dict,
-    "emission_filter" : emission_filter_dict
+    "emission_filter" : emission_filter_dict,
+    "standardObject" : standard_drop
     
 }
 

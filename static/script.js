@@ -56,33 +56,51 @@ function filterEfficiency(){
     });
 }
 
+
+function filterstandard(){
+    $("#standard_type").empty();
+    $("#standard_type").append("<option value='' selected disabled>Select</option>");
+    $("#application_type").empty();
+    $("#application_type").append("<option value='' selected disabled>Select</option>");
+    $("#radius_type").empty();
+    $("#radius_type").append("<option value='' selected disabled>Select</option>");
+    $("#rrc_type").empty();
+    $("#rrc_type").append("<option value='' selected disabled>Select</option>");
+
+    inputvalue_dict["standardObject"][$("#tyre_type").val()].forEach(value => {            
+        let optionTemplate = `<option value="${value}" >${value}</option>`;
+        $("#standard_type").append(optionTemplate);
+    });
+    $("#Tyre_details").show();
+    if ($("#tyre_type").val() in inputvalue_dict['tire_description_dict']){
+        $("#pattern").val(inputvalue_dict['tire_description_dict'][$("#tyre_type").val()]["Pattern"])
+        $("#remark").val(inputvalue_dict['tire_description_dict'][$("#tyre_type").val()]["remark"])
+    };
+
+}
 function filterapplication(){
     $("#application_type").empty();
     $("#application_type").append("<option value='' selected disabled>Select</option>");
     $("#radius_type").empty();
     $("#radius_type").append("<option value='' selected disabled>Select</option>");
-
     $("#rrc_type").empty();
     $("#rrc_type").append("<option value='' selected disabled>Select</option>");
-    inputvalue_dict["applicationObject"][$("#tyre_type").val()].forEach(value => {            
+
+    let app_string = `${$("#tyre_type").val()} ${$("#standard_type").val()}`
+    inputvalue_dict["applicationObject"][app_string].forEach(value => {            
         let optionTemplate = `<option value="${value}" >${value}</option>`;
         $("#application_type").append(optionTemplate);
     });
-    $("#Tyre_details").show();
-    if ($("#tyre_type").val() in inputvalue_dict['tire_description_dict']){
-        $("#pattern").val(inputvalue_dict['tire_description_dict'][$("#tyre_type").val()]["Pattern"])
-        $("#std").val(inputvalue_dict['tire_description_dict'][$("#tyre_type").val()]['Standard'])
-        $("#remark").val(inputvalue_dict['tire_description_dict'][$("#tyre_type").val()]["remark"])
-    };
+   
 }
 
 function filterradius(){
     $("#radius_type").empty();
     $("#radius_type").append("<option value='' selected disabled>Select</option>");
-
     $("#rrc_type").empty();
     $("#rrc_type").append("<option value='' selected disabled>Select</option>");
-    let app_string = `${$("#tyre_type").val()} ${$("#application_type").val()}`
+
+    let app_string = `${$("#tyre_type").val()} ${$("#standard_type").val()} ${$("#application_type").val()}`
     inputvalue_dict['radiusObject'][app_string].forEach(value => {            
         let optionTemplate = `<option value="${value}" >${value}</option>`;
         $("#radius_type").append(optionTemplate);
@@ -93,7 +111,7 @@ function filterradius(){
 function filterrrc(){
     $("#rrc_type").empty();
     $("#rrc_type").append("<option value='' selected disabled>Select</option>");
-    let rrc_string = `${$("#tyre_type").val()} ${$("#application_type").val()} ${$("#radius_type").val()}`
+    let rrc_string = `${$("#tyre_type").val()} ${$("#standard_type").val()} ${$("#application_type").val()} ${$("#radius_type").val()}`
     inputvalue_dict['rrcObject'][rrc_string].forEach(value => {            
         let optionTemplate = `<option value="${value}" >${value}</option>`;
         $("#rrc_type").append(optionTemplate);
