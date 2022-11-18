@@ -93,6 +93,7 @@
                     placeholder="Eg. Truck,Bus"
                     name="vehicle_name"
                     required="required"
+                    value = "{{input_form.vehicle_name}}"
                     autocomplete="off"
                   />
                 </div>
@@ -107,6 +108,7 @@
                     placeholder="Eg. 6000"
                     name="vehicle_weight"
                     required="required"
+                    value = "{{input_form.vehicle_weight}}"
                     autocomplete="off"
                   />
                 </div>
@@ -140,7 +142,7 @@
                     >
                       <option value="" selected disabled>Select</option>
                       {% for engine in inputdata["engine_drop"] %}
-                      <option value="{{engine}}">{{engine}}</option>
+                      <option value="{{engine}}" {%if(engine==input_form['engine'])%} selected {%endif%}>{{engine}}</option>
                       {% endfor %}
                     </select>
                   </div>
@@ -152,10 +154,7 @@
                   </label>
                   <div class="btn-group" style="left: 45px">
                     <select name="emission_type" id="emission_type" form="Form2" required = "required" >
-                      <option value="" selected disabled>Select</option>
-                      {% for emission in emission_drop %}
-                      <option value="{{emission}}">{{emission}}</option>
-                      {% endfor %}
+                      <option value="{{input_form['emission']}}" selected>{{input_form['emission']}}</option>
                     </select>
                   </div>
                 </div>
@@ -172,7 +171,7 @@
                     Show Graph
                   </button>
                   <div style="position: relative; left: 200px; top: -200px">
-                    <img src="" id="graph_img" />
+                    <img src="{{url_for('static', filename='graph.png')}}" id="graph_img" />
                   </div>  
                 </div>
               </div>
@@ -196,7 +195,7 @@
                     <select name="transmission_type" id="transmission_type" required="required" onChange="getgearno({{inputdata['trans_dict_len']}});">
                       <option value="" selected disabled>Select</option>
                       {% for transmission in  inputdata['trans_drop'] %}
-                      <option value="{{transmission}}">{{transmission}}</option>
+                      <option value="{{transmission}}" {%if(transmission==input_form['transmission'])%} selected {%endif%}>{{transmission}}</option>
                       {% endfor %}
                     </select>
 
@@ -247,6 +246,7 @@
                         position: relative;
                         top: -35px;"
                         autocomplete="off"
+                        value = "{{input_form.A_da}}"
                       />
                     </div>
                     <div class="mb-0 mt-0">
@@ -267,6 +267,7 @@
                         position: relative;
                         top: -35px;"
                         autocomplete="off"
+                        value = "{{input_form.B_da}}"
                       />
                     </div>
                     <div class="mb-0 mt-0">
@@ -287,11 +288,12 @@
                         position: relative;
                         top: -35px;"
                         autocomplete="off"
+                        value = "{{input_form.C_da}}"
                       />
                     </div>
                     <div class="mb-0 mt-0">
                       <label for="Torque_cut" class="form-label"
-                        ><strong>Driving Resistance </strong>
+                        ><strong>Torque_cut_D(Nm) </strong>
                       </label>
                       <input
                           type="number"
@@ -307,6 +309,7 @@
                           position: relative;
                           top: -35px;"
                           autocomplete="off"
+                          value = "{{input_form.D_da}}"
                       />
                     </div>
                   </div>
@@ -330,6 +333,7 @@
                         position: relative;
                         top: -35px;"
                         autocomplete="off"
+                        value = "{{input_form.Gear_A}}"
                       />
                     </div>
                     <div class="mb-0 mt-0">
@@ -350,6 +354,7 @@
                         position: relative;
                         top: -35px;"
                         autocomplete="off"
+                        value = "{{input_form.Gear_B}}"
                       />
                     </div>
                     <div class="mb-0 mt-0">
@@ -370,6 +375,7 @@
                         position: relative;
                         top: -35px;"
                         autocomplete="off"
+                        value = "{{input_form.Gear_C}}"
                       />
                     </div>
                     <div class="mb-0 mt-0">
@@ -390,6 +396,7 @@
                           position: relative;
                           top: -35px;"
                           autocomplete="off"
+                          value = "{{input_form.Gear_D}}"
                       />
                     </div>
                   </div>
@@ -422,7 +429,7 @@
                     >
                       <option value="" selected disabled>Select</option>
                       {% for axel in inputdata['axel_drop'] %}
-                      <option value="{{axel}}">{{axel}}</option>
+                      <option value="{{axel}}" {%if(axel==input_form['axel'])%} selected {%endif%}>{{axel}}</option>
                       {% endfor %}
                     </select>
                   </div>
@@ -438,7 +445,7 @@
                       onchange="filterRatio()"
                       required="required"
                     >
-                      <option value="" selected disabled>Select</option>
+                      <option value="{{input_form['axel_layout']}}" selected>{{input_form['axel_layout']}}</option>
                     </select>
                   </div>
                 </div>
@@ -453,7 +460,7 @@
                       onchange="filterEfficiency()"
                       required="required"
                     >
-                      <option value="" selected disabled>Select</option>
+                      <option value="{{input_form['ratio']}}" selected>{{input_form['ratio']}}</option>
                     </select>
                   </div>
                 </div>
@@ -467,7 +474,7 @@
                       id="efficiency_type"
                       required="required"
                     >
-                      <option value="" selected disabled>Select</option>
+                      <option value="{{input_form['efficiency']}}" selected>{{input_form['efficiency']}}</option>
                     </select>
                   </div>
                 </div>
@@ -498,8 +505,23 @@
                     >
                       <option value="" selected disabled>Select</option>
                       {% for tyre in inputdata['tyre_size_drop'] %}
-                      <option value="{{tyre}}">{{tyre}}</option>
+                      <option value="{{tyre}}" {%if(tyre==input_form['tyre_size'])%} selected {%endif%}>{{tyre}}</option>
                       {% endfor %}
+                    </select>
+                  </div>
+                </div>
+                <div class="mb-3 mt-4">
+                  <label for="Tyre Size" class="form-label"
+                    ><strong>Standard</strong>
+                  </label>
+                  <div class="btn-group" style="left: 25px">
+                    <select
+                      name="standard_type"
+                      id="standard_type"
+                      onchange="filterapplication()"
+                      required="required"
+                    >
+                      <option value="{{input_form['standard']}}" selected>{{input_form['standard']}}</option>
                     </select>
                   </div>
                 </div>
@@ -514,10 +536,8 @@
                       onchange="filterradius()"
                       required="required"
                     >
-                      <option value="" selected disabled>Select</option>
-                      {% for tyre in tyre_size_drop %}
-                      <option value="{{tyre}}">{{tyre}}</option>
-                      {% endfor %}
+                      <option value="{{input_form['application']}}" selected disabled>{{input_form['application']}}</option>
+
                     </select>
                   </div>
                 </div>
@@ -532,7 +552,7 @@
                       onchange="filterrrc()"
                       required="required"
                     >
-                      <option value="" selected disabled>Select</option>
+                      <option value="{{input_form['radius']}}" selected>{{input_form['radius']}}</option>
                     </select>
                   </div>
                 </div>
@@ -542,7 +562,7 @@
                   </label>
                   <div class="btn-group" style="left: 60px">
                     <select name="rrc_type" id="rrc_type" required="required">
-                      <option value="" selected disabled>Select</option>
+                      <option value="{{input_form['rrc']}}" selected>{{input_form['rrc']}}</option>
                     </select>
                   </div>
                 </div>
@@ -581,7 +601,7 @@
                     <select name="air_resistance_type" id="air_resistance_type" required="required">
                       <option value="" selected disabled>Select</option>
                       {% for air in inputdata['air_drop'] %}
-                      <option value="{{air}}">{{air}}</option>
+                      <option value="{{air}}"  selected >{{input_form['air_resistance']}}</option>
                       {% endfor %}
                     </select>
                   </div>
@@ -603,13 +623,16 @@
                 </h5>
                   <div class="row">
                     <div class="col-1">
-                      <label><input type="radio" name="colorRadio" value="default" style= "width:20px; height:20px;"><strong>Default</strong></label>
+                      <label><input type="radio" name="colorRadio" value="default" style= "width:20px; height:20px;"
+                        {%if(input_form['colorRadio'] == "default")%} checked {%endif%}><strong>Default</strong></label>
                     </div>
                     <div class="col-1">
-                      <label><input type="radio" name="colorRadio" value="manual" style= "width:20px; height:20px;"><strong>Manual Entry</strong></label>
+                      <label><input type="radio" name="colorRadio" value="manual" style= "width:20px; height:20px;"
+                        {%if(input_form['colorRadio'] == "manual")%} checked {%endif%}><strong>Manual Entry</strong></label>
                     </div>
                     <div class="col-2">
-                      <label><input type="radio" name="colorRadio" value="step" style= "width:20px; height:20px;"><strong>Steps</strong></label>
+                      <label><input type="radio" name="colorRadio" value="step" style= "width:20px; height:20px;"
+                        {%if(input_form['colorRadio'] == "step")%} checked {%endif%}><strong>Steps</strong></label>
                     </div>
                   </div>
                   <div class = "col-12">
@@ -636,6 +659,7 @@
                               position: relative;
                               top: -35px;"
                               autocomplete="off"
+                              value = "{{input_form.driving_resistance1}}"
                           />
                           <label for="Torque_cut" class="form-label"
                             ><strong>Driving Resistance 2</strong>
@@ -654,6 +678,7 @@
                               position: relative;
                               top: -35px;"
                               autocomplete="off"
+                              value = "{{input_form.driving_resistance2}}"
                           />
                           <label for="Torque_cut" class="form-label"
                             ><strong>Driving Resistance 3</strong>
@@ -672,6 +697,7 @@
                               position: relative;
                               top: -35px;"
                               autocomplete="off"
+                              value = "{{input_form.driving_resistance3}}"
                           />
                           <label for="Torque_cut" class="form-label"
                             ><strong>Driving Resistance 4</strong>
@@ -690,6 +716,7 @@
                               position: relative;
                               top: -35px;"
                               autocomplete="off"
+                              value = "{{input_form.driving_resistance4}}"
                           />
                           <label for="Torque_cut" class="form-label"
                             ><strong>Driving Resistance 5</strong>
@@ -708,6 +735,7 @@
                               position: relative;
                               top: -35px;"
                               autocomplete="off"
+                              value = "{{input_form.driving_resistance5}}"
                           />
                           <label for="Torque_cut" class="form-label"
                             ><strong>Driving Resistance 21</strong>
@@ -726,6 +754,7 @@
                               position: relative;
                               top: -35px;"
                               autocomplete="off"
+                              value = "{{input_form.driving_resistance21}}"
                           />
                         </div>
                       </div>
@@ -748,6 +777,7 @@
                               position: relative;
                               top: -35px;"
                               autocomplete="off"
+                              value = "{{input_form.driving_resistance6}}"
                           />
                           <label for="Torque_cut" class="form-label"
                             ><strong>Driving Resistance 7</strong>
@@ -766,6 +796,7 @@
                               position: relative;
                               top: -35px;"
                               autocomplete="off"
+                              value = "{{input_form.driving_resistance7}}"
                           />
                           <label for="Torque_cut" class="form-label"
                             ><strong>Driving Resistance 8</strong>
@@ -784,6 +815,7 @@
                               position: relative;
                               top: -35px;"
                               autocomplete="off"
+                              value = "{{input_form.driving_resistance8}}"
                           />
                           <label for="Torque_cut" class="form-label"
                             ><strong>Driving Resistance 9</strong>
@@ -802,6 +834,7 @@
                               position: relative;
                               top: -35px;"
                               autocomplete="off"
+                              value = "{{input_form.driving_resistance9}}"
                           />
                           <label for="Torque_cut" class="form-label"
                             ><strong>Driving Resistance 10</strong>
@@ -820,6 +853,7 @@
                               position: relative;
                               top: -35px;"
                               autocomplete="off"
+                              value = "{{input_form.driving_resistance10}}"
                           />
                           <label for="Torque_cut" class="form-label"
                             ><strong>Driving Resistance 22</strong>
@@ -838,6 +872,7 @@
                               position: relative;
                               top: -35px;"
                               autocomplete="off"
+                              value = "{{input_form.driving_resistance22}}"
                           />
                         </div>
                       </div>
@@ -860,6 +895,7 @@
                               position: relative;
                               top: -35px;"
                               autocomplete="off"
+                              value = "{{input_form.driving_resistance11}}"
                           />
                           <label for="Torque_cut" class="form-label"
                             ><strong>Driving Resistance 12</strong>
@@ -878,6 +914,7 @@
                               position: relative;
                               top: -35px;"
                               autocomplete="off"
+                              value = "{{input_form.driving_resistance12}}"
                           />
                           <label for="Torque_cut" class="form-label"
                             ><strong>Driving Resistance 13</strong>
@@ -896,6 +933,7 @@
                               position: relative;
                               top: -35px;"
                               autocomplete="off"
+                              value = "{{input_form.driving_resistance13}}"
                           />
                           <label for="Torque_cut" class="form-label"
                             ><strong>Driving Resistance 14</strong>
@@ -914,6 +952,7 @@
                               position: relative;
                               top: -35px;"
                               autocomplete="off"
+                              value = "{{input_form.driving_resistance14}}"
                           />
                           <label for="Torque_cut" class="form-label"
                             ><strong>Driving Resistance 15</strong>
@@ -932,6 +971,7 @@
                               position: relative;
                               top: -35px;"
                               autocomplete="off"
+                              value = "{{input_form.driving_resistance15}}"
                           />
                         </div>
                       </div>
@@ -954,6 +994,7 @@
                               position: relative;
                               top: -35px;"
                               autocomplete="off"
+                              value = "{{input_form.driving_resistance16}}"
                           />
                           <label for="Torque_cut" class="form-label"
                             ><strong>Driving Resistance 17</strong>
@@ -972,6 +1013,7 @@
                               position: relative;
                               top: -35px;"
                               autocomplete="off"
+                              value = "{{input_form.driving_resistance17}}"
                           />
                           <label for="Torque_cut" class="form-label"
                             ><strong>Driving Resistance 18</strong>
@@ -990,6 +1032,7 @@
                               position: relative;
                               top: -35px;"
                               autocomplete="off"
+                              value = "{{input_form.driving_resistance18}}"
                           />
                           <label for="Torque_cut" class="form-label"
                             ><strong>Driving Resistance 19</strong>
@@ -1008,6 +1051,7 @@
                               position: relative;
                               top: -35px;"
                               autocomplete="off"
+                              value = "{{input_form.driving_resistance19}}"
                           />
                           <label for="Torque_cut" class="form-label"
                             ><strong>Driving Resistance 20</strong>
@@ -1026,6 +1070,7 @@
                               position: relative;
                               top: -35px;"
                               autocomplete="off"
+                              value = "{{input_form.driving_resistance20}}"
                           />
                         </div>
                       </div> 
@@ -1052,6 +1097,7 @@
                               position: relative;
                               top: -35px;"
                               autocomplete="off"
+                              value = "{{input_form.starting_value}}"
                           />
                         </div>
                       </div>
@@ -1074,6 +1120,7 @@
                               position: relative;
                               top: -35px;"
                               autocomplete="off"
+                              value = "{{input_form.step_size}}"
                           />
                         </div>
                       </div>
@@ -1096,6 +1143,7 @@
             name="file_path"
             required="required"
             style="left: 500px; width: 700px; position: relative; top: 0px"
+            value = "{{input_form.file_path}}"
           />
           <button
             class="btn btn-success btn-li float-right"

@@ -14,7 +14,7 @@ import pythoncom
 from matplotlib.backends.backend_tkagg import (
     FigureCanvasTkAgg, NavigationToolbar2Tk)
 import logging
-from src.input_varible import trans_dict, engine_dict,input_json, table_data
+from src.input_varible import trans_dict, engine_dict,input_json
 # from .src.air_resistence import
 import webbrowser
 from threading import Timer
@@ -30,7 +30,7 @@ inputdata = json.loads(input_json)
 
 @app.route("/")
 def display():
-    return render_template("index.html",inputdata  = inputdata ,table_data=table_data)
+    return render_template("index.html",inputdata  = inputdata)
 
 @app.route("/", methods=['POST'])   
 def graph():
@@ -51,7 +51,7 @@ def graph():
     plt.ylabel("Engine torque(Nm)")
     plt.savefig("static\output.jpg", dpi=800)
     image = Image.open(".\static\output.jpg")
-    image = image.resize((500, 200), Image.ANTIALIAS)
+    image = image.resize((300, 200), Image.ANTIALIAS)
     image.save(fp="static\graph.png")
     image_path = "static\graph.png"
     return engine, emission
@@ -60,38 +60,47 @@ def graph():
 @app.route("/output", methods=["GET", "POST"])
 def output_page(): 
     global engine_dict
-    if request.method == "POST":       
-        vehicle_name = request.form.get("vehicle_name")
-        vehicle_weight = request.form.get("vehicle_weight")
-        engine = session.get("engine", None)
-        emission = session.get("emission", None)
-        transmission = request.form.get("transmission_type")
-        axel = request.form.get("axel_type")
-        axel_layout = request.form.get("axle_layout_type")
-        ratio = request.form.get("ratio_type")
-        efficiency = request.form.get("efficiency_type")
-        tyre_size = request.form.get("tyre_type")
-        radius = request.form.get("radius_type")
-        rrc = request.form.get("rrc_type")
-        air_resistance = request.form.get("air_resistance_type")
-        A_da = request.form.get("Torque_cut_A")
-        B_da = request.form.get("Torque_cut_B")
-        C_da = request.form.get("Torque_cut_C")
-        D_da = request.form.get("Torque_cut_D")
+    if request.method == "POST": 
+        input_form = {}      
+        input_form["vehicle_name"] = vehicle_name = request.form.get("vehicle_name")
+        input_form["vehicle_weight"] = vehicle_weight = request.form.get("vehicle_weight")
+        input_form["engine"] = engine = session.get("engine", None)
+        input_form["emission"] = emission = session.get("emission", None)
+        input_form["transmission"] = transmission = request.form.get("transmission_type")
+        input_form["axel"] = axel = request.form.get("axel_type")
+        input_form["axel_layout"] = axel_layout = request.form.get("axle_layout_type")
+        input_form["ratio"] = ratio = request.form.get("ratio_type")
+        input_form["efficiency"] = efficiency = request.form.get("efficiency_type")
+        input_form["tyre_size"] = tyre_size = request.form.get("tyre_type")
+        input_form["standard"] = standard = request.form.get("standard_type")
+        input_form["application"] = application = request.form.get("application_type")
+        input_form["radius"] = radius = request.form.get("radius_type")
+        input_form["rrc"] = rrc = request.form.get("rrc_type")
+        input_form["air_resistance"] = air_resistance = request.form.get("air_resistance_type")
+        input_form["A_da"] = A_da = request.form.get("Torque_cut_A")
+        input_form["B_da"] = B_da = request.form.get("Torque_cut_B")
+        input_form["C_da"] = C_da = request.form.get("Torque_cut_C")
+        input_form["D_da"] = D_da = request.form.get("Torque_cut_D")
         Gear_A = request.form.get("Gear_A").split(",")
         Gear_B = request.form.get("Gear_B").split(",")
         Gear_C = request.form.get("Gear_C").split(",")
         Gear_D = request.form.get("Gear_D").split(",")
+        input_form["Gear_A"] = ",".join(Gear_A)
+        input_form["Gear_B"] = ",".join(Gear_B)
+        input_form["Gear_C"] =",".join(Gear_C)
+        input_form["Gear_D"] = ",".join(Gear_D)
+        input_form["colorRadio"] = request.form.get("colorRadio")
         driving_resistance_dict = {}
         for drive_res in range(1, 23):
             driving_resistance_dict["driving_resistance"+str(drive_res)] = request.form.get("driving_resistance_{}".format(drive_res))
-        starting_value = request.form.get("starting_value")
-        step_size = request.form.get("step_size")
+        input_form["starting_value"] = starting_value = request.form.get("starting_value")
+        input_form["step_size"] = step_size = request.form.get("step_size")
         Gear_value = {"A":Gear_A, "B":Gear_B, "C":Gear_C, "D":Gear_D}
-        file_path = request.form.get("file_path")
+        input_form["file_path"] = file_path = request.form.get("file_path")
         chan_val = 1
         chan_val = + 1
-       
+        input_form.update(driving_resistance_dict)
+        print(input_form)
         # excel = Dispatch('Excel.Application', pythoncom.CoInitialize())
         try:
             shutil.copyfile('data\Longitudinal_simulation_sample.xlsx',
@@ -271,7 +280,7 @@ def output_page():
         #df_styled = new_table.style.background_gradient()
         #dfi.export(df_styled, "mytable.png")
         
-    return render_template("output.html", inputdata = inputdata ,result_text = "Success!! Excel Generated", table_data = table_data, table_len = table_len)
+    return render_template("output.html", input_form = input_form, inputdata = inputdata ,result_text = "Success!! Excel Generated", table_data = table_data, table_len = table_len)
 
 def main():
     if not os.environ.get("WERKZEUG_RUN_MAIN"):
