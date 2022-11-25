@@ -14,7 +14,7 @@ import pythoncom
 from matplotlib.backends.backend_tkagg import (
     FigureCanvasTkAgg, NavigationToolbar2Tk)
 import logging
-from src.input_varible import trans_dict, engine_dict,input_json
+from src.input_variable import trans_dict, engine_dict,input_json,driving_resistance_cell, gear_for_torque_dict
 # from .src.air_resistence import
 import webbrowser
 from threading import Timer
@@ -90,6 +90,9 @@ def output_page():
         input_form["Gear_C"] =",".join(Gear_C)
         input_form["Gear_D"] = ",".join(Gear_D)
         input_form["colorRadio"] = request.form.get("colorRadio")
+        input_form["gear_display"] = request.form.get("gear_display")
+        input_form["pattern"] = request.form.get("pattern")
+        input_form["remark"] = request.form.get("remark")
         driving_resistance_dict = {}
         for drive_res in range(1, 23):
             driving_resistance_dict["driving_resistance"+str(drive_res)] = request.form.get("driving_resistance_{}".format(drive_res))
@@ -181,53 +184,6 @@ def output_page():
             sheet.Cells(72, 6).value = int(D_da)
             sheet.Cells(151, 6).value = int(D_da)
             
-        gear_for_torque_dict = {
-            "1":  9, 
-            "2":  10, 
-            "3":  11, 
-            "4":  12, 
-            "5":  13, 
-            "6":  14, 
-            "7":  15, 
-            "8":  16, 
-            "9":  17, 
-            "10":  18, 
-            "11":  19, 
-            "12":  20, 
-            "13":  21, 
-            "14":  22, 
-            "15":  23, 
-            "16":  24, 
-            "17":  25, 
-            "18":  26, 
-            "19":  27, 
-            "20":  28
-        }
-        
-        driving_resistance_cell = {'driving_resistance1':9,
-                            'driving_resistance2':10,
-                            'driving_resistance3':11,
-                            'driving_resistance4':12,
-                            'driving_resistance5':13,
-                            'driving_resistance6':14,
-                            'driving_resistance7':15,
-                            'driving_resistance8':16,
-                            'driving_resistance9':17,
-                            'driving_resistance10':18,
-                            'driving_resistance11':19,
-                            'driving_resistance12':20,
-                            'driving_resistance13':21,
-                            'driving_resistance14':22,
-                            'driving_resistance15':23,
-                            'driving_resistance16':24,
-                            'driving_resistance17':25,
-                            'driving_resistance18':26,
-                            'driving_resistance19':27,
-                            'driving_resistance20':28,
-                            'driving_resistance21':29,
-                            'driving_resistance22':30
-                           }
-        
         for key in driving_resistance_dict:
             if driving_resistance_dict[key]:
                 sheet.Cells(driving_resistance_cell[key], 11).Value = driving_resistance_dict[key] +"%"
@@ -272,7 +228,7 @@ def output_page():
         new_table.loc[3] = df.iloc[68, 8:30].tolist()
         
         table_data = {
-            "row1" : ["Max Velocity", "km/h"] + list(round(i, 3) for i in df.iloc[65, 10:30].tolist() if i!="-"),
+            "row1" : ["Max Velocity at no slope", "km/h"] + list(round(i, 3) for i in df.iloc[65, 10:30].tolist() if i!="-"),
             "row2" : ["@rpm"] + list(round(i, 3) for i in df.iloc[66, 10:30].tolist() if i!="-"),
             "row3" : ["Climb ability", "%"] + list(round(i, 3) for i in df.iloc[67, 10:30].tolist() if i!="-"),
             "row4" : ["@km/h"] + list(round(i, 3) for i in df.iloc[68, 10:30].tolist() if i!="-")

@@ -120,6 +120,43 @@ function filterrrc(){
 
 }
 
+function filtercab(){
+    $("#cab").empty();
+    $("#cab").append("<option value='' selected disabled>Select</option>");
+    $("#rear_body").empty();
+    $("#rear_body").append("<option value='' selected disabled>Select</option>");
+    $("#air_resistance_type").empty();
+    $("#air_resistance_type").append("<option value='' selected disabled>Select</option>");
+    inputvalue_dict["vehicle_category_drop"][$("#category").val()].forEach(value => {            
+        let optionTemplate = `<option value="${value}" >${value}</option>`;
+        $("#cab").append(optionTemplate);
+    });
+   
+}
+
+function filter_rearbody(){
+    $("#rear_body").empty();
+    $("#rear_body").append("<option value='' selected disabled>Select</option>");
+    $("#air_resistance_type").empty();
+    $("#air_resistance_type").append("<option value='' selected disabled>Select</option>");
+    let app_string = `${$("#category").val()} ${$("#cab").val()}`
+    inputvalue_dict["rear_body_drop"][app_string].forEach(value => {            
+        let optionTemplate = `<option value="${value}" >${value}</option>`;
+        $("#rear_body").append(optionTemplate);
+    });
+   
+}
+function filterairresistance(){
+    $("#air_resistance_type").empty();
+    $("#air_resistance_type").append("<option value='' selected disabled>Select</option>");
+    let app_string = `${$("#category").val()} ${$("#cab").val()} ${$("#rear_body").val()}`
+    inputvalue_dict["air_drop"][app_string].forEach(value => {            
+        let optionTemplate = `<option value="${value}" >${value}</option>`;
+        $("#air_resistance_type").append(optionTemplate);
+    });
+   
+}
+
 function loading(){
    
     let all_input = []

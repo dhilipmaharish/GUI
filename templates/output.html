@@ -139,6 +139,7 @@
                       form="Form2"
                       required = "required"
                       onchange= "filteremission()"
+                      style="left: 45px; width: 150px;"
                     >
                       <option value="" selected disabled>Select</option>
                       {% for engine in inputdata["engine_drop"] %}
@@ -153,13 +154,13 @@
                     ><strong>Emission</strong>
                   </label>
                   <div class="btn-group" style="left: 45px">
-                    <select name="emission_type" id="emission_type" form="Form2" required = "required" >
+                    <select name="emission_type" id="emission_type" form="Form2" required = "required"  style="left: 45px; width: 150px;">
                       <option value="{{input_form['emission']}}" selected>{{input_form['emission']}}</option>
                     </select>
                   </div>
                 </div>
                 <!-- <div style="position:relative; left:300px; top:-120px;"><img src="{{url_for('static', filename='graph.png')}}"/></div> -->
-                <div class="graph-button">
+                <div class="graph-button" style = "left:140px">
                   <button
                     class="btn btn-success btn-li float-right"
                     type="submit"
@@ -201,10 +202,10 @@
 
                   </div>
                   <br></br>
-                  <div id="Geardiv" style="display:none">
+                  <div id="Geardiv">
                     <label><strong>No. of Gears:</strong></label>
-                    <div id="Gear_input"  >
-                      <input type="text" class="gear_no" id="gear_display" style="position:relative; left:125px; top:-25px; width:50px; border-radius: 0.25rem; background-color:rgb(208, 208, 208)" readonly>
+                    <div id="Gear_input">
+                      <input type="text" class="gear_no" id="gear_display" name="gear_display" style="position:relative; left:125px; top:-25px; width:50px; border-radius: 0.25rem; background-color:rgb(208, 208, 208)" value="{{input_form["gear_display"]}}" readonly>
                     </div>
                   </div>
                 </div>               
@@ -426,6 +427,7 @@
                       id="axel_type"
                       onchange="filterAxleLayout()"
                       required="required"
+                      style = "width:130px;"
                     >
                       <option value="" selected disabled>Select</option>
                       {% for axel in inputdata['axel_drop'] %}
@@ -444,6 +446,7 @@
                       id="axle_layout_type"
                       onchange="filterRatio()"
                       required="required"
+                      style = "width:130px;"
                     >
                       <option value="{{input_form['axel_layout']}}" selected>{{input_form['axel_layout']}}</option>
                     </select>
@@ -459,6 +462,7 @@
                       id="ratio_type"
                       onchange="filterEfficiency()"
                       required="required"
+                      style = "width:130px;"
                     >
                       <option value="{{input_form['ratio']}}" selected>{{input_form['ratio']}}</option>
                     </select>
@@ -473,6 +477,7 @@
                       name="efficiency_type"
                       id="efficiency_type"
                       required="required"
+                      style = "width:130px;"
                     >
                       <option value="{{input_form['efficiency']}}" selected>{{input_form['efficiency']}}</option>
                     </select>
@@ -502,6 +507,7 @@
                       id="tyre_type"
                       onchange="filterapplication()"
                       required="required"
+                      style = "width:120px;"
                     >
                       <option value="" selected disabled>Select</option>
                       {% for tyre in inputdata['tyre_size_drop'] %}
@@ -520,6 +526,7 @@
                       id="standard_type"
                       onchange="filterapplication()"
                       required="required"
+                      style = "width:120px;"
                     >
                       <option value="{{input_form['standard']}}" selected>{{input_form['standard']}}</option>
                     </select>
@@ -535,6 +542,7 @@
                       id="application_type"
                       onchange="filterradius()"
                       required="required"
+                      style = "width:120px;"
                     >
                       <option value="{{input_form['application']}}" selected disabled>{{input_form['application']}}</option>
 
@@ -551,6 +559,7 @@
                       id="radius_type"
                       onchange="filterrrc()"
                       required="required"
+                      style = "width:120px;"
                     >
                       <option value="{{input_form['radius']}}" selected>{{input_form['radius']}}</option>
                     </select>
@@ -561,21 +570,18 @@
                     ><strong>RRC</strong>
                   </label>
                   <div class="btn-group" style="left: 60px">
-                    <select name="rrc_type" id="rrc_type" required="required">
+                    <select name="rrc_type" id="rrc_type" required="required" style = "width:120px;">
                       <option value="{{input_form['rrc']}}" selected>{{input_form['rrc']}}</option>
                     </select>
                   </div>
                 </div>
               <br></br>
-              <div id="Tyre_details" style="display:none;" >
+              <div id="Tyre_details">
                 <label><strong>Pattern:</strong></label>
-                <input type="text" class="tyre_pattern" id="pattern" style="position:relative; left:25px; width:100px; border-radius: 0.25rem; top:0px; background-color:rgb(225, 245, 247)" readonly>
-                <br></br>
-                <label><strong>Standard:</strong></label>
-                <input type="text" class="tyre_stand" id="std" style="position:relative; left:10px; top:5px; width:100px; border-radius: 0.25rem; background-color:rgb(225, 245, 247)" readonly>
+                <input type="text" class="tyre_pattern" id="pattern" style="position:relative; left:25px; width:100px; border-radius: 0.25rem; top:0px; background-color:rgb(225, 245, 247)" value = "{{input_form["pattern"]}}" readonly>
                 <br></br>
                 <label><strong>Remark:</strong></label>
-                <input type="text" class="tyre_remark" id="remark" style="position:relative; left:20px; top:5px; width:100px; border-radius: 0.25rem; background-color:rgb(225, 245, 247)" readonly>
+                <input type="text" class="tyre_remark" id="remark" style="position:relative; left:20px; top:5px; width:100px; border-radius: 0.25rem; background-color:rgb(225, 245, 247)" value = "{{input_form["remark"]}}" readonly>
               </div>
               
               </div>
@@ -592,6 +598,54 @@
                     height="50"
                   />Air Resistance Details
                 </h5>
+                <div class="mb-3 mt-4">
+                  <label for="Radius" class="form-label"
+                    ><strong>Category</strong>
+                  </label>
+                  <div class="btn-group">
+                    <select
+                      name="radius_type"
+                      id="radius_type"
+                      onchange="filterrrc()"
+                      required="required"
+                      style = "width:130px; left :25px;position:relative;"
+                    >
+                      <option value="" selected disabled>Select</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="mb-3 mt-4">
+                  <label for="Radius" class="form-label"
+                    ><strong>Cab</strong>
+                  </label>
+                  <div class="btn-group">
+                    <select
+                      name="radius_type"
+                      id="radius_type"
+                      onchange="filterrrc()"
+                      required="required"
+                      style = "width:130px; left:65px; position:relative"
+                    >
+                      <option value="" selected disabled>Select</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="mb-3 mt-4">
+                  <label for="Radius" class="form-label"
+                    ><strong>Rear Body</strong>
+                  </label>
+                  <div class="btn-group" style="left: 2px">
+                    <select
+                      name="radius_type"
+                      id="radius_type"
+                      onchange="filterrrc()"
+                      required="required"
+                      style = "width:130px; left:40px; position:relative"
+                    >
+                      <option value="" selected disabled>Select</option>
+                    </select>
+                  </div>
+                </div>
                 <div class="mb-3 mt-4">
                   <label for="Air Resistance" class="form-label"
                     ><strong>Air Resistance</strong>
@@ -649,7 +703,6 @@
                               type="number"
                               class="form-control"
                               id="driving_resistance_1"
-                              placeholder="Eg. 250"
                               name="driving_resistance_1"
                               width="5"
                               height="5"
@@ -668,7 +721,6 @@
                               type="number"
                               class="form-control"
                               id="driving_resistance_2"
-                              placeholder="Eg. 250"
                               name="driving_resistance_2"
                               width="5"
                               height="5"
@@ -687,7 +739,6 @@
                               type="number"
                               class="form-control"
                               id="driving_resistance_3"
-                              placeholder="Eg. 250"
                               name="driving_resistance_3"
                               width="5"
                               height="5"
@@ -706,7 +757,6 @@
                               type="number"
                               class="form-control"
                               id="driving_resistance_4"
-                              placeholder="Eg. 250"
                               name="driving_resistance_4"
                               width="5"
                               height="5"
@@ -725,7 +775,6 @@
                               type="number"
                               class="form-control"
                               id="driving_resistance_5"
-                              placeholder="Eg. 250"
                               name="driving_resistance_5"
                               width="5"
                               height="5"
@@ -744,7 +793,6 @@
                               type="number"
                               class="form-control"
                               id="driving_resistance_21"
-                              placeholder="Eg. 250"
                               name="driving_resistance_21"
                               width="5"
                               height="5"
@@ -767,7 +815,6 @@
                               type="number"
                               class="form-control"
                               id="driving_resistance_6"
-                              placeholder="Eg. 250"
                               name="driving_resistance_6"
                               width="5"
                               height="5"
@@ -786,7 +833,6 @@
                               type="number"
                               class="form-control"
                               id="driving_resistance_7"
-                              placeholder="Eg. 250"
                               name="driving_resistance_7"
                               width="5"
                               height="5"
@@ -805,7 +851,6 @@
                               type="number"
                               class="form-control"
                               id="driving_resistance_8"
-                              placeholder="Eg. 250"
                               name="driving_resistance_8"
                               width="5"
                               height="5"
@@ -824,7 +869,6 @@
                               type="number"
                               class="form-control"
                               id="driving_resistance_9"
-                              placeholder="Eg. 250"
                               name="driving_resistance_9"
                               width="5"
                               height="5"
@@ -843,7 +887,6 @@
                               type="number"
                               class="form-control"
                               id="driving_resistance_10"
-                              placeholder="Eg. 250"
                               name="driving_resistance_10"
                               width="5"
                               height="5"
@@ -862,7 +905,6 @@
                               type="number"
                               class="form-control"
                               id="driving_resistance_22"
-                              placeholder="Eg. 250"
                               name="driving_resistance_22"
                               width="5"
                               height="5"
@@ -885,7 +927,6 @@
                               type="number"
                               class="form-control"
                               id="driving_resistance_11"
-                              placeholder="Eg. 250"
                               name="driving_resistance_11"
                               width="5"
                               height="5"
@@ -904,7 +945,6 @@
                               type="number"
                               class="form-control"
                               id="driving_resistance_12"
-                              placeholder="Eg. 250"
                               name="driving_resistance_12"
                               width="5"
                               height="5"
@@ -923,7 +963,6 @@
                               type="number"
                               class="form-control"
                               id="driving_resistance_13"
-                              placeholder="Eg. 250"
                               name="driving_resistance_13"
                               width="5"
                               height="5"
@@ -942,7 +981,6 @@
                               type="number"
                               class="form-control"
                               id="driving_resistance_14"
-                              placeholder="Eg. 250"
                               name="driving_resistance_14"
                               width="5"
                               height="5"
@@ -961,7 +999,6 @@
                               type="number"
                               class="form-control"
                               id="driving_resistance_15"
-                              placeholder="Eg. 250"
                               name="driving_resistance_15"
                               width="5"
                               height="5"
@@ -984,7 +1021,6 @@
                               type="number"
                               class="form-control"
                               id="driving_resistance_16"
-                              placeholder="Eg. 250"
                               name="driving_resistance_16"
                               width="5"
                               height="5"
@@ -1003,7 +1039,6 @@
                               type="number"
                               class="form-control"
                               id="driving_resistance_17"
-                              placeholder="Eg. 250"
                               name="driving_resistance_17"
                               width="5"
                               height="5"
@@ -1022,7 +1057,6 @@
                               type="number"
                               class="form-control"
                               id="driving_resistance_18"
-                              placeholder="Eg. 250"
                               name="driving_resistance_18"
                               width="5"
                               height="5"
@@ -1041,7 +1075,6 @@
                               type="number"
                               class="form-control"
                               id="driving_resistance_19"
-                              placeholder="Eg. 250"
                               name="driving_resistance_19"
                               width="5"
                               height="5"
@@ -1060,7 +1093,6 @@
                               type="number"
                               class="form-control"
                               id="driving_resistance_20"
-                              placeholder="Eg. 250"
                               name="driving_resistance_20"
                               width="5"
                               height="5"
@@ -1087,7 +1119,6 @@
                               type="number"
                               class="form-control"
                               id="starting_value"
-                              placeholder="Eg. 250"
                               name="starting_value"
                               width="5"
                               height="5"
@@ -1110,7 +1141,6 @@
                               type="number"
                               class="form-control"
                               id="step_size"
-                              placeholder="Eg. 250"
                               name="step_size"
                               width="5"
                               height="5"
@@ -1183,7 +1213,7 @@
           <tbody>
               <tr>
                 {% for row in table_data["row1"]%}
-                  {%if row == "Max Velocity"%}
+                  {%if row == "Max Velocity at no slope"%}
                     <td rowspan = "2">{{row}}</td>
                   {%else%}
                     <td>{{row}}</td>
