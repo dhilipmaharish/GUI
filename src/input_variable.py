@@ -1,12 +1,12 @@
-from transmission import transmission_input
-from engine import engine_input
-from finaldrive import final_drive_input
-from tire import tire_input
-from air_resistence import air_resistance
+from src.transmission import transmission_input
+from src.engine import engine_input
+from src.finaldrive import final_drive_input
+from src.tire import tire_input
+from src.air_resistence import air_resistance
 import json
 
 trans_dict,trans_dict_len, trans_drop = transmission_input()
-engine_dict, engine_drop, emission_drop, emission_filter_dict = engine_input()
+engine_dict, emission_drop, engine_filter_dict = engine_input()
 axel_drop,axle_type, from_axel_select_gear_ratio_option_show, from_gear_ratio_select_efficiency_option_show = final_drive_input()
 tyre_size_drop,standard_drop,application_drop, radius_drop, rrc_drop, tire_description_dict = tire_input()
 vehicle_category_drop, cab_drop, rear_body_drop, air_resistance_drop = air_resistance()
@@ -30,28 +30,26 @@ rear_body_drop = {key:list(set(value)) for key, value in rear_body_drop.items()}
 air_resistance_drop = {key:list(set(value)) for key, value in air_resistance_drop.items()}
 
 inputdata = {
-    "engine_drop" : engine_drop,
-    "trans_drop" : trans_drop,
-    "axel_drop" : axel_drop,
-    "axleObject" : axle_type,
-    "axleRatioObject" : from_axel_select_gear_ratio_option_show,
-    "axelefficiencyObject" : from_gear_ratio_select_efficiency_option_show,
-    "tyre_size_drop" : tyre_size_drop,
-    "applicationObject" : application_drop,
-    "radiusObject" : radius_drop,
-    "rrcObject" : rrc_drop,
-    "air_drop" : air_resistance_drop,
-    "vehicle_category_drop" : vehicle_category_drop,
-    "cab_drop" : cab_drop,
-    "rear_body_drop" : rear_body_drop,
-    "trans_dict_len" : trans_dict_len,
-    "tire_description_dict" : tire_description_dict,
-    "emission_filter" : emission_filter_dict,
-    "standardObject" : standard_drop
-    
+    "emission_object" : emission_drop,
+    "engine_object" : engine_filter_dict,
+    "transsmission_object" : trans_drop,
+    "no_gears_object" : trans_dict_len, 
+    "final_drive_object" : axel_drop,
+    "layout_object" : axle_type,
+    "ratio_object" : from_axel_select_gear_ratio_option_show,
+    "efficiency_object" : from_gear_ratio_select_efficiency_option_show,
+    "tyre_size_object" : tyre_size_drop,
+    "standard_object" : standard_drop,
+    "application_object" : application_drop,
+    "radius_object" : radius_drop,
+    "rrc_object" : rrc_drop,
+    "tire_description_dict_object" : tire_description_dict,
+    "category_object" : vehicle_category_drop,
+    "cab_object" : cab_drop,
+    "rear_body_object" : rear_body_drop,
+    "air_resistance_object" : air_resistance_drop   
 }
 
-print(inputdata)
 
 driving_resistance_cell = {'driving_resistance1':9,'driving_resistance2':10,'driving_resistance3':11,'driving_resistance4':12,
                             'driving_resistance5':13,'driving_resistance6':14,'driving_resistance7':15,'driving_resistance8':16,

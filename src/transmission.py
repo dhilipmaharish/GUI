@@ -34,7 +34,6 @@ def transmission_input():
             
     return trans_dict, trans_dict_len, trans_model
 
-trans_dict,trans_dict_len, trans_model = transmission_input()
 
 
 

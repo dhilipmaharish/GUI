@@ -125,7 +125,19 @@
                     height="50"
                   />Engine Details
                 </h5>
-
+                <div class="mb-3 mt-4">
+                  <label for="Emission" class="form-label"
+                    ><strong>Emission</strong>
+                  </label>
+                  <div class="btn-group" style="left: 45px;">
+                    <select name="emission_type" id="emission_type" form="Form2" required = "required" style="left: 45px; width: 150px;" onchange="filterengine()">
+                      <option value="" selected disabled>Select</option>
+                      {% for emission in inputdata["emission_object"] %}
+                      <option value="{{emission}}">{{emission}}</option>
+                      {% endfor %}
+                    </select>
+                  </div>
+                </div>
                 <div class="mb-3 mt-4">
                   <label for="Engine" class="form-label"
                     ><strong>Engine</strong>
@@ -136,27 +148,9 @@
                       id="engine_type"
                       form="Form2"
                       required = "required"
-                      onchange= "filteremission()"
                       style="left: 45px; width: 150px;"
                     >
                       <option value="" selected disabled>Select</option>
-                      {% for engine in inputdata["engine_drop"] %}
-                      <option value="{{engine}}">{{engine}}</option>
-                      {% endfor %}
-                    </select>
-                  </div>
-                </div>
-
-                <div class="mb-3 mt-4">
-                  <label for="Emission" class="form-label"
-                    ><strong>Emission</strong>
-                  </label>
-                  <div class="btn-group" style="left: 45px;">
-                    <select name="emission_type" id="emission_type" form="Form2" required = "required" style="left: 45px; width: 150px;">
-                      <option value="" selected disabled>Select</option>
-                      {% for emission in emission_drop %}
-                      <option value="{{emission}}">{{emission}}</option>
-                      {% endfor %}
                     </select>
                   </div>
                 </div>
@@ -194,9 +188,9 @@
                     ><strong>Transmission</strong>
                   </label>
                   <div class="btn-group">
-                    <select name="transmission_type" id="transmission_type" required="required" onChange="getgearno({{inputdata['trans_dict_len']}});" style="width:200px">
+                    <select name="transmission_type" id="transmission_type" required="required" onChange="getgearno({{inputdata['no_gears_object']}});" style="width:200px">
                       <option value="" selected disabled>Select</option>
-                      {% for transmission in  inputdata['trans_drop'] %}
+                      {% for transmission in  inputdata['transsmission_object'] %}
                       <option value="{{transmission}}">{{transmission}}</option>
                       {% endfor %}
                     </select>
@@ -423,7 +417,7 @@
                       style = "width:130px;"
                     >
                       <option value="" selected disabled>Select</option>
-                      {% for axel in inputdata['axel_drop'] %}
+                      {% for axel in inputdata['final_drive_object'] %}
                       <option value="{{axel}}">{{axel}}</option>
                       {% endfor %}
                     </select>
@@ -503,7 +497,7 @@
                       style = "width:120px;"
                     >
                       <option value="" selected disabled>Select</option>
-                      {% for tyre in inputdata['tyre_size_drop'] %}
+                      {% for tyre in inputdata['tyre_size_object'] %}
                       <option value="{{tyre}}">{{tyre}}</option>
                       {% endfor %}
                     </select>
@@ -522,9 +516,6 @@
                       style = "width:120px;"
                     >
                       <option value="" selected disabled>Select</option>
-                      {% for tyre in tyre_size_drop %}
-                      <option value="{{tyre}}">{{tyre}}</option>
-                      {% endfor %}
                     </select>
                   </div>
                 </div>
@@ -541,9 +532,6 @@
                       style = "width:120px;"
                     >
                       <option value="" selected disabled>Select</option>
-                      {% for tyre in tyre_size_drop %}
-                      <option value="{{tyre}}">{{tyre}}</option>
-                      {% endfor %}
                     </select>
                   </div>
                 </div>
@@ -608,7 +596,10 @@
                       required="required"
                       style = "width:130px; left :25px;position:relative;"
                     >
-                      <option value="" selected disabled>Select</option>
+                    <option value="" selected disabled>Select</option>
+                    {% for category in inputdata['category_object'] %}
+                      <option value="{{category}}">{{category}}</option>
+                    {% endfor %}
                     </select>
                   </div>
                 </div>
@@ -649,12 +640,9 @@
                     ><strong>Air Resistance</strong>
                   </label>
                   <div><strong>(N/(km/h)2)</strong></div>
-                  <div class="btn-group" , style="left: 120px; top: -60px;">
+                  <div class="btn-group" , style="left: 125px; top: -60px;">
                     <select name="air_resistance_type" id="air_resistance_type" required="required" style = "width:130px; position:relative">
                       <option value="" selected disabled>Select</option>
-                      {% for air in inputdata['air_drop'] %}
-                      <option value="{{air}}">{{air}}</option>
-                      {% endfor %}
                     </select>
                   </div>
                 </div>
@@ -697,8 +685,8 @@
                           <input
                               type="number"
                               class="form-control"
-                              id="driving_resistance_1"
-                              name="driving_resistance_1"
+                              id="driving_resistance_{{value}}"
+                              name="driving_resistance_{{value}}"
                               width="5"
                               height="5"
                               style="

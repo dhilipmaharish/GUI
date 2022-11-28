@@ -7,12 +7,12 @@ function myFunc(value) {
 
 
 
-function filteremission() {
-    $("#emission_type").empty();
-    $("#emission_type").append("<option value='' selected disabled>Select</option>");
-    inputvalue_dict["emission_filter"][$("#engine_type").val()].forEach(value =>{
+function filterengine() {
+    $("#engine_type").empty();
+    $("#engine_type").append("<option value='' selected disabled>Select</option>");
+    inputvalue_dict["engine_object"][$("#emission_type").val()].forEach(value =>{
         let optionTemplate = `<option value="${value}" >${value}</option>`
-        $("#emission_type").append(optionTemplate);
+        $("#engine_type").append(optionTemplate);
     });
 
 }
@@ -26,7 +26,7 @@ function filterAxleLayout() {
     
     $("#efficiency_type").empty();
     $("#efficiency_type").append("<option value='' selected disabled>Select</option>");
-    inputvalue_dict["axleObject"][$("#axel_type").val()].forEach(value => {            
+    inputvalue_dict["layout_object"][$("#axel_type").val()].forEach(value => {            
         let optionTemplate = `<option value="${value}" >${value}</option>`
         $("#axle_layout_type").append(optionTemplate);
     });
@@ -40,7 +40,7 @@ function filterRatio() {
     $("#efficiency_type").append("<option value='' selected disabled>Select</option>");
 
     let axle_ratio_string = `${$("#axel_type").val()} ${$("#axle_layout_type").val()}`
-    inputvalue_dict["axleRatioObject"][axle_ratio_string].forEach(value => {
+    inputvalue_dict["ratio_object"][axle_ratio_string].forEach(value => {
         let optionTemplate = `<option value="${value}" >${value}</option>`;
         $("#ratio_type").append(optionTemplate);
     });
@@ -50,7 +50,7 @@ function filterEfficiency(){
     $("#efficiency_type").empty();
     $("#efficiency_type").append("<option value='' selected disabled>Select</option>");
     let axle_efficiency_string = `${$('#axel_type').val()} ${$("#axle_layout_type").val()} ${$("#ratio_type").val()}`
-    inputvalue_dict["axelefficiencyObject"][axle_efficiency_string].forEach(value => {
+    inputvalue_dict["efficiency_object"][axle_efficiency_string].forEach(value => {
         let optionTemplate = `<option value="${value}">${value}</option>`;
         $("#efficiency_type").append(optionTemplate);
     });
@@ -67,14 +67,14 @@ function filterstandard(){
     $("#rrc_type").empty();
     $("#rrc_type").append("<option value='' selected disabled>Select</option>");
 
-    inputvalue_dict["standardObject"][$("#tyre_type").val()].forEach(value => {            
+    inputvalue_dict["standard_object"][$("#tyre_type").val()].forEach(value => {            
         let optionTemplate = `<option value="${value}" >${value}</option>`;
         $("#standard_type").append(optionTemplate);
     });
     $("#Tyre_details").show();
-    if ($("#tyre_type").val() in inputvalue_dict['tire_description_dict']){
-        $("#pattern").val(inputvalue_dict['tire_description_dict'][$("#tyre_type").val()]["Pattern"])
-        $("#remark").val(inputvalue_dict['tire_description_dict'][$("#tyre_type").val()]["remark"])
+    if ($("#tyre_type").val() in inputvalue_dict['tire_description_dict_object']){
+        $("#pattern").val(inputvalue_dict['tire_description_dict_object'][$("#tyre_type").val()]["Pattern"])
+        $("#remark").val(inputvalue_dict['tire_description_dict_object'][$("#tyre_type").val()]["remark"])
     };
 
 }
@@ -87,7 +87,7 @@ function filterapplication(){
     $("#rrc_type").append("<option value='' selected disabled>Select</option>");
 
     let app_string = `${$("#tyre_type").val()} ${$("#standard_type").val()}`
-    inputvalue_dict["applicationObject"][app_string].forEach(value => {            
+    inputvalue_dict["application_object"][app_string].forEach(value => {            
         let optionTemplate = `<option value="${value}" >${value}</option>`;
         $("#application_type").append(optionTemplate);
     });
@@ -101,7 +101,7 @@ function filterradius(){
     $("#rrc_type").append("<option value='' selected disabled>Select</option>");
 
     let app_string = `${$("#tyre_type").val()} ${$("#standard_type").val()} ${$("#application_type").val()}`
-    inputvalue_dict['radiusObject'][app_string].forEach(value => {            
+    inputvalue_dict['radius_object'][app_string].forEach(value => {            
         let optionTemplate = `<option value="${value}" >${value}</option>`;
         $("#radius_type").append(optionTemplate);
 
@@ -112,7 +112,7 @@ function filterrrc(){
     $("#rrc_type").empty();
     $("#rrc_type").append("<option value='' selected disabled>Select</option>");
     let rrc_string = `${$("#tyre_type").val()} ${$("#standard_type").val()} ${$("#application_type").val()} ${$("#radius_type").val()}`
-    inputvalue_dict['rrcObject'][rrc_string].forEach(value => {            
+    inputvalue_dict['rrc_object'][rrc_string].forEach(value => {            
         let optionTemplate = `<option value="${value}" >${value}</option>`;
         $("#rrc_type").append(optionTemplate);
     });
@@ -127,7 +127,7 @@ function filtercab(){
     $("#rear_body").append("<option value='' selected disabled>Select</option>");
     $("#air_resistance_type").empty();
     $("#air_resistance_type").append("<option value='' selected disabled>Select</option>");
-    inputvalue_dict["vehicle_category_drop"][$("#category").val()].forEach(value => {            
+    inputvalue_dict["cab_object"][$("#category").val()].forEach(value => {            
         let optionTemplate = `<option value="${value}" >${value}</option>`;
         $("#cab").append(optionTemplate);
     });
@@ -140,7 +140,7 @@ function filter_rearbody(){
     $("#air_resistance_type").empty();
     $("#air_resistance_type").append("<option value='' selected disabled>Select</option>");
     let app_string = `${$("#category").val()} ${$("#cab").val()}`
-    inputvalue_dict["rear_body_drop"][app_string].forEach(value => {            
+    inputvalue_dict["rear_body_object"][app_string].forEach(value => {            
         let optionTemplate = `<option value="${value}" >${value}</option>`;
         $("#rear_body").append(optionTemplate);
     });
@@ -150,7 +150,7 @@ function filterairresistance(){
     $("#air_resistance_type").empty();
     $("#air_resistance_type").append("<option value='' selected disabled>Select</option>");
     let app_string = `${$("#category").val()} ${$("#cab").val()} ${$("#rear_body").val()}`
-    inputvalue_dict["air_drop"][app_string].forEach(value => {            
+    inputvalue_dict["air_resistance_object"][app_string].forEach(value => {            
         let optionTemplate = `<option value="${value}" >${value}</option>`;
         $("#air_resistance_type").append(optionTemplate);
     });

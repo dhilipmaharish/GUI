@@ -38,17 +38,32 @@ def graph():
     emission = request.form.get('emission')
     session["engine"] = engine
     session["emission"] = emission
-    f = plt.figure(figsize=(6, 5), dpi=500)
-    a = f.add_subplot(111)
     x1 = engine_dict[str(engine)+'_'+str(emission)]['Engine speed']
     y1 = engine_dict[str(engine)+'_'+str(emission)]['Torque']
-    a.plot(x1, y1, label="Torque")
     x2 = engine_dict[str(engine)+'_'+str(emission)]['Engine speed']
     y2 = engine_dict[str(engine)+'_'+str(emission)]['Power']
-    a.plot(x2, y2, label="Power")
-    a.legend()
-    plt.xlabel("Engine speed(RPM)")
-    plt.ylabel("Engine torque(Nm)")
+    col1 = 'steelblue'
+    col2 = 'red'
+    fig, ax = plt.subplots()
+    ax.plot(x1, y1, color=col1)
+    ax.set_xlabel("Engine speed[rpm]", fontsize=14)
+    ax.set_ylabel("Torque[Nm]", color=col1, fontsize=16)
+    ax2 = ax.twinx()
+    ax2.plot(x2, y2, color=col2)
+    ax2.set_ylabel("Power[kW]", color=col2, fontsize=20)
+    # f = plt.figure(figsize=(6, 5), dpi=500)
+    # a = f.add_subplot(111)
+    # x1 = engine_dict[str(engine)+'_'+str(emission)]['Engine speed']
+    # y1 = engine_dict[str(engine)+'_'+str(emission)]['Torque']
+    # a.plot(x1, y1, label="Torque")
+    # x2 = engine_dict[str(engine)+'_'+str(emission)]['Engine speed']
+    # y2 = engine_dict[str(engine)+'_'+str(emission)]['Power']
+    # a.plot(x2, y2, label="Power")
+    
+    # plt.xlabel("Engine speed(RPM)")
+    # plt.ylabel("Engine torque(Nm)")
+    plt.xlim(500, 5000)
+    plt.ylim(0,160)
     plt.savefig("static\output.jpg", dpi=800)
     image = Image.open(".\static\output.jpg")
     image = image.resize((300, 200), Image.ANTIALIAS)
@@ -76,6 +91,9 @@ def output_page():
         input_form["application"] = application = request.form.get("application_type")
         input_form["radius"] = radius = request.form.get("radius_type")
         input_form["rrc"] = rrc = request.form.get("rrc_type")
+        input_form["category"] = request.form.get("category")
+        input_form["cab"] = request.form.get("cab")
+        input_form["rear_body"] = request.form.get("rear_body")
         input_form["air_resistance"] = air_resistance = request.form.get("air_resistance_type")
         input_form["A_da"] = A_da = request.form.get("Torque_cut_A")
         input_form["B_da"] = B_da = request.form.get("Torque_cut_B")
@@ -103,7 +121,6 @@ def output_page():
         chan_val = 1
         chan_val = + 1
         input_form.update(driving_resistance_dict)
-        print(input_form)
         # excel = Dispatch('Excel.Application', pythoncom.CoInitialize())
         try:
             shutil.copyfile('data\Longitudinal_simulation_sample.xlsx',
@@ -230,7 +247,7 @@ def output_page():
         table_data = {
             "row1" : ["Max Velocity at no slope", "km/h"] + list(round(i, 3) for i in df.iloc[65, 10:30].tolist() if i!="-"),
             "row2" : ["@rpm"] + list(round(i, 3) for i in df.iloc[66, 10:30].tolist() if i!="-"),
-            "row3" : ["Climb ability", "%"] + list(round(i, 3) for i in df.iloc[67, 10:30].tolist() if i!="-"),
+            "row3" : ["Climb ability", "%"] + list(str(round(i*100, 3))+"%" for i in df.iloc[67, 10:30].tolist() if i!="-"),
             "row4" : ["@km/h"] + list(round(i, 3) for i in df.iloc[68, 10:30].tolist() if i!="-")
         }
         #df_styled = new_table.style.background_gradient()

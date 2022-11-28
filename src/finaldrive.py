@@ -60,4 +60,3 @@ def final_drive_input():
                         str(main_list[ll+1][kk])]
     return list(set(type_f)), from_type, from_axel_select_gear_ratio_option_show, from_gear_ratio_select_efficiency_option_show
 
-final_drive_input()

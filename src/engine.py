@@ -5,11 +5,6 @@ from win32com.client import Dispatch
 import shutil
 import time
 
-
-engine_da = ''
-emission_da = '' 
-
-
 def engine_input():
     engine_data = pd.read_excel('data/Engine_Sample.xlsx')
     engine_model = engine_data.iloc[:, 2:].iloc[4].dropna().tolist()
@@ -31,7 +26,7 @@ def engine_input():
     name_ind = 0
 
     engine_dict = {}
-    emission_filter_dict = {}
+    engine_filter_dict = {}
     for ll in range(0, len(enginespd_troque_power_data.columns)):
         if ll == end_ind:
             engine_dict[str(engine_emission_model[name_ind])] = {'Engine speed': enginespd_troque_power_data[str(start_ind)].dropna().to_list(), 'Torque': enginespd_troque_power_data[str(end_ind-1)].dropna().to_list(), 'Power': enginespd_troque_power_data[str(end_ind)].dropna().to_list()
@@ -40,11 +35,13 @@ def engine_input():
             end_ind = end_ind+3
             name_ind += 1      
     for engine, emission in zip(engine_model, emission_model):
-        if engine in emission_filter_dict:
-            emission_filter_dict[engine].append(emission)
+        if emission in engine_filter_dict:
+            engine_filter_dict[emission].append(engine)
         else:
-            emission_filter_dict[engine] = [emission]
+            engine_filter_dict[emission] = [engine]
             
-    return engine_dict, engine_model, emission_model, emission_filter_dict
+    return engine_dict,list(set(emission_model)), engine_filter_dict
 
-engine_dict, engine_model, emission_model, emission_filter_dict = engine_input()
+engine_dict,_,_ = engine_input()
+
+print(engine_dict)

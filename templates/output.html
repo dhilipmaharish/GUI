@@ -127,7 +127,16 @@
                     height="50"
                   />Engine Details
                 </h5>
-
+                <div class="mb-3 mt-4">
+                  <label for="Emission" class="form-label"
+                    ><strong>Emission</strong>
+                  </label>
+                  <div class="btn-group" style="left: 45px">
+                    <select name="emission_type" id="emission_type" form="Form2" required = "required"  style="left: 45px; width: 150px;">
+                      <option value="{{input_form['emission']}}" selected>{{input_form['emission']}}</option>
+                    </select>
+                  </div>
+                </div>
                 <div class="mb-3 mt-4">
                   <label for="Engine" class="form-label"
                     ><strong>Engine</strong>
@@ -142,20 +151,7 @@
                       style="left: 45px; width: 150px;"
                     >
                       <option value="" selected disabled>Select</option>
-                      {% for engine in inputdata["engine_drop"] %}
-                      <option value="{{engine}}" {%if(engine==input_form['engine'])%} selected {%endif%}>{{engine}}</option>
-                      {% endfor %}
-                    </select>
-                  </div>
-                </div>
-
-                <div class="mb-3 mt-4">
-                  <label for="Emission" class="form-label"
-                    ><strong>Emission</strong>
-                  </label>
-                  <div class="btn-group" style="left: 45px">
-                    <select name="emission_type" id="emission_type" form="Form2" required = "required"  style="left: 45px; width: 150px;">
-                      <option value="{{input_form['emission']}}" selected>{{input_form['emission']}}</option>
+                      <option value="{{input_form['engine']}}" selected >{{input_form['engine']}}</option>
                     </select>
                   </div>
                 </div>
@@ -193,11 +189,8 @@
                     ><strong>Transmission</strong>
                   </label>
                   <div class="btn-group">
-                    <select name="transmission_type" id="transmission_type" required="required" onChange="getgearno({{inputdata['trans_dict_len']}});">
-                      <option value="" selected disabled>Select</option>
-                      {% for transmission in  inputdata['trans_drop'] %}
-                      <option value="{{transmission}}" {%if(transmission==input_form['transmission'])%} selected {%endif%}>{{transmission}}</option>
-                      {% endfor %}
+                    <select name="transmission_type" id="transmission_type" required="required" onChange="getgearno({{inputdata['trans_dict_len']}});" style="width:200px">
+                      <option value="{{input_form["transmission"]}}" selected >{{input_form["transmission"]}}</option>
                     </select>
 
                   </div>
@@ -429,10 +422,7 @@
                       required="required"
                       style = "width:130px;"
                     >
-                      <option value="" selected disabled>Select</option>
-                      {% for axel in inputdata['axel_drop'] %}
-                      <option value="{{axel}}" {%if(axel==input_form['axel'])%} selected {%endif%}>{{axel}}</option>
-                      {% endfor %}
+                    <option value="{{input_form["axel"]}}"  selected>{{input_form["axel"]}}</option>
                     </select>
                   </div>
                 </div>
@@ -509,10 +499,7 @@
                       required="required"
                       style = "width:120px;"
                     >
-                      <option value="" selected disabled>Select</option>
-                      {% for tyre in inputdata['tyre_size_drop'] %}
-                      <option value="{{tyre}}" {%if(tyre==input_form['tyre_size'])%} selected {%endif%}>{{tyre}}</option>
-                      {% endfor %}
+                    <option value="{{input_form["tyre_size"]}}" selected>{{input_form["tyre_size"]}}</option>
                     </select>
                   </div>
                 </div>
@@ -590,77 +577,74 @@
               class="card7 mt-2 col-lg-2 col-md-10 col-sm-12 col-xs-12"
               style="left: 24px"
             >
-              <div class="card-body">
-                <h5 class="card-title">
-                  <img
-                    src="{{url_for('static', filename='air_res.png')}}"
-                    width="50"
-                    height="50"
-                  />Air Resistance Details
-                </h5>
-                <div class="mb-3 mt-4">
-                  <label for="Radius" class="form-label"
-                    ><strong>Category</strong>
-                  </label>
-                  <div class="btn-group">
-                    <select
-                      name="radius_type"
-                      id="radius_type"
-                      onchange="filterrrc()"
-                      required="required"
-                      style = "width:130px; left :25px;position:relative;"
-                    >
-                      <option value="" selected disabled>Select</option>
-                    </select>
-                  </div>
-                </div>
-                <div class="mb-3 mt-4">
-                  <label for="Radius" class="form-label"
-                    ><strong>Cab</strong>
-                  </label>
-                  <div class="btn-group">
-                    <select
-                      name="radius_type"
-                      id="radius_type"
-                      onchange="filterrrc()"
-                      required="required"
-                      style = "width:130px; left:65px; position:relative"
-                    >
-                      <option value="" selected disabled>Select</option>
-                    </select>
-                  </div>
-                </div>
-                <div class="mb-3 mt-4">
-                  <label for="Radius" class="form-label"
-                    ><strong>Rear Body</strong>
-                  </label>
-                  <div class="btn-group" style="left: 2px">
-                    <select
-                      name="radius_type"
-                      id="radius_type"
-                      onchange="filterrrc()"
-                      required="required"
-                      style = "width:130px; left:40px; position:relative"
-                    >
-                      <option value="" selected disabled>Select</option>
-                    </select>
-                  </div>
-                </div>
-                <div class="mb-3 mt-4">
-                  <label for="Air Resistance" class="form-label"
-                    ><strong>Air Resistance</strong>
-                  </label>
-                  <div><strong>(N/(km/h)2)</strong></div>
-                  <div class="btn-group" , style="left: 120px; top: -60px;">
-                    <select name="air_resistance_type" id="air_resistance_type" required="required">
-                      <option value="" selected disabled>Select</option>
-                      {% for air in inputdata['air_drop'] %}
-                      <option value="{{air}}"  selected >{{input_form['air_resistance']}}</option>
-                      {% endfor %}
-                    </select>
-                  </div>
+            <div class="card-body">
+              <h5 class="card-title">
+                <img
+                  src="{{url_for('static', filename='air_res.png')}}"
+                  width="50"
+                  height="50"
+                />Air Resistance 
+              </h5>
+              <div class="mb-3 mt-4">
+                <label for="Radius" class="form-label"
+                  ><strong>Category</strong>
+                </label>
+                <div class="btn-group">
+                  <select
+                    name="category"
+                    id="category"
+                    onchange="filtercab()"
+                    required="required"
+                    style = "width:130px; left :25px;position:relative;"
+                  >
+                  <option value="{{input_form['category']}}" selected disabled>{{input_form['category']}}</option>
+                  </select>
                 </div>
               </div>
+              <div class="mb-3 mt-4">
+                <label for="Radius" class="form-label"
+                  ><strong>Cab</strong>
+                </label>
+                <div class="btn-group">
+                  <select
+                    name="cab"
+                    id="cab"
+                    onchange="filter_rearbody()"
+                    required="required"
+                    style = "width:130px; left:65px; position:relative"
+                  >
+                    <option value="{{input_form['cab_object']}}" selected disabled>{{input_form['cab']}}</option>
+                  </select>
+                </div>
+              </div>
+              <div class="mb-3 mt-4">
+                <label for="Radius" class="form-label"
+                  ><strong>Rear Body</strong>
+                </label>
+                <div class="btn-group" style="left: 2px">
+                  <select
+                    name="rear_body"
+                    id="rear_body"
+                    onchange="filterairresistance()"
+                    required="required"
+                    style = "width:130px; left:40px; position:relative"
+                  >
+                    <option value="" selected disabled>{{input_form['rear_body']}}</option>
+                  </select>
+                </div>
+              </div>
+              <div class="mb-3 mt-4">
+                <label for="Air Resistance" class="form-label"
+                  ><strong>Air Resistance</strong>
+                </label>
+                <div><strong>(N/(km/h)2)</strong></div>
+                <div class="btn-group" , style="left: 125px; top: -60px;">
+                  <select name="air_resistance_type" id="air_resistance_type" required="required" style = "width:130px; position:relative">
+                    <option value="" selected disabled>{{input_form['air_resistance']}}</option>
+                  </select>
+                </div>
+              </div>
+            </div>
             </div> 
           </div>
           <div class="row">   
