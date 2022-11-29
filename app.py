@@ -51,17 +51,6 @@ def graph():
     ax2 = ax.twinx()
     ax2.plot(x2, y2, color=col2)
     ax2.set_ylabel("Power[kW]", color=col2, fontsize=20)
-    # f = plt.figure(figsize=(6, 5), dpi=500)
-    # a = f.add_subplot(111)
-    # x1 = engine_dict[str(engine)+'_'+str(emission)]['Engine speed']
-    # y1 = engine_dict[str(engine)+'_'+str(emission)]['Torque']
-    # a.plot(x1, y1, label="Torque")
-    # x2 = engine_dict[str(engine)+'_'+str(emission)]['Engine speed']
-    # y2 = engine_dict[str(engine)+'_'+str(emission)]['Power']
-    # a.plot(x2, y2, label="Power")
-    
-    # plt.xlabel("Engine speed(RPM)")
-    # plt.ylabel("Engine torque(Nm)")
     plt.xlim(500, 5000)
     plt.ylim(0,160)
     plt.savefig("static\output.jpg", dpi=800)
@@ -118,6 +107,7 @@ def output_page():
         input_form["step_size"] = step_size = request.form.get("step_size")
         Gear_value = {"A":Gear_A, "B":Gear_B, "C":Gear_C, "D":Gear_D}
         input_form["file_path"] = file_path = request.form.get("file_path")
+        print(file_path)
         chan_val = 1
         chan_val = + 1
         input_form.update(driving_resistance_dict)
@@ -250,8 +240,6 @@ def output_page():
             "row3" : ["Climb ability", "%"] + list(str(round(i*100, 3))+"%" for i in df.iloc[67, 10:30].tolist() if i!="-"),
             "row4" : ["@km/h"] + list(round(i, 3) for i in df.iloc[68, 10:30].tolist() if i!="-")
         }
-        #df_styled = new_table.style.background_gradient()
-        #dfi.export(df_styled, "mytable.png")
         
     return render_template("output.html", input_form = input_form, inputdata = inputdata ,result_text = "Success!! Excel Generated", table_data = table_data, table_len = table_len)
 

@@ -41,7 +41,3 @@ def engine_input():
             engine_filter_dict[emission] = [engine]
             
     return engine_dict,list(set(emission_model)), engine_filter_dict
-
-engine_dict,_,_ = engine_input()
-
-print(engine_dict)
