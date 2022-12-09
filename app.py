@@ -21,7 +21,12 @@ from threading import Timer
 app = Flask(__name__, template_folder='templates', static_url_path='/static')
 import json
 import dataframe_image as dfi
-
+from src.transmission import transmission_input
+from src.engine import engine_input
+from src.finaldrive import final_drive_input
+from src.tire import tire_input
+from src.air_resistence import air_resistance
+import copy
 
 # jsoninput = json.loads(inputjson)
 app.secret_key = "27eduCBA09"
@@ -30,18 +35,79 @@ inputdata = json.loads(input_json)
 
 @app.route("/")
 def display():
+    print("session", session)
+    session.clear()
+    print("session", session)
     return render_template("index.html",inputdata  = inputdata)
 
-@app.route("/", methods=['POST'])   
+@app.route("/upload", methods=["GET", "POST"])
+def upload():
+    uploaddata = copy.deepcopy(inputdata)
+    if request.method == "POST":
+        engine_file = request.files["engine_file"]
+        transmission_file = request.files["transmission_file"]
+        final_drive_file = request.files["final_file"] 
+        tire_sample_file = request.files["tire_file"] 
+        air_drag_file = request.files["air_file"]
+        print(engine_file.__name)
+        print(transmission_file.name)
+        print(final_drive_file.name)
+        print(tire_sample_file.name)
+        print(air_drag_file.name)
+        engine_dict, emission_drop, engine_filter_dict = engine_input(engine_file)
+        trans_dict,trans_dict_len, trans_drop =  transmission_input(transmission_file)
+        axel_drop,axle_type, from_axel_select_gear_ratio_option_show, from_gear_ratio_select_efficiency_option_show = final_drive_input(final_drive_file)
+        tyre_size_drop,standard_drop,application_drop, radius_drop, rrc_drop, tire_description_dict = tire_input(tire_sample_file)
+        vehicle_category_drop, cab_drop, rear_body_drop, air_resistance_drop = air_resistance(air_drag_file)    
+    try:
+        if engine_file: 
+            uploaddata["emission_object"] = emission_drop
+            uploaddata["engine_object"] = engine_filter_dict
+            session["engine_dict"] = engine_dict
+        if transmission_file:
+            uploaddata["transsmission_object"] = trans_drop
+            uploaddata["no_gears_object"] = trans_dict_len
+            session["trans_dict"] = trans_dict
+        if final_drive_file:
+            uploaddata["final_drive_object"] = axel_drop
+            uploaddata["layout_object"] = axle_type
+            uploaddata["ratio_object"] = from_axel_select_gear_ratio_option_show
+            uploaddata["efficiency_object"] = from_gear_ratio_select_efficiency_option_show
+        if tire_sample_file:
+            uploaddata["tyre_size_object"] = tyre_size_drop
+            uploaddata["standard_object"] = standard_drop
+            uploaddata["application_object"] = application_drop
+            uploaddata["radius_object"] = radius_drop
+            uploaddata["rrc_object"] = rrc_drop
+            uploaddata["tire_description_dict_object"] = tire_description_dict
+        if air_drag_file:
+            uploaddata["category_object"] = vehicle_category_drop
+            uploaddata["cab_object"] = cab_drop
+            uploaddata["rear_body_object"] = rear_body_drop
+            uploaddata["air_resistance_object"] = air_resistance_drop
+        return render_template("index.html",inputdata  = uploaddata)
+    except:
+        return render_template("index.html",inputdata  = uploaddata)
+
+@app.route("/graph", methods=['POST'])   
 def graph():
     engine = request.form.get('engine')
     emission = request.form.get('emission')
     session["engine"] = engine
     session["emission"] = emission
-    x1 = engine_dict[str(engine)+'_'+str(emission)]['Engine speed']
-    y1 = engine_dict[str(engine)+'_'+str(emission)]['Torque']
-    x2 = engine_dict[str(engine)+'_'+str(emission)]['Engine speed']
-    y2 = engine_dict[str(engine)+'_'+str(emission)]['Power']
+    print(session)
+    try:
+        engine_update_dict = session.get("engine_dict", None)
+        x1 = engine_update_dict[str(engine)+'_'+str(emission)]['Engine speed']
+        y1 = engine_update_dict[str(engine)+'_'+str(emission)]['Torque']
+        x2 = engine_update_dict[str(engine)+'_'+str(emission)]['Engine speed']
+        y2 = engine_update_dict[str(engine)+'_'+str(emission)]['Power']
+    except:
+        print("i am here")
+        x1 = engine_dict[str(engine)+'_'+str(emission)]['Engine speed']
+        y1 = engine_dict[str(engine)+'_'+str(emission)]['Torque']
+        x2 = engine_dict[str(engine)+'_'+str(emission)]['Engine speed']
+        y2 = engine_dict[str(engine)+'_'+str(emission)]['Power']
     col1 = 'steelblue'
     col2 = 'red'
     fig, ax = plt.subplots()
@@ -113,8 +179,12 @@ def output_page():
         input_form.update(driving_resistance_dict)
         # excel = Dispatch('Excel.Application', pythoncom.CoInitialize())
         try:
-            shutil.copyfile('data\Longitudinal_simulation_sample.xlsx',
-                        f'{file_path}' + f'\{vehicle_name}'+'.xlsx')
+            if file_path:
+                shutil.copyfile('data\Longitudinal_simulation_sample.xlsx',
+                            f'{file_path}' + f'\{vehicle_name}'+'.xlsx')
+            else:
+                shutil.copyfile('data\Longitudinal_simulation_sample.xlsx',
+                                'output'+ f'\{vehicle_name}'+'.xlsx')
             excel = win32com.client.Dispatch(
                 'Excel.Application', pythoncom.CoInitialize())
             output_filepath = rf"{file_path}" + f'\{vehicle_name}'+'.xlsx'
@@ -128,27 +198,51 @@ def output_page():
         if vehicle_name:
             sheet.Cells(2, 5).Value = vehicle_name
         if transmission:
-            # print(trans_dict[str(trans_da)])
-            sheet.Cells(7, 5).Value = transmission
-            inertia = len(trans_dict[str(transmission)]['Gear ratio'])
-            for ii in range(0, len(trans_dict[str(transmission)]['Gear ratio'])):
-                sheet.Cells(trans_row, 5).Value = trans_dict[str(
-                    transmission)]['Gear ratio'][ii]
-                sheet.Cells(trans_row, 6).Value = trans_dict[str(
-                    transmission)]['Efficiency'][ii]
-                trans_row = trans_row+1
+            # print(trans_dict[str(trans_da)])  
+            try:
+                transmission_update_dict = session.get("trans_dict", None)             
+                sheet.Cells(7, 5).Value = transmission
+                inertia = len(transmission_update_dict[str(transmission)]['Gear ratio'])
+                for ii in range(0, len(transmission_update_dict[str(transmission)]['Gear ratio'])):
+                    sheet.Cells(trans_row, 5).Value = transmission_update_dict[str(
+                        transmission)]['Gear ratio'][ii]
+                    sheet.Cells(trans_row, 6).Value = transmission_update_dict[str(
+                        transmission)]['Efficiency'][ii]
+                    trans_row = trans_row+1
+            except:
+                sheet.Cells(7, 5).Value = transmission
+                inertia = len(trans_dict[str(transmission)]['Gear ratio'])
+                for ii in range(0, len(trans_dict[str(transmission)]['Gear ratio'])):
+                    sheet.Cells(trans_row, 5).Value = trans_dict[str(
+                        transmission)]['Gear ratio'][ii]
+                    sheet.Cells(trans_row, 6).Value = trans_dict[str(
+                        transmission)]['Efficiency'][ii]
+                    trans_row = trans_row+1
 
         if engine and emission:
-            for ii in range(0, len(engine_dict[str(engine)+'_'+str(emission)]['Engine speed'])):
-                sheet.Cells(engine_row, 5).Value = engine_dict[str(
-                    engine)+'_'+str(emission)]['Engine speed'][ii]
-                sheet.Cells(engine_row,  6).Value = engine_dict[str(
-                    engine)+'_'+str(emission)]['Torque'][ii]
-                sheet.Cells(engine_row,  7).Value = engine_dict[str(
-                    engine)+'_'+str(emission)]['Power'][ii]   
-                engine_row = engine_row+1
-            sheet.Cells(42,5).Value = engine
-            #sheet.Cells(43,5).Value = emission
+            try :
+                engine_update_dict = session.get("engine_dict", None)
+                for ii in range(0, len(engine_update_dict[str(engine)+'_'+str(emission)]['Engine speed'])):
+                    sheet.Cells(engine_row, 5).Value = engine_update_dict[str(
+                        engine)+'_'+str(emission)]['Engine speed'][ii]
+                    sheet.Cells(engine_row,  6).Value = engine_update_dict[str(
+                        engine)+'_'+str(emission)]['Torque'][ii]
+                    sheet.Cells(engine_row,  7).Value = engine_update_dict[str(
+                        engine)+'_'+str(emission)]['Power'][ii]   
+                    engine_row = engine_row+1
+                sheet.Cells(42,5).Value = engine
+                #sheet.Cells(43,5).Value = emission
+            except:
+                for ii in range(0, len(engine_dict[str(engine)+'_'+str(emission)]['Engine speed'])):
+                    sheet.Cells(engine_row, 5).Value = engine_dict[str(
+                        engine)+'_'+str(emission)]['Engine speed'][ii]
+                    sheet.Cells(engine_row,  6).Value = engine_dict[str(
+                        engine)+'_'+str(emission)]['Torque'][ii]
+                    sheet.Cells(engine_row,  7).Value = engine_dict[str(
+                        engine)+'_'+str(emission)]['Power'][ii]   
+                    engine_row = engine_row+1
+                sheet.Cells(42,5).Value = engine
+                #sheet.Cells(43,5).Value = emission
             
         if axel:
             # print(axel)
@@ -242,6 +336,33 @@ def output_page():
         }
         
     return render_template("output.html", input_form = input_form, inputdata = inputdata ,result_text = "Success!! Excel Generated", table_data = table_data, table_len = table_len)
+
+
+@app.route("/upload", methods=['GET','POST'])
+def upload_file():
+    if request.method == "POST":
+        air_drag_file = request.files["air_file"] 
+        engine_file = request.files["engine_file"]
+        final_drive_file = request.files["final_file"] 
+        tire_sample_file = request.files["tire_file"] 
+        transmision_file = request.files["transmission_file"]
+        transmission =  transmission_input(transmision_file)
+        engine = engine_input(engine_file)
+        print(engine)
+        final_drive = final_drive_input(final_drive_file)
+        tire = tire_input(tire_sample_file)
+        air = air_resistance(air_drag_file)
+        print(air)
+        # print(Engine)
+        # print(final_drive)
+        # print(Tire_sample)
+        # print(Transmision)
+        # df = pd.read_excel(Air_drag) if Air_drag else None
+        # df2 = pd.read_excel(Tire_sample) if Tire_sample else None
+        # print(df)
+        # print(df2)
+    return render_template('user_file.html')
+
 
 def main():
     if not os.environ.get("WERKZEUG_RUN_MAIN"):

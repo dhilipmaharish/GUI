@@ -6,8 +6,11 @@ import shutil
 import time
 
 
-def final_drive_input():
-    f_drive_data = pd.read_excel('data/Final_Drive_Sample.xlsx')
+def final_drive_input(user_file = None):
+    if user_file:
+        f_drive_data = pd.read_excel(user_file)
+    else:
+        f_drive_data = pd.read_excel('data/Final_Drive_Sample.xlsx')
     from_type = {}
     from_type_select_axel_option_show = {}
     from_axel_select_gear_ratio_option_show = {}
@@ -16,7 +19,7 @@ def final_drive_input():
     type_f = [str(gg).replace('\n', ' ') for gg in type_f]
     axel_layout = f_drive_data.iloc[:, 1:].iloc[6].dropna().to_list()
     gear_ratio_f = f_drive_data.iloc[:, 1:].iloc[7].dropna().to_list()
-    efficiency_f = f_drive_data.iloc[:, 1:].iloc[9].dropna().to_list()
+    efficiency_f = f_drive_data.iloc[:, 1:].iloc[8].dropna().to_list()
 
 
     # from_axel_select_gear_ratio_option_show={}
@@ -58,5 +61,11 @@ def final_drive_input():
                 else:
                     dict_list[ll][str(main_list[ll][kk])] = [
                         str(main_list[ll+1][kk])]
+    def unique_element(filter):
+        dict = {key:list(set(value)) for key,value in filter.items()}
+        return dict
+    from_type = unique_element(from_type)
+    from_axel_select_gear_ratio_option_show = unique_element(from_axel_select_gear_ratio_option_show) 
+    from_gear_ratio_select_efficiency_option_show = unique_element(from_gear_ratio_select_efficiency_option_show)
     return list(set(type_f)), from_type, from_axel_select_gear_ratio_option_show, from_gear_ratio_select_efficiency_option_show
 

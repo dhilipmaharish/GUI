@@ -12,23 +12,6 @@ tyre_size_drop,standard_drop,application_drop, radius_drop, rrc_drop, tire_descr
 vehicle_category_drop, cab_drop, rear_body_drop, air_resistance_drop = air_resistance()
 
 
-
-# unique option on axle details
-axle_type = {key:list(set(value)) for key,value in axle_type.items()}
-from_axel_select_gear_ratio_option_show = {key:list(set(value)) for key,value in from_axel_select_gear_ratio_option_show.items()}
-from_gear_ratio_select_efficiency_option_show = {key:list(set(value)) for key,value in from_gear_ratio_select_efficiency_option_show.items()}
-
-# unique option on tyre details
-standard_drop = {key:list(set(value)) for key, value in standard_drop.items()}
-application_drop = {key:list(set(value)) for key,value in application_drop.items()}
-radius_drop = {key:list(set(value)) for key,value in radius_drop.items()}
-rrc_drop = {key:list(set(value)) for key,value in rrc_drop.items()}
-
-# unique option on air resistance details
-cab_drop = {key:list(set(value)) for key, value in cab_drop.items()}
-rear_body_drop = {key:list(set(value)) for key, value in rear_body_drop.items()}
-air_resistance_drop = {key:list(set(value)) for key, value in air_resistance_drop.items()}
-
 inputdata = {
     "emission_object" : emission_drop,
     "engine_object" : engine_filter_dict,

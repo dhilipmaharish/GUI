@@ -5,13 +5,17 @@ from win32com.client import Dispatch
 import shutil
 import time
 
-def transmission_input():
+def transmission_input(user_file = None):
+   
+    if user_file:
+        trans_data = pd.read_excel(user_file)
+    else:
+        trans_data = pd.read_excel('data/Transmission_sample.xlsx')
     start_ind = 0
     end_ind = 1
     name_ind = 0
     trans_dict = {}
     trans_dict_len = {}
-    trans_data = pd.read_excel('data/Transmission_sample.xlsx')
     trans_model = trans_data.iloc[:, 1:].iloc[4].dropna().to_list()
     gear_ratio_effi_data = trans_data.iloc[:, 1:].iloc[9:]
     gear_ratio_effi_data.columns = [
@@ -30,9 +34,9 @@ def transmission_input():
             start_ind = end_ind+1
             end_ind = end_ind+2
             name_ind += 1
-            
-            
-    return trans_dict, trans_dict_len, trans_model
+    
+        
+    return trans_dict, trans_dict_len, list(set(trans_model))
 
 
 

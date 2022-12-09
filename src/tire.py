@@ -6,8 +6,12 @@ import shutil
 import time
 
 
-def tire_input():
-    tire_data = pd.read_excel('data/Tire_Sample.xlsx')
+def tire_input(user_file = None):
+    
+    if user_file : 
+        tire_data = pd.read_excel(user_file)
+    else:
+        tire_data = pd.read_excel('data/Tire_Sample.xlsx')
 
     # print(tire_data)
     tire_size = {}
@@ -54,7 +58,13 @@ def tire_input():
         
         # Pattern, standard and remark details
         tire_description_dict[size_t[ele]] = {"Pattern" : pattern[ele], "Standard" : standard[ele], "remark": remark[ele]} 
-        
+        def unique_element(filter):
+            dict = {key:list(set(value)) for key,value in filter.items()}
+            return dict  
+        from_size_select_standard_option_show = unique_element(from_size_select_standard_option_show)
+        from_standard_select_application_option_show = unique_element(from_standard_select_application_option_show)
+        from_application_select_radius_option_show = unique_element(from_application_select_radius_option_show)
+        from_radius_option_select_rrc_option_show = unique_element(from_radius_option_select_rrc_option_show)
     return list(set(size_t)),from_size_select_standard_option_show,from_standard_select_application_option_show,from_application_select_radius_option_show,from_radius_option_select_rrc_option_show,tire_description_dict
 
 

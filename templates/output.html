@@ -46,6 +46,15 @@
     <script>
       myFunc({{inputdata|tojson}})
     </script>
+    <style>
+      input::file-selector-button {
+          font-weight: bold;
+          color: dodgerblue;
+          padding: 0.5em;
+          border: thin solid grey;
+          border-radius: 8px;
+      }
+    </style>
   </head>
   <body style="background: #e7ebea">
     <nav class="navbar-default" style="background-color:rgb(72, 178, 178)">
@@ -155,8 +164,9 @@
                     </select>
                   </div>
                 </div>
+                <h6><strong>Engine input file</strong></h6><input type="file" id="engine_file" name="engine_file" form="Form3" accept='.xlsx'>
                 <!-- <div style="position:relative; left:300px; top:-120px;"><img src="{{url_for('static', filename='graph.png')}}"/></div> -->
-                <div class="graph-button" style = "left:140px">
+                <div class="graph-button" style = "left:300px; top:-50px">
                   <button
                     class="btn btn-success btn-li float-right"
                     type="submit"
@@ -167,14 +177,29 @@
                   >
                     Show Graph
                   </button>
-                  <div style="position: relative; left: 200px; top: -200px">
-                    <img src="{{url_for('static', filename='graph.png')}}" id="graph_img" />
-                  </div>  
                 </div>
+                <div style="position: relative; left:500px; top: -400px">
+                  <img src="{{url_for('static', filename='graph.png')}}" id="graph_img" />
+                </div>
+              </div>
+              <div class="graph-button" style = "left:300px; top:-50px">
+                <button
+                  class="btn btn-success btn-li float-right"
+                  type="submit"
+                  name="graph"
+                  value="graph_value"
+                  id="graph_id"
+                  form="Form2"
+                >
+                  Show Graph
+                </button>
+              </div>
+              <div style="position: relative; left:500px; top: -400px">
+                <img src="{{url_for('static', filename='graph.png')}}" id="graph_img" />
               </div>
             </div>
             <div class="card3 mt-3 col-lg-3 col-md-10 col-sm-12 col-xs-12"
-              style="left:17px;">
+              style="left:17px;height:300px">
               <div class="card-body">
                 <h5 class="card-title">
                   <img
@@ -194,6 +219,8 @@
                     </select>
 
                   </div>
+                  <br></br>
+                  <h6><strong>Transmision input file</strong></h6><input type="file" id="transmission_file" name="transmission_file" form="Form3" accept='.xlsx'>
                   <br></br>
                   <div id="Geardiv">
                     <label><strong>No. of Gears:</strong></label>
@@ -473,6 +500,7 @@
                     </select>
                   </div>
                 </div>
+                <h6><strong>final_drive input file</strong></h6><input type="file" id="final_file" name="final_file" form="Form3" accept='.xlsx'>
               </div>
             </div>
             <div
@@ -562,6 +590,7 @@
                     </select>
                   </div>
                 </div>
+                <h6><strong>Tire_sample file</strong></h6><input type="file" id="tire_file" name="tire_file" form="Form3" accept='.xlsx'>
               <br></br>
               <div id="Tyre_details">
                 <label><strong>Pattern:</strong></label>
@@ -643,6 +672,7 @@
                     <option value="" selected disabled>{{input_form['air_resistance']}}</option>
                   </select>
                 </div>
+                <h6><strong>Air_drag input file</strong></h6><input type="file" id="air_file" name="air_file" accept='.xlsx' form="Form3">
               </div>
             </div>
             </div> 
@@ -1184,6 +1214,14 @@
             REFRESH
           </button>
         </a>
+        <button
+              class="btn btn-success btn-li float-right"
+              id="refresh"
+              type="submit"
+              style = "left:-50px; top:-75px"
+              form="Form3">
+              FILE SUBMIT
+        </button>
         <font color="green" align="center" style="left:1500px; position:relative; top: -75px;" ><strong>{{result_text}}</strong></font>
         <table id="table_display" class="styled-table">
           <thead>

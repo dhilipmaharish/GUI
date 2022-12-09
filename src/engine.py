@@ -5,13 +5,17 @@ from win32com.client import Dispatch
 import shutil
 import time
 
-def engine_input():
-    engine_data = pd.read_excel('data/Engine_Sample.xlsx')
+def engine_input(user_file = None):
+    
+    if user_file:
+        engine_data = pd.read_excel(user_file)
+    else:
+        engine_data = pd.read_excel('data/Engine_Sample.xlsx')
     engine_model = engine_data.iloc[:, 2:].iloc[4].dropna().tolist()
-    emission_model = engine_data.iloc[:, 2:].iloc[12].dropna().tolist()
+    emission_model = engine_data.iloc[:, 2:].iloc[13].dropna().tolist()
     engine_emission_model = [str(engine_model[oo])+'_'+str(emission_model[oo])
                             for oo in range(0, len(engine_model))]
-    enginespd_troque_power_data = engine_data.iloc[:, 2:].iloc[18:]
+    enginespd_troque_power_data = engine_data.iloc[:, 2:].iloc[19:]
     # print(enginespd_troque_power_data)
     enginespd_troque_power_data.columns = [
         str(ss) for ss in range(0, len(enginespd_troque_power_data.columns))]
@@ -20,7 +24,6 @@ def engine_input():
     ).any(axis=0)]
     enginespd_troque_power_data = enginespd_troque_power_data.loc[:, (
         enginespd_troque_power_data != 0).any(axis=0)]
-    # print(enginespd_troque_power_data)
     start_ind = 0
     end_ind = 2
     name_ind = 0
@@ -39,5 +42,13 @@ def engine_input():
             engine_filter_dict[emission].append(engine)
         else:
             engine_filter_dict[emission] = [engine]
-            
+    def unique_element(filter):
+        dict = {key:list(set(value)) for key,value in filter.items()}
+        return dict
+    
+    engine_filter_dict = unique_element(engine_filter_dict)   
     return engine_dict,list(set(emission_model)), engine_filter_dict
+
+
+
+

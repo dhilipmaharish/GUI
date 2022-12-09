@@ -1,0 +1,47 @@
+<!doctype html>
+<html>
+<head>
+<title>FUSO</title>
+<meta name="description" content="Our first page">
+<meta name="keywords" content="html tutorial template">
+<style>
+    input {
+        margin-top: 1rem;
+    }
+    
+    input::file-selector-button {
+        font-weight: bold;
+        color: dodgerblue;
+        padding: 0.5em;
+        border: thin solid grey;
+        border-radius: 3px;
+    }
+</style>    
+</head>
+<body>
+    <nav class="navbar-default" style="background-color:rgb(72, 178, 178)">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="/">
+            <form action="/">
+              <img
+                src="{{url_for('static', filename='fuso.png')}}"
+                alt=""
+                width="175"
+                height="65"
+                class="d-inline-block align-text-bottom"
+              />
+              
+            </form>
+          </a>
+        </div>
+    </nav>
+    <form action="{{url_for('upload_file')}}" method="post" enctype="multipart/form-data">
+        <h4>Air_drag input file</h4><input type="file" id="air_file" name="air_file" accept='.xlsx'>
+        <h4>Engine input file</h4><input type="file" id="engine_file" name="engine_file" accept='.xlsx'>
+        <h4>final_drive input file</h4><input type="file" id="final_file" name="final_file" accept='.xlsx'>
+        <h4>Tire_sample input file</h4><input type="file" id="tire_file" name="tire_file" accept='.xlsx'>
+        <h4>Transmision input file</h4><input type="file" id="transmission_file" name="transmission_file" accept='.xlsx'>
+        <input type="submit">
+    </form>
+</body>
+</html>
