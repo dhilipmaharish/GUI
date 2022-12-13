@@ -33,61 +33,66 @@ app.secret_key = "27eduCBA09"
 
 inputdata = json.loads(input_json)
 
+
 @app.route("/")
 def display():
-    print("session", session)
     session.clear()
-    print("session", session)
     return render_template("index.html",inputdata  = inputdata)
 
 @app.route("/upload", methods=["GET", "POST"])
 def upload():
     uploaddata = copy.deepcopy(inputdata)
     if request.method == "POST":
+        file_name = {}
         engine_file = request.files["engine_file"]
         transmission_file = request.files["transmission_file"]
         final_drive_file = request.files["final_file"] 
         tire_sample_file = request.files["tire_file"] 
         air_drag_file = request.files["air_file"]
-        print(engine_file.__name)
-        print(transmission_file.name)
-        print(final_drive_file.name)
-        print(tire_sample_file.name)
-        print(air_drag_file.name)
+        engine_file_path = os.path.abspath(engine_file.filename)
+        print(engine_file_path)
+        file_name['engine_name'] = [engine_file.filename, False]
+        file_name['transmission_name'] = [transmission_file.filename, False]
+        file_name['final_drive_name'] = [final_drive_file.filename, False]
+        file_name['tire_sample_name'] = [tire_sample_file.filename, False]
+        file_name['air_drag_name'] = [air_drag_file.filename, False]
         engine_dict, emission_drop, engine_filter_dict = engine_input(engine_file)
         trans_dict,trans_dict_len, trans_drop =  transmission_input(transmission_file)
         axel_drop,axle_type, from_axel_select_gear_ratio_option_show, from_gear_ratio_select_efficiency_option_show = final_drive_input(final_drive_file)
         tyre_size_drop,standard_drop,application_drop, radius_drop, rrc_drop, tire_description_dict = tire_input(tire_sample_file)
         vehicle_category_drop, cab_drop, rear_body_drop, air_resistance_drop = air_resistance(air_drag_file)    
-    try:
-        if engine_file: 
-            uploaddata["emission_object"] = emission_drop
-            uploaddata["engine_object"] = engine_filter_dict
-            session["engine_dict"] = engine_dict
-        if transmission_file:
-            uploaddata["transsmission_object"] = trans_drop
-            uploaddata["no_gears_object"] = trans_dict_len
-            session["trans_dict"] = trans_dict
-        if final_drive_file:
-            uploaddata["final_drive_object"] = axel_drop
-            uploaddata["layout_object"] = axle_type
-            uploaddata["ratio_object"] = from_axel_select_gear_ratio_option_show
-            uploaddata["efficiency_object"] = from_gear_ratio_select_efficiency_option_show
-        if tire_sample_file:
-            uploaddata["tyre_size_object"] = tyre_size_drop
-            uploaddata["standard_object"] = standard_drop
-            uploaddata["application_object"] = application_drop
-            uploaddata["radius_object"] = radius_drop
-            uploaddata["rrc_object"] = rrc_drop
-            uploaddata["tire_description_dict_object"] = tire_description_dict
-        if air_drag_file:
-            uploaddata["category_object"] = vehicle_category_drop
-            uploaddata["cab_object"] = cab_drop
-            uploaddata["rear_body_object"] = rear_body_drop
-            uploaddata["air_resistance_object"] = air_resistance_drop
-        return render_template("index.html",inputdata  = uploaddata)
-    except:
-        return render_template("index.html",inputdata  = uploaddata)
+    if engine_file: 
+        uploaddata["emission_object"] = emission_drop
+        uploaddata["engine_object"] = engine_filter_dict
+        session["engine_dict"] = engine_dict
+        file_name['engine_name'][1] = True
+    if transmission_file:
+        uploaddata["transsmission_object"] = trans_drop
+        uploaddata["no_gears_object"] = trans_dict_len
+        session["trans_dict"] = trans_dict
+        file_name['transmission_name'][1] = True
+    if final_drive_file:
+        uploaddata["final_drive_object"] = axel_drop
+        uploaddata["layout_object"] = axle_type
+        uploaddata["ratio_object"] = from_axel_select_gear_ratio_option_show
+        uploaddata["efficiency_object"] = from_gear_ratio_select_efficiency_option_show
+        file_name['final_drive_name'][1] = True
+    if tire_sample_file:
+        uploaddata["tyre_size_object"] = tyre_size_drop
+        uploaddata["standard_object"] = standard_drop
+        uploaddata["application_object"] = application_drop
+        uploaddata["radius_object"] = radius_drop
+        uploaddata["rrc_object"] = rrc_drop
+        uploaddata["tire_description_dict_object"] = tire_description_dict
+        file_name['tire_sample_name'][1] = True
+    if air_drag_file:
+        uploaddata["category_object"] = vehicle_category_drop
+        uploaddata["cab_object"] = cab_drop
+        uploaddata["rear_body_object"] = rear_body_drop
+        uploaddata["air_resistance_object"] = air_resistance_drop
+        file_name['air_drag_name'][1] = True
+    print(file_name)
+    return render_template("index.html",inputdata  = uploaddata, filename = file_name)
 
 @app.route("/graph", methods=['POST'])   
 def graph():
@@ -103,7 +108,6 @@ def graph():
         x2 = engine_update_dict[str(engine)+'_'+str(emission)]['Engine speed']
         y2 = engine_update_dict[str(engine)+'_'+str(emission)]['Power']
     except:
-        print("i am here")
         x1 = engine_dict[str(engine)+'_'+str(emission)]['Engine speed']
         y1 = engine_dict[str(engine)+'_'+str(emission)]['Torque']
         x2 = engine_dict[str(engine)+'_'+str(emission)]['Engine speed']
@@ -121,7 +125,7 @@ def graph():
     plt.ylim(0,160)
     plt.savefig("static\output.jpg", dpi=800)
     image = Image.open(".\static\output.jpg")
-    image = image.resize((300, 200), Image.ANTIALIAS)
+    image = image.resize((375, 275), Image.ANTIALIAS)
     image.save(fp="static\graph.png")
     image_path = "static\graph.png"
     return engine, emission
@@ -336,33 +340,6 @@ def output_page():
         }
         
     return render_template("output.html", input_form = input_form, inputdata = inputdata ,result_text = "Success!! Excel Generated", table_data = table_data, table_len = table_len)
-
-
-@app.route("/upload", methods=['GET','POST'])
-def upload_file():
-    if request.method == "POST":
-        air_drag_file = request.files["air_file"] 
-        engine_file = request.files["engine_file"]
-        final_drive_file = request.files["final_file"] 
-        tire_sample_file = request.files["tire_file"] 
-        transmision_file = request.files["transmission_file"]
-        transmission =  transmission_input(transmision_file)
-        engine = engine_input(engine_file)
-        print(engine)
-        final_drive = final_drive_input(final_drive_file)
-        tire = tire_input(tire_sample_file)
-        air = air_resistance(air_drag_file)
-        print(air)
-        # print(Engine)
-        # print(final_drive)
-        # print(Tire_sample)
-        # print(Transmision)
-        # df = pd.read_excel(Air_drag) if Air_drag else None
-        # df2 = pd.read_excel(Tire_sample) if Tire_sample else None
-        # print(df)
-        # print(df2)
-    return render_template('user_file.html')
-
 
 def main():
     if not os.environ.get("WERKZEUG_RUN_MAIN"):

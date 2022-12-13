@@ -164,6 +164,11 @@
                   </div>
                 </div>
                 <h6><strong>Engine input file</strong></h6><input type="file" id="engine_file" name="engine_file" form="Form3" accept='.xlsx'>
+                {% if 'upload' in request.endpoint%}
+                  {% if filename['engine_name'][1] %}
+                  <h6><strong>{{filename['engine_name'][0]}} is added</strong></h6>
+                  {% endif %}
+                {% endif %}
                 <!-- <div style="position:relative; left:300px; top:-120px;"><img src="{{url_for('static', filename='graph.png')}}"/></div> -->
                 <div class="graph-button" style = "left:300px; top:-50px">
                   <button
@@ -177,7 +182,7 @@
                     Show Graph
                   </button>
                 </div>
-                <div style="position: relative; left:500px; top: -400px">
+                <div style="position: relative; left:450px; top: -450px">
                   <img src="" id="graph_img" />
                 </div>     
               </div>
@@ -208,7 +213,11 @@
                   </div>
                   <br></br>
                   <h6><strong>Transmision input file</strong></h6><input type="file" id="transmission_file" name="transmission_file" form="Form3" accept='.xlsx'>
-                  <br></br>
+                  {% if 'upload' in request.endpoint%}
+                      {% if filename['transmission_name'][1] %}
+                      <h6><strong>{{filename['transmission_name'][0]}} is added</strong></h6>
+                      {% endif %}
+                  {% endif %}
                   <div id="Geardiv" style="display:none">
                     <label><strong>No. of Gears:</strong></label>
                     <div id="Gear_input"  >
@@ -483,6 +492,11 @@
                   </div>
                 </div>
                 <h6><strong>final_drive input file</strong></h6><input type="file" id="final_file" name="final_file" form="Form3" accept='.xlsx'>
+                {% if 'upload' in request.endpoint%}
+                      {% if filename['final_drive_name'][1] %}
+                      <h6><strong>{{filename['final_drive_name'][0]}} is added</strong></h6>
+                      {% endif %}
+                {% endif %}
               </div>             
             </div>
             <div
@@ -575,6 +589,11 @@
                   </div>
                 </div>
                 <h6><strong>Tire_sample file</strong></h6><input type="file" id="tire_file" name="tire_file" form="Form3" accept='.xlsx'>
+                {% if 'upload' in request.endpoint%}
+                      {% if filename['tire_sample_name'][1] %}
+                      <h6><strong>{{filename['tire_sample_name'][0]}} is added</strong></h6>
+                      {% endif %}
+                {% endif %}
               <br></br>
               <div id="Tyre_details" style="display:none;" >
                 <label><strong>Pattern:</strong></label>
@@ -660,6 +679,11 @@
                     </select>
                   </div>
                   <h6><strong>Air_drag input file</strong></h6><input type="file" id="air_file" name="air_file" accept='.xlsx' form="Form3">
+                  {% if 'upload' in request.endpoint%}
+                      {% if filename['air_drag_name'][1] %}
+                      <h6><strong>{{filename['air_drag_name'][0]}} is added</strong></h6>
+                      {% endif %}
+                  {% endif %}
                 </div>
               </div>
             </div> 
