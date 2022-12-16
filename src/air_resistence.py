@@ -47,5 +47,4 @@ def air_resistance(user_file = None):
     from_category_show_cab_option = unique_element(from_category_show_cab_option)
     from_cab_show_rear_option = unique_element(from_cab_show_rear_option)
     from_rear_show_air_resistance_option = unique_element(from_rear_show_air_resistance_option)
-    print("air_resstaince", from_rear_show_air_resistance_option)
     return list(set(category_type)), from_category_show_cab_option, from_cab_show_rear_option, from_rear_show_air_resistance_option

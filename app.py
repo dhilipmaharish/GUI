@@ -39,6 +39,7 @@ def display():
     session.clear()
     return render_template("index.html",inputdata  = inputdata)
 
+
 @app.route("/upload", methods=["GET", "POST"])
 def upload():
     uploaddata = copy.deepcopy(inputdata)
@@ -50,7 +51,6 @@ def upload():
         tire_sample_file = request.files["tire_file"] 
         air_drag_file = request.files["air_file"]
         engine_file_path = os.path.abspath(engine_file.filename)
-        print(engine_file_path)
         file_name['engine_name'] = [engine_file.filename, False]
         file_name['transmission_name'] = [transmission_file.filename, False]
         file_name['final_drive_name'] = [final_drive_file.filename, False]
@@ -91,7 +91,6 @@ def upload():
         uploaddata["rear_body_object"] = rear_body_drop
         uploaddata["air_resistance_object"] = air_resistance_drop
         file_name['air_drag_name'][1] = True
-    print(file_name)
     return render_template("index.html",inputdata  = uploaddata, filename = file_name)
 
 @app.route("/graph", methods=['POST'])   
@@ -100,7 +99,6 @@ def graph():
     emission = request.form.get('emission')
     session["engine"] = engine
     session["emission"] = emission
-    print(session)
     try:
         engine_update_dict = session.get("engine_dict", None)
         x1 = engine_update_dict[str(engine)+'_'+str(emission)]['Engine speed']
@@ -128,8 +126,7 @@ def graph():
     image = image.resize((375, 275), Image.ANTIALIAS)
     image.save(fp="static\graph.png")
     image_path = "static\graph.png"
-    return engine, emission
-
+    return "graph.png"
 
 @app.route("/output", methods=["GET", "POST"])
 def output_page(): 
@@ -177,7 +174,6 @@ def output_page():
         input_form["step_size"] = step_size = request.form.get("step_size")
         Gear_value = {"A":Gear_A, "B":Gear_B, "C":Gear_C, "D":Gear_D}
         input_form["file_path"] = file_path = request.form.get("file_path")
-        print(file_path)
         chan_val = 1
         chan_val = + 1
         input_form.update(driving_resistance_dict)

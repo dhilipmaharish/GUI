@@ -53,8 +53,10 @@
           padding: 0.5em;
           border: thin solid grey;
           border-radius: 8px;
+          
       }
     </style>
+
   </head>
   <body style="background: #e7ebea">
     <nav class="navbar-default" style="background-color:rgb(72, 178, 178)">
@@ -82,7 +84,7 @@
         <form method="post" id="Form1" action="{{url_for('output_page')}}" onsubmit= "submit_button.disabled = true; return true;">
           <div class="row" style="max-height: 1000px">
         <!-- -----------------------Vehicle Details---------------------- -->
-            <div class="card1 mt-3 col-lg-3 col-md-10 col-sm-12 col-xs-12" style="height:300px">
+            <div class="card1 mt-3 col-lg-3 col-md-10 col-sm-12 col-xs-12" style="height:350px">
               <div class="card-body">
                 <h5 class="card-title">
                   <image
@@ -124,7 +126,7 @@
             </div>
             <div
               class="card2 mt-3 col-lg-6 col-md-10 col-sm-12 col-xs-12"
-              style="left: 8px; height:300px;"
+              style="left: 8px; height:350px;"
             >
               <div class="card-body">
                 <h5 class="card-title">
@@ -163,7 +165,7 @@
                     </select>
                   </div>
                 </div>
-                <h6><strong>Engine input file</strong></h6><input type="file" id="engine_file" name="engine_file" form="Form3" accept='.xlsx'>
+                <h6><strong>Engine file</strong></h6><input type='file' id="engine_file" name="engine_file" form="Form3" accept='.xlsx'>
                 {% if 'upload' in request.endpoint%}
                   {% if filename['engine_name'][1] %}
                   <h6><strong>{{filename['engine_name'][0]}} is added</strong></h6>
@@ -188,7 +190,7 @@
               </div>
             </div>
             <div class="card3 mt-3 col-lg-3 col-md-10 col-sm-12 col-xs-12"
-              style="left:17px;  height:300px; ">
+              style="left:17px;  height:350px; ">
               <div class="card-body">
                 <h5 class="card-title">
                   <img
@@ -212,7 +214,7 @@
 
                   </div>
                   <br></br>
-                  <h6><strong>Transmision input file</strong></h6><input type="file" id="transmission_file" name="transmission_file" form="Form3" accept='.xlsx'>
+                  <h6><strong>Transmission file</strong></h6><input type="file" id="transmission_file" name="transmission_file" form="Form3" accept='.xlsx'>
                   {% if 'upload' in request.endpoint%}
                       {% if filename['transmission_name'][1] %}
                       <h6><strong>{{filename['transmission_name'][0]}} is added</strong></h6>
@@ -491,7 +493,7 @@
                     </select>
                   </div>
                 </div>
-                <h6><strong>final_drive input file</strong></h6><input type="file" id="final_file" name="final_file" form="Form3" accept='.xlsx'>
+                <h6><strong>Final drive file</strong></h6><input type="file" id="final_file" name="final_file" form="Form3" accept='.xlsx'>
                 {% if 'upload' in request.endpoint%}
                       {% if filename['final_drive_name'][1] %}
                       <h6><strong>{{filename['final_drive_name'][0]}} is added</strong></h6>
@@ -588,7 +590,7 @@
                     </select>
                   </div>
                 </div>
-                <h6><strong>Tire_sample file</strong></h6><input type="file" id="tire_file" name="tire_file" form="Form3" accept='.xlsx'>
+                <h6><strong>Tire sample file</strong></h6><input type="file" id="tire_file" name="tire_file" form="Form3" accept='.xlsx'>
                 {% if 'upload' in request.endpoint%}
                       {% if filename['tire_sample_name'][1] %}
                       <h6><strong>{{filename['tire_sample_name'][0]}} is added</strong></h6>
@@ -678,7 +680,7 @@
                       <option value="" selected disabled>Select</option>
                     </select>
                   </div>
-                  <h6><strong>Air_drag input file</strong></h6><input type="file" id="air_file" name="air_file" accept='.xlsx' form="Form3">
+                  <h6><strong>Air Drag file</strong></h6><input type="file" id="air_file" name="air_file" accept='.xlsx' form="Form3">
                   {% if 'upload' in request.endpoint%}
                       {% if filename['air_drag_name'][1] %}
                       <h6><strong>{{filename['air_drag_name'][0]}} is added</strong></h6>
@@ -1225,7 +1227,6 @@
           'emission':$("#emission_type").val()
         },
         success:function (response) {
-            var response = "graph.png";
             $("#graph_img").attr("src", "/static/" + response);
           },
         
