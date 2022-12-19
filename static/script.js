@@ -1,7 +1,6 @@
 let inputvalue_dict;
 
 function myFunc(value) {
-    console.log(value);
     inputvalue_dict = value
 }
 
@@ -15,6 +14,26 @@ function filterengine() {
         $("#engine_type").append(optionTemplate);
     });
 
+}
+
+// function filterpowertorque() {
+//     $("#power_type").empty();
+//     $("#power_type").append("<option value='' selected disabled>Select</option>");
+//     let power_torque_str = `${$("#emission_type").val()} ${$("#engine_type").val()}`
+//     inputvalue_dict["power_torque_object"][power_torque_str].forEach(value => {
+//         let optionTemplate = `<option value="${value}">${value}</option>`
+//         $("#power_type").append(optionTemplate);
+//     });
+// }
+function filterpowertorque() {
+    $("#power_type").empty();
+    $("#power_type").append("<option value='' selected disabled>Select</option>");
+    let power_torque_str = `${$('#emission_type').val()} ${$("#engine_type").val()}`
+    console.log(power_torque_str)
+    inputvalue_dict["power_torque_object"][power_torque_str].forEach(value => {
+        let optionTemplate = `<option value="${value}">${value}</option>`;
+        $("#power_type").append(optionTemplate);
+    });
 }
 
 function filterAxleLayout() {
@@ -40,6 +59,7 @@ function filterRatio() {
     $("#efficiency_type").append("<option value='' selected disabled>Select</option>");
 
     let axle_ratio_string = `${$("#axel_type").val()} ${$("#axle_layout_type").val()}`
+    console.log(axle_ratio_string)
     inputvalue_dict["ratio_object"][axle_ratio_string].forEach(value => {
         let optionTemplate = `<option value="${value}" >${value}</option>`;
         $("#ratio_type").append(optionTemplate);

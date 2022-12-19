@@ -56,7 +56,7 @@ def upload():
         file_name['final_drive_name'] = [final_drive_file.filename, False]
         file_name['tire_sample_name'] = [tire_sample_file.filename, False]
         file_name['air_drag_name'] = [air_drag_file.filename, False]
-        engine_dict, emission_drop, engine_filter_dict = engine_input(engine_file)
+        engine_dict, emission_drop, engine_filter_dict, power_torque_filter_dict = engine_input(engine_file)
         trans_dict,trans_dict_len, trans_drop =  transmission_input(transmission_file)
         axel_drop,axle_type, from_axel_select_gear_ratio_option_show, from_gear_ratio_select_efficiency_option_show = final_drive_input(final_drive_file)
         tyre_size_drop,standard_drop,application_drop, radius_drop, rrc_drop, tire_description_dict = tire_input(tire_sample_file)
@@ -64,6 +64,7 @@ def upload():
     if engine_file: 
         uploaddata["emission_object"] = emission_drop
         uploaddata["engine_object"] = engine_filter_dict
+        uploaddata["power_torque_object"] = power_torque_filter_dict
         session["engine_dict"] = engine_dict
         file_name['engine_name'][1] = True
     if transmission_file:
@@ -97,28 +98,31 @@ def upload():
 def graph():
     engine = request.form.get('engine')
     emission = request.form.get('emission')
+    powertype = request.form.get('power_type')
+    print(powertype)
     session["engine"] = engine
     session["emission"] = emission
+    session["power_type"] = powertype
     try:
         engine_update_dict = session.get("engine_dict", None)
-        x1 = engine_update_dict[str(engine)+'_'+str(emission)]['Engine speed']
-        y1 = engine_update_dict[str(engine)+'_'+str(emission)]['Torque']
-        x2 = engine_update_dict[str(engine)+'_'+str(emission)]['Engine speed']
-        y2 = engine_update_dict[str(engine)+'_'+str(emission)]['Power']
+        x1 = engine_update_dict[str(engine)+'_'+str(emission)+'_'+str(powertype)]['Engine speed']
+        y1 = engine_update_dict[str(engine)+'_'+str(emission)+'_'+ str(powertype)]['Torque']
+        x2 = engine_update_dict[str(engine)+'_'+str(emission)+'_'+str(powertype)]['Engine speed']
+        y2 = engine_update_dict[str(engine)+'_'+str(emission)+'_'+str(powertype)]['Power']
     except:
-        x1 = engine_dict[str(engine)+'_'+str(emission)]['Engine speed']
-        y1 = engine_dict[str(engine)+'_'+str(emission)]['Torque']
-        x2 = engine_dict[str(engine)+'_'+str(emission)]['Engine speed']
-        y2 = engine_dict[str(engine)+'_'+str(emission)]['Power']
+        x1 = engine_dict[str(engine)+'_'+str(emission)+'_'+str(powertype)]['Engine speed']
+        y1 = engine_dict[str(engine)+'_'+str(emission)+'_'+str(powertype)]['Torque']
+        x2 = engine_dict[str(engine)+'_'+str(emission)+'_'+str(powertype)]['Engine speed']
+        y2 = engine_dict[str(engine)+'_'+str(emission)+'_'+str(powertype)]['Power']
     col1 = 'steelblue'
     col2 = 'red'
     fig, ax = plt.subplots()
     ax.plot(x1, y1, color=col1)
     ax.set_xlabel("Engine speed[rpm]", fontsize=14)
-    ax.set_ylabel("Torque[Nm]", color=col1, fontsize=16)
+    ax.set_ylabel("Torque[Nm]", color=col2, fontsize=16)
     ax2 = ax.twinx()
     ax2.plot(x2, y2, color=col2)
-    ax2.set_ylabel("Power[kW]", color=col2, fontsize=20)
+    ax2.set_ylabel("Power[kW]", color=col1, fontsize=20)
     plt.xlim(500, 5000)
     plt.ylim(0,160)
     plt.savefig("static\output.jpg", dpi=800)
@@ -137,6 +141,7 @@ def output_page():
         input_form["vehicle_weight"] = vehicle_weight = request.form.get("vehicle_weight")
         input_form["engine"] = engine = session.get("engine", None)
         input_form["emission"] = emission = session.get("emission", None)
+        input_form["powertorque"] = powertorque = session.get("power_type", None)  
         input_form["transmission"] = transmission = request.form.get("transmission_type")
         input_form["axel"] = axel = request.form.get("axel_type")
         input_form["axel_layout"] = axel_layout = request.form.get("axle_layout_type")
@@ -222,24 +227,24 @@ def output_page():
         if engine and emission:
             try :
                 engine_update_dict = session.get("engine_dict", None)
-                for ii in range(0, len(engine_update_dict[str(engine)+'_'+str(emission)]['Engine speed'])):
+                for ii in range(0, len(engine_update_dict[str(engine)+'_'+str(emission)+'_'+str(powertorque)]['Engine speed'])):
                     sheet.Cells(engine_row, 5).Value = engine_update_dict[str(
-                        engine)+'_'+str(emission)]['Engine speed'][ii]
+                        engine)+'_'+str(emission)+'_'+str(powertorque)]['Engine speed'][ii]
                     sheet.Cells(engine_row,  6).Value = engine_update_dict[str(
-                        engine)+'_'+str(emission)]['Torque'][ii]
+                        engine)+'_'+str(emission)+'_'+str(powertorque)]['Torque'][ii]
                     sheet.Cells(engine_row,  7).Value = engine_update_dict[str(
-                        engine)+'_'+str(emission)]['Power'][ii]   
+                        engine)+'_'+str(emission)+'_'+str(powertorque)]['Power'][ii]   
                     engine_row = engine_row+1
                 sheet.Cells(42,5).Value = engine
                 #sheet.Cells(43,5).Value = emission
             except:
-                for ii in range(0, len(engine_dict[str(engine)+'_'+str(emission)]['Engine speed'])):
+                for ii in range(0, len(engine_dict[str(engine)+'_'+str(emission)+'_'+str(powertorque)]['Engine speed'])):
                     sheet.Cells(engine_row, 5).Value = engine_dict[str(
-                        engine)+'_'+str(emission)]['Engine speed'][ii]
+                        engine)+'_'+str(emission)+'_'+str(powertorque)]['Engine speed'][ii]
                     sheet.Cells(engine_row,  6).Value = engine_dict[str(
-                        engine)+'_'+str(emission)]['Torque'][ii]
+                        engine)+'_'+str(emission)+'_'+str(powertorque)]['Torque'][ii]
                     sheet.Cells(engine_row,  7).Value = engine_dict[str(
-                        engine)+'_'+str(emission)]['Power'][ii]   
+                        engine)+'_'+str(emission)+'_'+str(powertorque)]['Power'][ii]   
                     engine_row = engine_row+1
                 sheet.Cells(42,5).Value = engine
                 #sheet.Cells(43,5).Value = emission

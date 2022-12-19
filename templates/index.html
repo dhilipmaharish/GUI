@@ -84,7 +84,7 @@
         <form method="post" id="Form1" action="{{url_for('output_page')}}" onsubmit= "submit_button.disabled = true; return true;">
           <div class="row" style="max-height: 1000px">
         <!-- -----------------------Vehicle Details---------------------- -->
-            <div class="card1 mt-3 col-lg-3 col-md-10 col-sm-12 col-xs-12" style="height:350px">
+            <div class="card1 mt-3 col-lg-3 col-md-10 col-sm-12 col-xs-12" style="height:400px">
               <div class="card-body">
                 <h5 class="card-title">
                   <image
@@ -126,7 +126,7 @@
             </div>
             <div
               class="card2 mt-3 col-lg-6 col-md-10 col-sm-12 col-xs-12"
-              style="left: 8px; height:350px;"
+              style="left: 8px; height:400px;"
             >
               <div class="card-body">
                 <h5 class="card-title">
@@ -160,6 +160,23 @@
                       form="Form2"
                       required = "required"
                       style="left: 45px; width: 150px;"
+                      onchange = "filterpowertorque()"
+                    >
+                      <option value="" selected disabled>Select</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="mb-3 mt-4">
+                  <label for="Power_torque" class="form-label"
+                    ><strong>Power Torque</strong>
+                  </label>
+                  <div class="btn-group" style="left: 10px">
+                    <select
+                      name="power_type"
+                      id="power_type"
+                      form="Form2"
+                      required = "required"
+                      style="left: 45px; width: 150px;"
                     >
                       <option value="" selected disabled>Select</option>
                     </select>
@@ -190,7 +207,7 @@
               </div>
             </div>
             <div class="card3 mt-3 col-lg-3 col-md-10 col-sm-12 col-xs-12"
-              style="left:17px;  height:350px; ">
+              style="left:17px;  height:400px; ">
               <div class="card-body">
                 <h5 class="card-title">
                   <img
@@ -1224,7 +1241,8 @@
         url:'/graph',
         data:{
           'engine':$("#engine_type").val(),
-          'emission':$("#emission_type").val()
+          'emission':$("#emission_type").val(),
+          'power_type':$("#power_type").val()
         },
         success:function (response) {
             $("#graph_img").attr("src", "/static/" + response);

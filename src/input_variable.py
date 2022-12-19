@@ -6,7 +6,7 @@ from src.air_resistence import air_resistance
 import json
 
 trans_dict,trans_dict_len, trans_drop = transmission_input()
-engine_dict, emission_drop, engine_filter_dict = engine_input()
+engine_dict, emission_drop, engine_filter_dict, power_torque_filter_dict = engine_input()
 axel_drop,axle_type, from_axel_select_gear_ratio_option_show, from_gear_ratio_select_efficiency_option_show = final_drive_input()
 tyre_size_drop,standard_drop,application_drop, radius_drop, rrc_drop, tire_description_dict = tire_input()
 vehicle_category_drop, cab_drop, rear_body_drop, air_resistance_drop = air_resistance()
@@ -15,6 +15,7 @@ vehicle_category_drop, cab_drop, rear_body_drop, air_resistance_drop = air_resis
 inputdata = {
     "emission_object" : emission_drop,
     "engine_object" : engine_filter_dict,
+    "power_torque_object" : power_torque_filter_dict,
     "transsmission_object" : trans_drop,
     "no_gears_object" : trans_dict_len, 
     "final_drive_object" : axel_drop,
@@ -32,6 +33,8 @@ inputdata = {
     "rear_body_object" : rear_body_drop,
     "air_resistance_object" : air_resistance_drop   
 }
+
+print(inputdata)
 
 
 driving_resistance_cell = {'driving_resistance1':9,'driving_resistance2':10,'driving_resistance3':11,'driving_resistance4':12,
