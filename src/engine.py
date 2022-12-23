@@ -58,6 +58,3 @@ def engine_input(user_file = None):
     return engine_dict,list(set(emission_model)), engine_filter_dict, power_torque_filter_dict
 
 
-#engine_dict,emission_model, engine_filter_dict = engine_input()
-print(engine_input())
-

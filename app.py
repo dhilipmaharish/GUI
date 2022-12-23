@@ -32,11 +32,14 @@ import copy
 app.secret_key = "27eduCBA09"
 
 inputdata = json.loads(input_json)
-
+file_name = {}
+show_graph = {}
 
 @app.route("/")
 def display():
     session.clear()
+    file_name.clear()
+    show_graph.clear()
     return render_template("index.html",inputdata  = inputdata)
 
 
@@ -44,7 +47,6 @@ def display():
 def upload():
     uploaddata = copy.deepcopy(inputdata)
     if request.method == "POST":
-        file_name = {}
         engine_file = request.files["engine_file"]
         transmission_file = request.files["transmission_file"]
         final_drive_file = request.files["final_file"] 
@@ -92,17 +94,17 @@ def upload():
         uploaddata["rear_body_object"] = rear_body_drop
         uploaddata["air_resistance_object"] = air_resistance_drop
         file_name['air_drag_name'][1] = True
-    return render_template("index.html",inputdata  = uploaddata, filename = file_name)
+    return render_template("index.html", inputdata  = uploaddata, filename = file_name)
 
 @app.route("/graph", methods=['POST'])   
 def graph():
     engine = request.form.get('engine')
     emission = request.form.get('emission')
     powertype = request.form.get('power_type')
-    print(powertype)
-    session["engine"] = engine
-    session["emission"] = emission
-    session["power_type"] = powertype
+    show_graph["status"] = True
+    # session["engine"] = engine
+    # session["emission"] = emission
+    # session["power_type"] = powertype
     try:
         engine_update_dict = session.get("engine_dict", None)
         x1 = engine_update_dict[str(engine)+'_'+str(emission)+'_'+str(powertype)]['Engine speed']
@@ -130,7 +132,7 @@ def graph():
     image = image.resize((375, 275), Image.ANTIALIAS)
     image.save(fp="static\graph.png")
     image_path = "static\graph.png"
-    return "graph.png"
+    return "graph.png" 
 
 @app.route("/output", methods=["GET", "POST"])
 def output_page(): 
@@ -139,9 +141,9 @@ def output_page():
         input_form = {}      
         input_form["vehicle_name"] = vehicle_name = request.form.get("vehicle_name")
         input_form["vehicle_weight"] = vehicle_weight = request.form.get("vehicle_weight")
-        input_form["engine"] = engine = session.get("engine", None)
-        input_form["emission"] = emission = session.get("emission", None)
-        input_form["powertorque"] = powertorque = session.get("power_type", None)  
+        input_form["engine"] = engine = request.form.get("engine_type")
+        input_form["emission"] = emission = request.form.get("emission_type")
+        input_form["powertorque"] = powertorque = request.form.get("power_type")
         input_form["transmission"] = transmission = request.form.get("transmission_type")
         input_form["axel"] = axel = request.form.get("axel_type")
         input_form["axel_layout"] = axel_layout = request.form.get("axle_layout_type")
@@ -172,6 +174,7 @@ def output_page():
         input_form["gear_display"] = request.form.get("gear_display")
         input_form["pattern"] = request.form.get("pattern")
         input_form["remark"] = request.form.get("remark")
+        print(show_graph)
         driving_resistance_dict = {}
         for drive_res in range(1, 23):
             driving_resistance_dict["driving_resistance"+str(drive_res)] = request.form.get("driving_resistance_{}".format(drive_res))
@@ -183,6 +186,7 @@ def output_page():
         chan_val = + 1
         input_form.update(driving_resistance_dict)
         # excel = Dispatch('Excel.Application', pythoncom.CoInitialize())
+        print(file_name)
         try:
             if file_path:
                 shutil.copyfile('data\Longitudinal_simulation_sample.xlsx',
@@ -340,7 +344,7 @@ def output_page():
             "row4" : ["@km/h"] + list(round(i, 3) for i in df.iloc[68, 10:30].tolist() if i!="-")
         }
         
-    return render_template("output.html", input_form = input_form, inputdata = inputdata ,result_text = "Success!! Excel Generated", table_data = table_data, table_len = table_len)
+    return render_template("output.html", input_form = input_form, inputdata = inputdata ,result_text = "Success!! Excel Generated", table_data = table_data, table_len = table_len, file_name = file_name, show_graph = show_graph)
 
 def main():
     if not os.environ.get("WERKZEUG_RUN_MAIN"):

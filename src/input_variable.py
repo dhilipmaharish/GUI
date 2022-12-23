@@ -34,7 +34,6 @@ inputdata = {
     "air_resistance_object" : air_resistance_drop   
 }
 
-print(inputdata)
 
 
 driving_resistance_cell = {'driving_resistance1':9,'driving_resistance2':10,'driving_resistance3':11,'driving_resistance4':12,

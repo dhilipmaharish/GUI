@@ -260,3 +260,17 @@ table, th, td {
 input[type='file'] {
     color: transparent;
   }
+
+.info {
+    background-color: #e7f3fe;
+    border-left: 6px solid #2196F3;
+    max-width: 1000px;
+    text-align: center;
+    margin: auto;
+    height: 50px;
+    font-size: 25px;
+    position: relative;
+    top: 25px
+    
+  }
+  

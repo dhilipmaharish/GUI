@@ -76,7 +76,18 @@
         </a>
       </div>
     </nav>
-    <div id="content">
+    <div class="info">
+      <p><strong>Info!</strong>Please load Alternate source file(if any) before starting Calculation</p>
+    </div>
+    <button
+        class="btn btn-success btn-li float-right"
+        id="refresh"
+        type="submit"
+        style = "left:1800px; top:-25px; position: relative; "
+        form="Form3">
+        FILE SUBMIT
+    </button>
+    <div id="content" style="top: 20px; position: relative;">
       <div class="container" style="max-width: 1775px">
         <form id="Form2" method="post"></form>
         <form  id="Form3" action="{{url_for('upload')}}" method="post" enctype="multipart/form-data"></form>
@@ -141,12 +152,21 @@
                     ><strong>Emission</strong>
                   </label>
                   <div class="btn-group" style="left: 45px;">
-                    <select name="emission_type" id="emission_type" form="Form2" required = "required" style="left: 45px; width: 150px;" onchange="filterengine()">
-                      <option value="" selected disabled>Select</option>
-                      {% for emission in inputdata["emission_object"] %}
-                      <option value="{{emission}}">{{emission}}</option>
-                      {% endfor %}
-                    </select>
+                    {% if 'graph' in request.endpoint%}
+                        <select name="emission_type" id="emission_type" form="Form2" required = "required" style="left: 45px; width: 150px;" onchange="filterengine()">
+                          <option value="" selected disabled>Select</option>
+                          {% for emission in inputdata["emission_object"] %}
+                          <option value="{{emission}}">{{emission}}</option>
+                          {% endfor %}
+                        </select>
+                    {% else %}
+                        <select name="emission_type" id="emission_type" form="Form1" required = "required" style="left: 45px; width: 150px;" onchange="filterengine()">
+                          <option value="" selected disabled>Select</option>
+                          {% for emission in inputdata["emission_object"] %}
+                          <option value="{{emission}}">{{emission}}</option>
+                          {% endfor %}
+                        </select>
+                    {% endif %}
                   </div>
                 </div>
                 <div class="mb-3 mt-4">
@@ -154,16 +174,29 @@
                     ><strong>Engine</strong>
                   </label>
                   <div class="btn-group" style="left: 60px">
-                    <select
-                      name="engine_type"
-                      id="engine_type"
-                      form="Form2"
-                      required = "required"
-                      style="left: 45px; width: 150px;"
-                      onchange = "filterpowertorque()"
-                    >
-                      <option value="" selected disabled>Select</option>
-                    </select>
+                    {% if 'graph' in request.endpoint%}
+                        <select
+                          name="engine_type"
+                          id="engine_type"
+                          form="Form2"
+                          required = "required"
+                          style="left: 45px; width: 150px;"
+                          onchange = "filterpowertorque()"
+                        >
+                          <option value="" selected disabled>Select</option>
+                        </select>
+                    {% else %}
+                        <select
+                          name="engine_type"
+                          id="engine_type"
+                          form="Form1"
+                          required = "required"
+                          style="left: 45px; width: 150px;"
+                          onchange = "filterpowertorque()"
+                        >
+                          <option value="" selected disabled>Select</option>
+                        </select>
+                    {% endif %} 
                   </div>
                 </div>
                 <div class="mb-3 mt-4">
@@ -171,15 +204,27 @@
                     ><strong>Power Torque</strong>
                   </label>
                   <div class="btn-group" style="left: 10px">
-                    <select
-                      name="power_type"
-                      id="power_type"
-                      form="Form2"
-                      required = "required"
-                      style="left: 45px; width: 150px;"
-                    >
-                      <option value="" selected disabled>Select</option>
-                    </select>
+                    {% if 'graph' in request.endpoint%}
+                        <select
+                          name="power_type"
+                          id="power_type"
+                          form="Form2"
+                          required = "required"
+                          style="left: 45px; width: 150px;"
+                        >
+                          <option value="" selected disabled>Select</option>
+                        </select>
+                    {% else %}
+                        <select
+                          name="power_type"
+                          id="power_type"
+                          form="Form1"
+                          required = "required"
+                          style="left: 45px; width: 150px;"
+                        >
+                          <option value="" selected disabled>Select</option>
+                        </select>
+                    {% endif %}    
                   </div>
                 </div>
                 <h6><strong>Engine file</strong></h6><input type='file' id="engine_file" name="engine_file" form="Form3" accept='.xlsx'>
@@ -1216,14 +1261,6 @@
             REFRESH
           </button>
         </a>
-        <button
-              class="btn btn-success btn-li float-right"
-              id="refresh"
-              type="submit"
-              style = "left:-50px; top:-75px"
-              form="Form3">
-              FILE SUBMIT
-        </button>
         <font color="green" align="center" style="left:1500px; position:relative; top: -75px;" ><strong>{{result_text}}</strong></font> 
       </div>
     </div>
@@ -1244,7 +1281,7 @@
           'emission':$("#emission_type").val(),
           'power_type':$("#power_type").val()
         },
-        success:function (response) {
+        success:function (response, _) {
             $("#graph_img").attr("src", "/static/" + response);
           },
         
